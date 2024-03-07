@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CreateAccount() {
+function ForgotPasswordAccount() {
     return (
         <div className="App">
             <header className="App-header">
@@ -20,4 +20,4 @@ function CreateAccount() {
     );
 }
 
-export default CreateAccount;
+export default ForgotPasswordAccount;

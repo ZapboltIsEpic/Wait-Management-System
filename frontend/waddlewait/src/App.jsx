@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import StaffLogin from './Screens/Accounts/Login';
 import CustomerTableSelection from './Screens/Customer/TableSelection';
 import CustomerHomeMenu from './Screens/Customer/HomeMenu';
-import StaffAccountCreation from './Screens/Accounts/CreateAccount';
+import StaffForgotPassword from './Screens/Accounts/ForgotPasswordAccount';
 import Home from './Screens/Home';
 import KitchenMain from './Screens/Kitchen/KitchenMain';
 import WaiterMain from './Screens/Waiter/WaiterMain';
@@ -18,7 +18,7 @@ function App() {
 
         {/* Staff login/creation */}
         <Route path="/staff/login" element={<StaffLogin/>} />
-        <Route path="/staff/creation" elemnt={<StaffAccountCreation/>} />
+        <Route path="/staff/forgot-password" element={<StaffForgotPassword/>} />
 
         {/* Customer Routes */}
         <Route path="/customer/table-selection" element={<CustomerTableSelection/>} />
