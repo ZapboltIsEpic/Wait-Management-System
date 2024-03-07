@@ -1,23 +1,39 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function Login() {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <p>
-                This is Login <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                >
-                Learn React
-                </a>
-            </header>
-        </div>
-    );
+	const navigate = useNavigate();
+
+	const navigateTo = (link) => {
+		navigate(link);
+	}
+
+	return (
+		<div className="App">
+				<p>
+					This is Login <code>src/App.js</code> and save to reload.
+				</p>
+				<Button 
+        	variant='outlined'
+        	onClick={() => {navigateTo('/kitchen/main')}}
+				>
+					Go to Kitchen Staff
+				</Button>
+				<Button 
+        	variant='outlined'
+        	onClick={() => {navigateTo('/waiter/main')}}
+				>
+					Go to Wait Staff
+				</Button>
+				<Button 
+        	variant='outlined'
+        	onClick={() => {navigateTo('/manager/main')}}
+				>
+					Go to Managers
+				</Button>
+		</div>
+	);
 }
 
 export default Login;

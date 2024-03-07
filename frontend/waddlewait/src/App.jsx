@@ -6,6 +6,9 @@ import CustomerTableSelection from './Screens/Customer/TableSelection';
 import CustomerHomeMenu from './Screens/Customer/HomeMenu';
 import StaffAccountCreation from './Screens/Accounts/CreateAccount';
 import Home from './Screens/Home';
+import KitchenMain from './Screens/Kitchen/KitchenMain';
+import WaiterMain from './Screens/Waiter/WaiterMain';
+import ManagerMain from './Screens/Manager/ManagerMain';
 
 function App() {
   return (
@@ -21,6 +24,14 @@ function App() {
         <Route path="/customer/table-selection" element={<CustomerTableSelection/>} />
         <Route path="/customer/home-menu" element={<CustomerHomeMenu/>} />
 
+        {/* Kitchen Routes */}
+        <Route path="/kitchen/main" element={<KitchenMain/>} />
+
+        {/* Waiter Routes */}
+        <Route path="/waiter/main" element={<WaiterMain/>} />
+
+        {/* Manager Routes */}
+        <Route path="/manager/main" element={<ManagerMain/>} />
 
       </Routes>
     </BrowserRouter>
