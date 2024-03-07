@@ -1,21 +1,19 @@
 import React from 'react';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+    const navigate = useNavigate();
     return (
       <div className="App">
-        <header className="App-header">
           <p>
             This is Home <code>src/App.js</code> and save to reload.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Button variant='outlined'
+            onClick={() => navigate('/customer/table-selection')}
+        >
+            Go to Table selection
+        </Button>
       </div>
     );
   }
