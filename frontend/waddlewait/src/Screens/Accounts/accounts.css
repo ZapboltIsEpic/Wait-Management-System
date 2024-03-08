@@ -1,4 +1,4 @@
-.login-container {
+.account-container {
 	width: 350px;
 	display: flex;
 	flex-direction: column;
@@ -9,7 +9,7 @@
 	padding: 20px;
 }
 
-.login-screen {
+.account-screen {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -22,7 +22,7 @@
 }
 
 .input-container {
-	margin: 15px 0;
+	margin: 10px 0;
 }
 
 .input-role-container {
@@ -68,4 +68,10 @@
 	text-decoration: underline;
 	color: blue;
 	cursor: pointer;
+}
+
+.create-options {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
 }

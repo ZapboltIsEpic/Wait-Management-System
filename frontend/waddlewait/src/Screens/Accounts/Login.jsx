@@ -20,21 +20,19 @@ function Login() {
   };
 
 	return (
-		<div className="login-screen">
-			<div className="login-container">
+		<div className="account-screen">
+			<div className="account-container">
 				<h1>
 					Staff Login
 				</h1>
 				<div className="input-container">
 					<TextField
-						id="outlined-password-input"
 						label="Username"
 						className="input"
 					/>
 				</div>
 				<div className="input-container">
 					<TextField
-						id="outlined-password-input"
 						label="Password"
 						type="password"
 						className="input"
@@ -43,9 +41,8 @@ function Login() {
 
 				<div className='input-role-container'>
 					<FormControl className="input-role">
-						<InputLabel id="demo-simple-select-label">Role</InputLabel>
+						<InputLabel>Role</InputLabel>
 						<Select
-							labelId="demo-simple-select-label"
 							id="demo-simple-select"
 							value={role}
 							label="Role"
