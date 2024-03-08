@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './CustomerStyle.css';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -10,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 
 function TableSelection() {
+  const navigate = useNavigate();
+
   const [groupSize, setGroupSize] = React.useState('')
   const [tableNum, setTableNum] = React.useState('')
   const [showError, setShowError] = React.useState(false)
@@ -23,13 +26,9 @@ function TableSelection() {
   };
 
   const handleConfirm = () => {
-    console.log(groupSize, tableNum);
-
     if (tableNum && groupSize && groupSize > 0) {
-      console.log("confirmed!");
-      // Additional logic or navigation can be added here
+      navigate('/customer/home-menu')
     } else {
-      // Set showError to true to render the error alert
       setShowError(true);
     }
   };
@@ -90,7 +89,7 @@ function TableSelection() {
       {showError && (
         <>
           <Alert severity="error" sx={{ width: '100%' }}>
-            Please fill in the Group Size and Table Number correctly.
+            Please fill in the 'Group Size' and 'Table Number' correctly.
           </Alert>
         </>
       )}
