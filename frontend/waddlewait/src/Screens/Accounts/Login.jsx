@@ -69,7 +69,28 @@ function Login() {
 						Submit
 					</Button>
 				</div>
-				<p> Submit for each role to access their page, no authentication needed </p>
+				<div className="login-help">
+					<div className="login-help-link-container">
+						<p 
+							className="login-help-link-text"
+							onClick={() => {
+								navigateTo('/staff/forgot-password');
+							}}
+						>
+							Forgot password?
+						</p>
+					</div>
+					<div className="login-help-link-container">
+						<p 
+							className="login-help-link-text"
+							onClick={() => {
+								navigateTo('/staff/create-account');
+							}}
+						>
+							Create account
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

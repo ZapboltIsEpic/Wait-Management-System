@@ -47,3 +47,25 @@
 	justify-content: center;
 	margin: 10px 0;
 }
+
+.login-help {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin: 10px 0 0 0;
+}
+
+.login-help-link-container {
+	border-radius: 5px;
+	padding: 0px 10px;
+}
+
+.login-help-link-container:hover {
+	background-color: rgba(0, 0, 255, 0.05);
+}
+
+.login-help-link-text {
+	text-decoration: underline;
+	color: blue;
+	cursor: pointer;
+}
