@@ -1,11 +1,11 @@
 import React from 'react';
 
-function ForgotPasswordAccount() {
+function CreateStaffAccount() {
     return (
         <div className="App">
             <header className="App-header">
                 <p>
-                This is staff account forgot password page <code>src/App.js</code> and save to reload.
+                This is staff account create Account page <code>src/App.js</code> and save to reload.
                 </p>
                 <a
                 className="App-link"
@@ -20,4 +20,4 @@ function ForgotPasswordAccount() {
     );
 }
 
-export default ForgotPasswordAccount;
+export default CreateStaffAccount;

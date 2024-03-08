@@ -9,6 +9,7 @@ import Home from './Screens/Home';
 import KitchenMain from './Screens/Kitchen/KitchenMain';
 import WaiterMain from './Screens/Waiter/WaiterMain';
 import ManagerMain from './Screens/Manager/ManagerMain';
+import CreateStaffAccount from './Screens/Accounts/CreateAccount';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         {/* Staff login/creation */}
         <Route path="/staff/login" element={<StaffLogin/>} />
         <Route path="/staff/forgot-password" element={<StaffForgotPassword/>} />
+        <Route path="/staff/create-account" element={<CreateStaffAccount/>} />
 
         {/* Customer Routes */}
         <Route path="/customer/table-selection" element={<CustomerTableSelection/>} />
