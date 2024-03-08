@@ -54,15 +54,15 @@ function TableSelection() {
         </Grid>
 
         <Grid item>
-            <FormControl fullWidth>
-              <InputLabel id="groupSizeLabel">Table Number</InputLabel>
-              <Select 
-              labelId="tableNumField"
-              label="Table Number" 
-              type="number"
-              value={tableNum}
-              onChange={changeTableNum}
-              sx={{ width: 150 }}
+          <FormControl fullWidth>
+            <InputLabel id="groupSizeLabel">Table Number</InputLabel>
+            <Select 
+            labelId="tableNumField"
+            label="Table Number" 
+            type="number"
+            value={tableNum}
+            onChange={changeTableNum}
+            sx={{ width: 150 }}
             >
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
@@ -74,7 +74,7 @@ function TableSelection() {
               <MenuItem value={8}>8</MenuItem>
               <MenuItem value={9}>9</MenuItem>
             </Select>
-            </FormControl>
+          </FormControl>
         </Grid>
       </Grid>
 
