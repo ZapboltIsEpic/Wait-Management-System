@@ -1,0 +1,49 @@
+.login-container {
+	width: 350px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+	padding: 20px;
+}
+
+.login-screen {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	height: 100vh;
+}
+
+.input {
+	width: 100%;
+}
+
+.input-container {
+	margin: 15px 0;
+}
+
+.input-role-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 15px 0;
+}
+
+.input-role {
+	width: 150px;
+}
+
+.button {
+	width: 100px;
+}
+
+.button-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 10px 0;
+}
