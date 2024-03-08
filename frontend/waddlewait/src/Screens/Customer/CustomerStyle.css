@@ -9,3 +9,11 @@ p {
 div {
     text-align: center;
 }
+
+.custom-button {
+    background-color: #FFC450;
+}
+  
+.custom-button:hover {
+    background-color: #FFA000; /* Change this color to your desired hover color */
+}
