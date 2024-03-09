@@ -20,27 +20,27 @@ function CreateStaffAccount() {
 					<TextField
 						label="Email"
 						placeholder='example@gmail.com'
-						className="input"
+						className="input-register"
 					/>
 				</div>
 				<div className="input-container">
 					<TextField
 						label="Password"
-						className="input"
+						className="input-register"
 						type="password"
 					/>
 				</div>
 				<div className="input-container">
 					<TextField
 						label="Confirm Password"
-						className="input"
+						className="input-register"
 						type="password"
 					/>
 				</div>
 				<div className="input-container">
 					<TextField
 						label="Authentication Passkey"
-						className="input"
+						className="input-register"
 						type="password"
 					/>
 				</div>

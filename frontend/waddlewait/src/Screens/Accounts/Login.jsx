@@ -28,14 +28,14 @@ function Login() {
 				<div className="input-container">
 					<TextField
 						label="Username"
-						className="input"
+						className="input-login"
 					/>
 				</div>
 				<div className="input-container">
 					<TextField
 						label="Password"
 						type="password"
-						className="input"
+						className="input-login"
 					/>
 				</div>
 
