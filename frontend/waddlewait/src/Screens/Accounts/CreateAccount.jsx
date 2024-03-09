@@ -27,7 +27,7 @@ function CreateStaffAccount() {
 		<div className="account-screen">
 			<div className="account-container">
 				<h1>
-					Staff Register
+					Register
 				</h1>
 				<div className="input-container">
 					<TextField

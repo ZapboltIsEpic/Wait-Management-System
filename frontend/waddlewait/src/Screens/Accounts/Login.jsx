@@ -23,7 +23,7 @@ function Login() {
 		<div className="account-screen">
 			<div className="account-container">
 				<h1>
-					Staff Login
+					Login
 				</h1>
 				<div className="input-container">
 					<TextField
