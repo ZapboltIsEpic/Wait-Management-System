@@ -108,9 +108,20 @@ function CreateStaffAccount() {
 function ErrorDialog ({open, setOpen}) {
 	return <Dialog
 		open={open}
-		onClose={() => {setOpen(false)}}
+		onClose={() => {
+			setOpen(false)
+		}}
 	>
 		<DialogTitle>Error</DialogTitle>
+		<p>Please check your inputs and try again</p>
+		<Button
+			variant="contained"
+			onClick={() => {
+				setOpen(false);
+			}}	
+		>
+			Close
+		</Button>
 	</Dialog>
 }
 
