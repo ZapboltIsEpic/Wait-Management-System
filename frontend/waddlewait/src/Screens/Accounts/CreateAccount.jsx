@@ -135,6 +135,15 @@ function SuccessDialog ({open, setOpen, navigateTo}) {
 	>
 		<DialogTitle>Success</DialogTitle>
 		<p>Your account has been registered</p>
+		<Button
+			variant="contained"
+			onClick={() => {
+				setOpen(false);
+				navigateTo('/staff/login');
+			}}	
+		>
+			Close
+		</Button>
 	</Dialog>
 }
 
