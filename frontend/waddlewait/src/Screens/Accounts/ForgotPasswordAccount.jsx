@@ -1,23 +1,84 @@
 import React from 'react';
+import { TextField, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function ForgotPasswordAccount() {
+	const navigate = useNavigate();
+
+	const navigateTo = (link) => {
+		navigate(link);
+	}
+
+	// Use states
+
+	// Dialog
+	const [success, setSuccessOpen] = React.useState(false);
+
 	return (
-		<div className="App">
-			<header className="App-header">
-				<p>
-					This is staff account forgot password page <code>src/App.js</code> and save to reload.
-				</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-				Learn React
-				</a>
-			</header>
+		<div className="account-screen">
+			<div className="account-container">
+				<h1>
+					Password Recovery
+				</h1>
+				<p>Enter your Username and we will send a password recovery to your email.</p>
+				<div className="input-container">
+					<TextField
+						label="Username"
+						className="input-login"
+					/>
+				</div>
+				<div className="create-options">
+					<div className="button-container">
+						<Button 
+							variant="contained"
+							onClick={() => {
+								navigateTo('/staff/login');
+							}}
+							className="button"
+						>
+							Back
+						</Button>
+					</div>
+					<div className="button-container">
+						<Button 
+							variant="contained"
+							onClick={() => {
+								setSuccessOpen(true);
+							}}
+							className="button"
+						>
+							Submit
+						</Button>
+						<SuccessDialog open={success} setOpen={setSuccessOpen} navigateTo={navigateTo} />
+					</div>
+				</div>
+			</div>
 		</div>
 	);
+}
+
+function SuccessDialog ({open, setOpen, navigateTo}) {
+	return <Dialog
+		open={open}
+		onClose={() => {
+			setOpen(false)
+			navigateTo('/staff/login');
+		}}
+	>
+		<DialogTitle>Password Recovery Sent</DialogTitle>
+		<p>A password recovery has been sent. Please check your email.</p>
+		<Button
+			variant="contained"
+			onClick={() => {
+				setOpen(false);
+				navigateTo('/staff/login');
+			}}	
+		>
+			Close
+		</Button>
+	</Dialog>
 }
 
 export default ForgotPasswordAccount;
