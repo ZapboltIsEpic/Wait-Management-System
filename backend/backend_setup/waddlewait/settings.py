@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,11 +78,11 @@ WSGI_APPLICATION = 'waddlewait.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'waddlewait', 
+        'NAME': 'postgres', 
         'USER': 'postgres',
-        'PASSWORD': 'chunkypenguins',
+        'PASSWORD': 'admin',
         'HOST': '127.0.0.1', 
-        'PORT': '8080',
+        'PORT': '5432',
     }
 }
 
