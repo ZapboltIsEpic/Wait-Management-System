@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from waddlewait_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('tables/', views.table_list),
+    path('table/<int:table_number>', views.table_detail),
+
 ]
