@@ -37,6 +37,8 @@ def table_detail(request, table_number):
         return Response(serializer.data)
 
     if request.method == 'PUT':
+        #max_seats = request.data['seats_max']
+        
         serializer = TableBookingSerializer(table, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
