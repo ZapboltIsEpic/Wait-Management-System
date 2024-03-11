@@ -64,18 +64,19 @@ function CreateStaffAccount() {
 				<div className="create-options">
 					<div className="button-container">
 						<Button 
-							variant="contained"
+							variant="outlined"
 							onClick={() => {
 								navigateTo('/staff/login');
 							}}
 							className="button"
+							color='warning'
 						>
 							Back
 						</Button>
 					</div>
 					<div className="button-container">
 						<Button 
-							variant="contained"
+							variant="outlined"
 							onClick={() => {
 								// Temporary basic authentication
 								// Check that fields cannot be empty
@@ -93,6 +94,7 @@ function CreateStaffAccount() {
 								setSuccessOpen(true);
 							}}
 							className="button"
+							color='warning'
 						>
 							Create
 						</Button>
@@ -115,10 +117,11 @@ function ErrorDialog ({open, setOpen}) {
 		<DialogTitle>Error</DialogTitle>
 		<p>Please check your inputs and try again</p>
 		<Button
-			variant="contained"
+			variant="outlined"
 			onClick={() => {
 				setOpen(false);
-			}}	
+			}}
+			color="warning"
 		>
 			Close
 		</Button>
@@ -136,11 +139,12 @@ function SuccessDialog ({open, setOpen, navigateTo}) {
 		<DialogTitle>Success</DialogTitle>
 		<p>Your account has been registered</p>
 		<Button
-			variant="contained"
+			variant="outlined"
 			onClick={() => {
 				setOpen(false);
 				navigateTo('/staff/login');
 			}}	
+			color="warning"
 		>
 			Close
 		</Button>
