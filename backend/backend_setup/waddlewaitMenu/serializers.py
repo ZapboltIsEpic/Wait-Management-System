@@ -4,7 +4,8 @@ from .models import Category, MenuItem
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["name"]
+        fields = ["id",
+                  "name"]
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
@@ -13,16 +14,17 @@ class MenuItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MenuItem
-        fields = ["id", 
+        fields = ["id",
                   "name", 
                   "description", 
                   "price", 
                   "category"]
-    
+
     def create(self, validated_data):
-        category_data = validated_data.pop('category')
-        category = Category.objects.get(name=category_data['name'])
+        categoryData = validated_data.pop('category')
+        category, _ = Category.objects.get_or_create(**categoryData)
         menu_item = MenuItem.objects.create(category=category, **validated_data)
         return menu_item
+    
 
         

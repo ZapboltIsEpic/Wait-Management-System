@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 
 from .models import MenuItem, Category
@@ -58,22 +58,33 @@ def menuItemsByCategory(request, categoryName):
             return Response(category_serializer.data, status.HTTP_201_CREATED)
         return Response(category_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
-@api_view(['GET','POST'])
+@api_view(['GET'])
 def menuItem(request, categoryName, id):
     if request.method == 'GET':
-        try:
-            menuItem = MenuItem.objects.get(id=id)
-            menuItem_serializer = MenuItemSerializer(menuItem)
-            return JsonResponse(menuItem_serializer.data)
-        
-        except MenuItem.DoesNotExist:
-            return JsonResponse({'message': 'Menu item does not exist'}, status=404)
+        menu_item = get_object_or_404(MenuItem, pk=id)
+        menu_item_serializer = MenuItemSerializer(menu_item)
+        return JsonResponse(menu_item_serializer.data)
 
-def addMenuItem(request):
+@api_view(['POST'])
+def addMenuItem(request, categoryName):
     if request.method == 'POST':
-        menuItem_serializer = MenuItemSerializer(data = request.data) #serializes table list
-        if menuItem_serializer.is_valid():
-            menuItem_serializer.save()
-            return Response(menuItem_serializer.data, status = status.HTTP_201_CREATED)
-        return Response(menuItem_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
-    
+        
+        data = {
+            'name': request.query_params.get('name'),
+            'description': request.query_params.get('description'),
+            'price': request.query_params.get('price'),
+            'category': {'name' : categoryName}
+        }
+
+        #category = get_object_or_404(Category, name=categoryName)
+        #data['category'] = category
+        menu_item_serializer = MenuItemSerializer(data=data)
+
+        if menu_item_serializer.is_valid():
+            menu_item_serializer.save()
+            print(f"Added Menu Item - {data}")
+            return Response(menu_item_serializer.data, status=status.HTTP_201_CREATED)
+        
+        print(f"Error adding Menu Item - {data}")
+        print(menu_item_serializer.errors)
+        return Response(menu_item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

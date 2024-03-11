@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'users',
-    'customerMenu'
+    'waddlewaitMenu'
 ]
 
 MIDDLEWARE = [
