@@ -37,10 +37,13 @@ def table_detail(request, table_number):
         return Response(serializer.data)
 
     if request.method == 'PUT':
-        #max_seats = request.data['seats_max']
-        
+        serializer_full = TableSerializer(table)
         serializer = TableBookingSerializer(table, data=request.data, partial=True)
         if serializer.is_valid():
+            requested_seats = serializer.validated_data.get('seats_in_use')
+            max_seats = serializer_full.data.get('seats_max')
+            if (requested_seats > max_seats):
+                return Response("Table cannot fit this many seats!",status=status.HTTP_400_BAD_REQUEST)
             serializer.save()
             return Response(serializer.data)
         return Response(status=status.HTTP_400_BAD_REQUEST)
