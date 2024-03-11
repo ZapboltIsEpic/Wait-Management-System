@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     # if the frontend have different port, it still works using corsheaders
     'corsheaders',
     'rest_framework',
-    'users'
+    'users',
+    'customerMenu'
 ]
 
 MIDDLEWARE = [
