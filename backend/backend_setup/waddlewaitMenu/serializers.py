@@ -18,6 +18,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
                   "name", 
                   "description", 
                   "price", 
+                  "image",
                   "category"]
 
     def create(self, validated_data):
