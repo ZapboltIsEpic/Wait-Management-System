@@ -22,7 +22,7 @@ function ForgotPasswordAccount() {
 				<h1>
 					Password Recovery
 				</h1>
-				<p>Enter your Username and we will send a password recovery to your email.</p>
+				<p>Enter your username and we will send a password recovery to your email.</p>
 				<div className="input-container">
 					<TextField
 						label="Username"
@@ -32,10 +32,11 @@ function ForgotPasswordAccount() {
 				<div className="create-options">
 					<div className="button-container">
 						<Button 
-							variant="contained"
+							variant="outlined"
 							onClick={() => {
 								navigateTo('/staff/login');
 							}}
+							color='warning'
 							className="button"
 						>
 							Back
@@ -43,10 +44,11 @@ function ForgotPasswordAccount() {
 					</div>
 					<div className="button-container">
 						<Button 
-							variant="contained"
+							variant="outlined"
 							onClick={() => {
 								setSuccessOpen(true);
 							}}
+							color='warning'
 							className="button"
 						>
 							Submit
@@ -70,11 +72,12 @@ function SuccessDialog ({open, setOpen, navigateTo}) {
 		<DialogTitle>Password Recovery Sent</DialogTitle>
 		<p>A password recovery has been sent. Please check your email.</p>
 		<Button
-			variant="contained"
+			variant="outlined"
 			onClick={() => {
 				setOpen(false);
 				navigateTo('/staff/login');
 			}}	
+			color="warning"	
 		>
 			Close
 		</Button>
