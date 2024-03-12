@@ -278,24 +278,6 @@
         }
     },
     {
-        "model": "auth.user",
-        "pk": 1,
-        "fields": {
-            "password": "pbkdf2_sha256$600000$Ehk0GBNVnqZOm0Y4FrldI9$B6FWd3rLtT4XeXqEajB6Gx5joz8NW54W8tv6pzlO9U4=",
-            "last_login": "2024-03-11T03:59:09.909Z",
-            "is_superuser": true,
-            "username": "admin",
-            "first_name": "",
-            "last_name": "",
-            "email": "admin@admin.com",
-            "is_staff": true,
-            "is_active": true,
-            "date_joined": "2024-03-11T03:59:02.415Z",
-            "groups": [],
-            "user_permissions": []
-        }
-    },
-    {
         "model": "contenttypes.contenttype",
         "pk": 1,
         "fields": {
@@ -381,6 +363,59 @@
             "order_id": -1,
             "is_near_window": false,
             "is_quiet_area": false
+        }
+    },
+    {
+        "model": "users.user", 
+        "pk": 1, 
+        "fields": {
+            "last_login": null, 
+            "is_superuser": false, 
+            "first_name": "", 
+            "last_name": "", 
+            "is_staff": false, 
+            "is_active": true, 
+            "date_joined": "2024-03-11T04:59:46.238Z", 
+            "name": "bob", 
+            "email": "bob@gmail.com", 
+            "password": "helloworld", 
+            "groups": [], 
+            "user_permissions": []
+        }
+    }, 
+    {
+        "model": "users.user", 
+        "pk": 2, 
+        "fields": {
+            "last_login": null, 
+            "is_superuser": false, 
+            "first_name": "", 
+            "last_name": "", 
+            "is_staff": false, 
+            "is_active": true, 
+            "date_joined": "2024-03-11T05:18:46.922Z", 
+            "name": "boby", "email": "boby@gmail.com", 
+            "password": "pbkdf2_sha256$600000$oojD10Vh7mniUIlND6aIIX$dx893r1Ug6dMTffzMr6jIJL8dIXQECPQcCx5fEzhfmQ=", 
+            "groups": [], 
+            "user_permissions": []
+        }
+    }, 
+    {
+        "model": "users.user", 
+        "pk": 3, 
+        "fields": {
+            "last_login": null, 
+            "is_superuser": false, 
+            "first_name": "", 
+            "last_name": "", 
+            "is_staff": false, 
+            "is_active": true, 
+            "date_joined": "2024-03-11T10:14:23.406Z", 
+            "name": "nam", 
+            "email": "nam@gmail.com", 
+            "password": "pbkdf2_sha256$600000$wW8GAHKFtk3gQMea6a3HtM$Ua34JGkZ+HdfvYVmTS7bt07REzNNn9EsP9e53nLPUFU=", 
+            "groups": [], 
+            "user_permissions": []
         }
     }
 ]

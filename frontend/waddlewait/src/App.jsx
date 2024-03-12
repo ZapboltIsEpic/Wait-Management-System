@@ -10,6 +10,7 @@ import KitchenMain from './Screens/Kitchen/KitchenMain';
 import WaiterMain from './Screens/Waiter/WaiterMain';
 import ManagerMain from './Screens/Manager/ManagerMain';
 import CreateStaffAccount from './Screens/Accounts/CreateAccount';
+import KitchenOrderRequests from './Screens/Kitchen/KitchenOrderRequests';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
 
         {/* Kitchen Routes */}
         <Route path="/kitchen/main" element={<KitchenMain/>} />
+        <Route path="/kitchen/order-requests" element={<KitchenOrderRequests/>} />
 
         {/* Waiter Routes */}
         <Route path="/waiter/main" element={<WaiterMain/>} />
