@@ -87,6 +87,7 @@ function CreateStaffAccount() {
 
 								// Check Passwords are the same
 								if (password !== confirmPassword) {
+									setErrorOpen(true);
 									return;
 								}
 
