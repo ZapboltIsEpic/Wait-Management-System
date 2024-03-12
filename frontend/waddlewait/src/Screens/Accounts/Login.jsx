@@ -56,11 +56,12 @@ function Login() {
 				</div>
 				<div className="button-container">
 					<Button 
-						variant="contained"
+						variant="outlined"
 						onClick={() => {
 							// Authentication goes here
 							navigateTo(role);
 						}}
+						color='warning'
 						className="button"
 					>
 						Submit
