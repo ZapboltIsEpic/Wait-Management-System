@@ -6,11 +6,11 @@ export const KitchenSidebar = () => {
     const navigate = useNavigate();
 
     const handleOrderRequestsClick = () => {
-        navigate('/kitchen/orderRequests'); 
+        navigate('/kitchen/order-requests'); 
     };
 
     const handleCompletedRequestsClick = () => {
-        navigate('/kitchen/completedRequests'); 
+        navigate('/kitchen/completed-requests'); 
     };
 
     return (
