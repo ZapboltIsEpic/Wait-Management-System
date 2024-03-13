@@ -10,12 +10,19 @@ import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 
+function tableExample() {
+  var tables = [1,2,3,4,5,6,7,8,9]
+
+  return tables
+}
+
 function TableSelection() {
   const navigate = useNavigate();
-
   const [groupSize, setGroupSize] = React.useState('')
   const [tableNum, setTableNum] = React.useState('')
   const [showError, setShowError] = React.useState(false)
+
+  const tables = tableExample()
 
   const changeGroupSize = (event) => {
     setGroupSize(event.target.value);
@@ -64,15 +71,9 @@ function TableSelection() {
             onChange={changeTableNum}
             sx={{ width: 150 }}
             >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={6}>6</MenuItem>
-              <MenuItem value={7}>7</MenuItem>
-              <MenuItem value={8}>8</MenuItem>
-              <MenuItem value={9}>9</MenuItem>
+              {tables.map((item, index) => (
+                <MenuItem value={item}>{item}</MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
