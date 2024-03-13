@@ -4,6 +4,7 @@ import { TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
+import axios from 'axios';
 
 function CreateStaffAccount() {
 	const navigate = useNavigate();
@@ -87,27 +88,27 @@ function CreateStaffAccount() {
 					<div className="button-container">
 						<Button 
 							variant="outlined"
-							onClick={() => {
+							onClick={async () => {
 									// Authentication goes here
-									// try {
-									// 	const response = await axios.post('http://127.0.0.1:8080/register', {
-									//    name: name,
-									// 		email: username,
-									// 		password: password
-									// 	});
+									try {
+										const response = await axios.post('http://127.0.0.1:8000/api/register', {
+									   name: name,
+											email: username,
+											password: password
+										});
 
-									// 	// Handle successful register
-									// 	console.log('Register successful');
-									// 	setSuccessOpen(true);
-									// } catch (error) {
-									// 	console.log(error)
-									// 	if (error.response.status === 404) {
-									// 		// Display error
-									// 		// console.error('Register failed:', error.response.data);
-									//    setErrorMessage("Login failed. Please check your name/username/password and try again.")
-									// 		setErrorOpen(true);
-									// 	}
-									// }
+										// Handle successful register
+										console.log('Register successful');
+										setSuccessOpen(true);
+									} catch (error) {
+										console.log(error)
+										if (error.response.status === 404) {
+											// Display error
+											// console.error('Register failed:', error.response.data);
+									   setErrorMessage("Login failed. Please check your name/username/password and try again.")
+											setErrorOpen(true);
+										}
+									}
 									
 								// Temporary basic authentication
 								// Check that fields cannot be empty

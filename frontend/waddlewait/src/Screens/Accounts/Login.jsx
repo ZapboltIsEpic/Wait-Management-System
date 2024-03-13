@@ -73,24 +73,25 @@ function Login() {
 						variant="outlined"
 						onClick={async () => {
 							// Authentication goes here
-							// try {
-							// 	const response = await axios.post('http://127.0.0.1:8080/login', {
-							// 		email: username,
-							// 		password: password
-							// 	});
+							try {
+								const response = await axios.post('http://127.0.0.1:8000/api/login', {
+									email: username,
+									password: password
+								});
 
-							// 	// Handle successful login, e.g., store token in local storage
-							// 	console.log('Login successful');
-							// 	navigateTo(role);
-							// } catch (error) {
-							// 	console.log(error)
-							// 	if (error.response.status === 404) {
-							// 		// Display error
-							// 		// console.error('Login failed:', error.response.data);
-							//    setErrorMessage("Login failed. Please check your username/password/role and try again.")
-							// 		setErrorOpen(true);
-							// 	}
-							// }
+								// Handle successful login, e.g., store token in local storage
+								console.log('Login successful');
+								console.log(response.data)
+								navigateTo(role);
+							} catch (error) {
+								console.log(error)
+								if (error.response.status === 404) {
+									// Display error
+									// console.error('Login failed:', error.response.data);
+							   setErrorMessage("Login failed. Please check your username/password/role and try again.")
+									setErrorOpen(true);
+								}
+							}
 							if (username === "" || password === "" || role === "") {
 								setErrorMessage("Login failed. Please ensure all fields are filled.");
 								setErrorOpen(true);
