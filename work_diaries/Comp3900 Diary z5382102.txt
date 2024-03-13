@@ -1,0 +1,11 @@
+Week 1 & 2: Group Formation 
+During these weeks, our team focused on forming cohesive groups and defining individual roles for the project. We conducted discussions to understand each member's strengths and interests, ensuring effective collaboration moving forward. 
+
+Week 3: Backend Technology Research and Proposal 
+This week was dedicated to researching backend technologies for our project. After thorough evaluation, we decided to use the Django framework with Postgres for our backend development. Django's rapid development, security features, and scalability align well with our project goals. Postgres offers reliability, advanced features, and compatibility with Django, providing a solid foundation for our application. We documented our findings and rationale in the project proposal. 
+
+Week 4: Project Initialization and Backend Setup 
+We initialized the project and established connections with the Postgres database. Backend tasks were distributed among team members, ensuring everyone had a role in the project, 3 in the back-end, 3 in the front-end. I took the lead in coding the authentication system of the backend, leveraging Django's built-in functionalities to streamline the process. 
+
+Week 5: Implementation of Authentication System 
+This week, I implemented the authentication system for the backend using a JWT token system. Users can register new accounts, log in, and receive a JWT token stored securely in their cookies. Upon logout, the token is invalidated, enhancing security. This authentication mechanism ensures secure access to our application.
