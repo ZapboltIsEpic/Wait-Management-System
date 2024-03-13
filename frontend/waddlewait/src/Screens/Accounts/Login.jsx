@@ -13,7 +13,18 @@ function Login() {
 	const navigate = useNavigate();
 
 	const navigateTo = (link) => {
-		navigate(link);
+		if (link === 'kitchen_staff') {
+			navigate('/kitchen/main');
+		}
+		else if (link === 'wait_staff') {
+			navigate('/waiter/main');
+		}
+		else if (link === 'manager') {
+			navigate('/manager/main');
+		}
+		else {
+			navigate(link);
+		}
 	}
 
 	const [role, setRole] = React.useState('');
@@ -54,20 +65,20 @@ function Login() {
 				</div>
 
 				<div className='input-role-container'>
-					<FormControl className="input-role">
-						<InputLabel>Role</InputLabel>
-						<Select
-							id="demo-simple-select"
-							value={role}
-							label="Role"
-							onChange={roleChange}
-						>
-							<MenuItem value={"/kitchen/main"}>Kitchen Staff</MenuItem>
-							<MenuItem value={"/waiter/main"}>Wait Staff</MenuItem>
-							<MenuItem value={"/manager/main"}>Manager</MenuItem>
-						</Select>
-					</FormControl>
-				</div>
+                    <FormControl className="input-role">
+                        <InputLabel>Role</InputLabel>
+                        <Select
+                            id="demo-simple-select"
+                            value={role}
+                            label="Role"
+                            onChange={roleChange}
+                        >
+                            <MenuItem value={"kitchen_staff"}>Kitchen Staff</MenuItem>
+                            <MenuItem value={"wait_staff"}>Wait Staff</MenuItem>
+                            <MenuItem value={"manager"}>Manager</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
 				<div className="button-container">
 					<Button 
 						variant="outlined"
@@ -83,7 +94,8 @@ function Login() {
 							try {
 								const response = await axios.post('http://127.0.0.1:8000/api/login', {
 									email: username,
-									password: password
+									password: password,
+									role: role
 								});
 
 								// Handle successful login, e.g., store token in local storage

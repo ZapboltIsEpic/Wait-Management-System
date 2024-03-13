@@ -106,9 +106,10 @@ function CreateStaffAccount() {
 									// Authentication goes here
 									try {
 										const response = await axios.post('http://127.0.0.1:8000/api/register', {
-									   name: name,
+									   		name: name,
 											email: username,
-											password: password
+											password: password,
+											role: role
 										});
 
 										// Handle successful register
