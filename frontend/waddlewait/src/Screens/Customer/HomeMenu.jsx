@@ -4,14 +4,23 @@ import {
   Typography,
   Box,
   Button,
-  // ,
   Card,
   CardActions,
   CardContent,
   CardMedia,
   Grid,
   Snackbar,
-  Alert
+  Alert,
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogActions,
+  Table, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  TableCell, 
+  TableBody
 } from '@mui/material';
 import {
   TabList,
@@ -25,7 +34,6 @@ import {
 
 
 function Item({ item }) {
-  console.log(item.source)
   const [showNotification, setShowNotification] = React.useState(false);
 
   const handleAddToCart = () => {
@@ -90,6 +98,66 @@ function Item({ item }) {
   );
 }
 
+function Cart({ showCart, setShowCart, setBill }) {
+  const handleBill = () => {
+    setShowCart(false)
+    setBill(true)
+  }
+
+  var items = itemExample()
+
+  return (
+    <Dialog 
+      open={showCart} 
+      onClose={() => setShowCart(false)} 
+      PaperProps={{
+        sx: {
+          width: '80%',
+          height: '80%'
+        },
+      }}
+    >
+      <DialogTitle>Your Order</DialogTitle>
+      <DialogContent>
+      <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Item Name</TableCell>
+                <TableCell align="right">Price</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {items.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell align="right">${item.price.toFixed(2)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </DialogContent>
+      <DialogActions>
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          width: '100%' 
+        }}
+        >
+          <Button onClick={handleBill} color='warning' variant="contained">
+            Bill
+          </Button>
+          <Button onClick={() => setShowCart(false)} color='warning'>
+            Close
+          </Button>
+        </Box>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 function itemExample() {
   var items = []
 
@@ -131,8 +199,15 @@ function cateExample() {
 function HomeMenu() {
   const [value, setValue] = React.useState(0)
   const [assistant, setAssistant] = React.useState(false);
+  const [showCart, setShowCart] = React.useState(false);
+  const [bill, setBill] = React.useState(false)
 
-  const handleChange = (event, newValue) => {
+  
+  const handleOpenCart = () => {
+    setShowCart(true);
+  };
+  
+  const handleChangeTab = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -160,23 +235,35 @@ function HomeMenu() {
               variant="filled"
               sx={{ width: '100%' }}
             >
-              Assistant is coming!
+              A waiter will be with you shortly!
             </Alert>
           </Snackbar>
           <Button
             variant="contained"
             color='warning'
             endIcon={<ShoppingCart />}
+            onClick={handleOpenCart}
             >
-            Cart 
+            Orders 
           </Button>
+          <Cart showCart={showCart} setShowCart={setShowCart} setBill={setBill} />
+          <Snackbar open={bill} autoHideDuration={3000} onClose={() => setBill(false)}>
+            <Alert
+              onClose={() => setBill(false)}
+              severity="info"
+              variant="filled"
+              sx={{ width: '100%' }}
+            >
+              A waiter is coming with the bill. Thank you for dining with us!
+            </Alert>
+          </Snackbar>
         </Box>
       </h1>
 
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList value={value} 
-            onChange={handleChange}
+            onChange={handleChangeTab}
             backgroundColor="warning"
           >
             {cates.map((cate, index) => (
