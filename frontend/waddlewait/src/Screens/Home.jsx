@@ -5,6 +5,11 @@ import Grid from '@mui/material/Grid';
 
 function Home() {
   const navigate = useNavigate();
+  
+  const navigateTo = (link) => {
+    navigate(link);
+  }
+
   return (
     <>
       <h1 >
