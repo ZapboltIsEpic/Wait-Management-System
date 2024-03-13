@@ -347,7 +347,7 @@
         "fields": {
             "table_in_use": false,
             "seats_max": 6,
-            "seats_in_use": 2,
+            "seats_in_use": 0,
             "order_id": 3,
             "is_near_window": true,
             "is_quiet_area": true
@@ -359,7 +359,31 @@
         "fields": {
             "table_in_use": false,
             "seats_max": 2,
-            "seats_in_use": 1,
+            "seats_in_use": 0,
+            "order_id": -1,
+            "is_near_window": false,
+            "is_quiet_area": false
+        }
+    },
+    {
+        "model": "waddlewait_app.table",
+        "pk": 3,
+        "fields": {
+            "table_in_use": false,
+            "seats_max": 2,
+            "seats_in_use": 0,
+            "order_id": -1,
+            "is_near_window": false,
+            "is_quiet_area": false
+        }
+    },
+    {
+        "model": "waddlewait_app.table",
+        "pk": 4,
+        "fields": {
+            "table_in_use": true,
+            "seats_max": 2,
+            "seats_in_use": 0,
             "order_id": -1,
             "is_near_window": false,
             "is_quiet_area": false

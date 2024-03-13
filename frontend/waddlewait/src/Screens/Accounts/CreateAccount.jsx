@@ -1,10 +1,12 @@
 import React from 'react';
 import './accounts.css'
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, InputLabel, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 function CreateStaffAccount() {
 	const navigate = useNavigate();
@@ -19,12 +21,17 @@ function CreateStaffAccount() {
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
-	const [passkey, setPasskey] = React.useState('');
 
 	// Dialog
 	const [error, setErrorOpen] = React.useState(false);
 	const [success, setSuccessOpen] = React.useState(false);
 	const [errorMessage, setErrorMessage] = React.useState(false);
+
+	const [role, setRole] = React.useState('');
+
+	const roleChange = (event) => {
+		setRole(event.target.value);
+	};
 
 	return (
 		<div className="account-screen">
@@ -64,14 +71,21 @@ function CreateStaffAccount() {
 						onChange={(e) => setConfirmPassword(e.target.value)}
 					/>
 				</div>
-				<div className="input-container">
-					<TextField
-						label="Authentication Passkey"
-						className="input-register"
-						type="password"
-						onChange={(e) => setPasskey(e.target.value)}
-					/>
-				</div>
+				<div className='input-role-container'>
+                    <FormControl className="input-role">
+                        <InputLabel>Role</InputLabel>
+                        <Select
+                            id="demo-simple-select"
+                            value={role}
+                            label="Role"
+                            onChange={roleChange}
+                        >
+                            <MenuItem value={"kitchen_staff"}>Kitchen Staff</MenuItem>
+                            <MenuItem value={"wait_staff"}>Wait Staff</MenuItem>
+                            <MenuItem value={"manager"}>Manager</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
 				<div className="create-options">
 					<div className="button-container">
 						<Button 
@@ -103,17 +117,20 @@ function CreateStaffAccount() {
 									} catch (error) {
 										console.log(error)
 										if (error.response.status === 404) {
-											// Display error
-											// console.error('Register failed:', error.response.data);
-									   setErrorMessage("Login failed. Please check your name/username/password and try again.")
+									   		setErrorMessage("Login failed. Please check your name/username/password and try again.")
 											setErrorOpen(true);
 										}
+										if (error.response.status === 400) {
+											setErrorMessage("Login failed. Email already in use.")
+											setErrorOpen(true);
+										}
+										return;
 									}
 									
 								// Temporary basic authentication
 								// Check that fields cannot be empty
-								if (password === "" || username === "" || passkey === "") {
-									setErrorMessage("Register Faild: Please ensure all fields are filled");
+								if (password === "" || username === "" || role === "") {
+									setErrorMessage("Register Failed: Please ensure all fields are filled");
 									setErrorOpen(true);
 									return;
 								}
@@ -125,7 +142,7 @@ function CreateStaffAccount() {
 									return;
 								}
 
-								console.log(username, passkey, password, confirmPassword)
+								console.log(username, role, password, confirmPassword)
 
 
 								setSuccessOpen(true);
