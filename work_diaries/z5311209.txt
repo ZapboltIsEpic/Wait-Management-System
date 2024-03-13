@@ -14,8 +14,7 @@ Wrote the description of frontend, including React, CSS and Material UI.
 Start coding. Working on customer(table selection, menu) and home page. Finished the table selection and home page.
 
 ### Week 5:
-Working on customer menu page.
-
+Working on customer menu page. Done the design interface of the menu and buttons(e.g. assistance, order and bill) using own example. 
 
 ### Week 6:
 
