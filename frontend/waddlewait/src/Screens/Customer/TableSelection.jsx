@@ -9,16 +9,29 @@ import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
+import axios from 'axios';
+
 
 function TableSelection() {
   const navigate = useNavigate();
-
   const [groupSize, setGroupSize] = React.useState('')
   const [tableNum, setTableNum] = React.useState('')
   const [showError, setShowError] = React.useState(false)
+  const [tableData, setTableData] = React.useState([]);
+  const [currentTables, setCurrentTables] = React.useState([]);
 
   const changeGroupSize = (event) => {
     setGroupSize(event.target.value);
+
+    // Change available tables
+    let filteredTables = [];
+    tableData.forEach(table => {
+      if (table.seats_max >= event.target.value) {
+        filteredTables.push(table);
+      }
+    })
+    setCurrentTables(filteredTables);
+
   };
 
   const changeTableNum = (event) => {
@@ -33,12 +46,37 @@ function TableSelection() {
     }
   };
 
+
+  React.useEffect(() => {
+    const fetchTables = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/tables');
+        const data = response.data;
+        let newData = [];
+        data.forEach(table => {
+          // Check if table is used
+          if (table.table_in_use === false) {
+            newData.push(table);
+          }
+
+        })
+        setTableData(newData);
+        setCurrentTables(newData);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchTables();
+  }, []);
+
   return (
     <>
       <h1 >
         Table Selection
       </h1>
-
+      
       <Grid container spacing={5} style={{ justifyContent: 'center' }}>
         <Grid item>
           <FormControl fullWidth>
@@ -57,22 +95,20 @@ function TableSelection() {
           <FormControl fullWidth>
             <InputLabel id="groupSizeLabel">Table Number</InputLabel>
             <Select 
-            labelId="tableNumField"
-            label="Table Number" 
-            type="number"
-            value={tableNum}
-            onChange={changeTableNum}
-            sx={{ width: 150 }}
+              labelId="tableNumField"
+              label="Table Number" 
+              type="number"
+              value={tableNum}
+              onChange={changeTableNum}
+              sx={{ width: 150 }}
             >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={6}>6</MenuItem>
-              <MenuItem value={7}>7</MenuItem>
-              <MenuItem value={8}>8</MenuItem>
-              <MenuItem value={9}>9</MenuItem>
+              {currentTables.length > 0 ? (
+                currentTables.map((item, index) => (
+                  <MenuItem key={index} value={item.table_number}>{item.table_number}</MenuItem>
+                ))
+              ) : (
+                <MenuItem value="">No tables available</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Grid>
@@ -82,6 +118,12 @@ function TableSelection() {
 
       <Button variant="contained" onClick={handleConfirm} className="custom-button" color='warning' >
         Confirm
+      </Button>
+
+      <br /><br />
+
+      <Button variant="outlined" onClick={() => navigate('/')} className="custom-button" color='warning' >
+        Back
       </Button>
 
       <br /><br />

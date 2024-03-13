@@ -1,0 +1,38 @@
+You should also include in this diary the following information (if applicable) about the project progress: 
+
+- what was planned for the period since the last work diary entry. 
+- what was finished. 
+- what were the main technical and non-technical obstacles and how they were overcome (or what was tried and did not work). 
+- what was not finished, why this happened, how this affects the overall project progress and what adjustments (if any) are needed so the success of the project is not endangered. 
+- what is planned for the next period (e.g., next week). 
+
+z5256944
+Jasmine Eliza Espejo
+
+Week 1:
+
+- Initial group formed (missing 1/2 members as group is only at 4). Jira set up completed
+- Project selected (Project 4 Waiting System)
+- Assigned to do preliminary brainstorming and ideas based on the project specifications
+
+Week 2:
+- Group finalised, team positions allocated
+- Separated work for group proposal, assigned making and defining user stories for kitchen staff
+- Completed user stories for kitchen staff, working on storyboarding for kitchen staff
+- for next week, aim to finish project proposal (decide on system architecture, specifically software/languages we'll be using for project)
+
+Week 3:
+- edited project background 
+- completed storyboards for kitchen staff flow
+- decided on backend and database framework: django and postgresql
+- completed project proposal, linked system features to the drawbacks within existing systems, wrote user stories for novel functionality, wrote description of external actors, wront sprint description and schedule
+
+Week 4
+- designed API links for user stories pertaining to menu
+- setup the backend on local environment (inclusive of github cloning, django and postgres database)
+- organised tasks for backend developers regarding user stories
+- assigned to work on backend for menu
+
+Week 5
+- created models, serializer, urls, views for menu viewing
+- linked with frontend how layout of menus should ideally look 

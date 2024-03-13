@@ -82,9 +82,6 @@ def addMenuItem(request, categoryName):
 
         if menu_item_serializer.is_valid():
             menu_item_serializer.save()
-            print(f"Added Menu Item - {data}")
             return Response(menu_item_serializer.data, status=status.HTTP_201_CREATED)
         
-        print(f"Error adding Menu Item - {data}")
-        print(menu_item_serializer.errors)
         return Response(menu_item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
