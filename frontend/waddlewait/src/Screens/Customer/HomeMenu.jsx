@@ -32,10 +32,13 @@ import {
   ShoppingCart
 } from '@mui/icons-material';
 
+var cart = []
+
 function Item({ item }) {
   const [showNotification, setShowNotification] = React.useState(false);
 
   const handleAddToCart = () => {
+    cart.push(item)
     setShowNotification(true);
     setTimeout(() => {
       setShowNotification(false);
@@ -126,8 +129,7 @@ function Cart({ showCart, setShowCart, setBill }) {
     setBill(true)
   }
 
-  var items = itemExample()
-
+  var items = cart
   return (
     <Dialog 
       open={showCart} 
@@ -238,7 +240,7 @@ function HomeMenu() {
   const [showCart, setShowCart] = React.useState(false);
   const [bill, setBill] = React.useState(false)
 
-  
+
   const handleOpenCart = () => {
     setShowCart(true);
   };
