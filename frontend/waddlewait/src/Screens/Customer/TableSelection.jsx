@@ -9,23 +9,29 @@ import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
+import axios from 'axios';
 
-function tableExample() {
-  var tables = [1,2,3,4,5,6,7,8,9]
-
-  return tables
-}
 
 function TableSelection() {
   const navigate = useNavigate();
   const [groupSize, setGroupSize] = React.useState('')
   const [tableNum, setTableNum] = React.useState('')
   const [showError, setShowError] = React.useState(false)
-
-  const tables = tableExample()
+  const [tableData, setTableData] = React.useState([]);
+  const [currentTables, setCurrentTables] = React.useState([]);
 
   const changeGroupSize = (event) => {
     setGroupSize(event.target.value);
+
+    // Change available tables
+    let filteredTables = [];
+    tableData.forEach(table => {
+      if (table.seats_max >= event.target.value) {
+        filteredTables.push(table);
+      }
+    })
+    setCurrentTables(filteredTables);
+
   };
 
   const changeTableNum = (event) => {
@@ -39,6 +45,31 @@ function TableSelection() {
       setShowError(true);
     }
   };
+
+
+  React.useEffect(() => {
+    const fetchTables = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/tables');
+        const data = response.data;
+        let newData = [];
+        data.forEach(table => {
+          // Check if table is used
+          if (table.table_in_use === false) {
+            newData.push(table);
+          }
+
+        })
+        setTableData(newData);
+        setCurrentTables(newData);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchTables();
+  }, []);
 
   return (
     <>
@@ -64,16 +95,20 @@ function TableSelection() {
           <FormControl fullWidth>
             <InputLabel id="groupSizeLabel">Table Number</InputLabel>
             <Select 
-            labelId="tableNumField"
-            label="Table Number" 
-            type="number"
-            value={tableNum}
-            onChange={changeTableNum}
-            sx={{ width: 150 }}
+              labelId="tableNumField"
+              label="Table Number" 
+              type="number"
+              value={tableNum}
+              onChange={changeTableNum}
+              sx={{ width: 150 }}
             >
-              {tables.map((item, index) => (
-                <MenuItem value={item}>{item}</MenuItem>
-              ))}
+              {currentTables.length > 0 ? (
+                currentTables.map((item, index) => (
+                  <MenuItem key={index} value={item.table_number}>{item.table_number}</MenuItem>
+                ))
+              ) : (
+                <MenuItem value="">No tables available</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Grid>
