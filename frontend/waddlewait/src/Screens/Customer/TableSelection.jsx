@@ -87,6 +87,12 @@ function TableSelection() {
 
       <br /><br />
 
+      <Button variant="outlined" onClick={() => navigate('/')} className="custom-button" color='warning' >
+        Back
+      </Button>
+
+      <br /><br />
+
       {showError && (
         <>
           <Alert severity="error" sx={{ width: '100%' }}>

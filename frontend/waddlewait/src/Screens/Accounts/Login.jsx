@@ -13,7 +13,18 @@ function Login() {
 	const navigate = useNavigate();
 
 	const navigateTo = (link) => {
-		navigate(link);
+		if (link === 'kitchen_staff') {
+			navigate('/kitchen/main');
+		}
+		else if (link === 'wait_staff') {
+			navigate('/waiter/main');
+		}
+		else if (link === 'manager') {
+			navigate('/manager/main');
+		}
+		else {
+			navigate(link);
+		}
 	}
 
 	const [role, setRole] = React.useState('');
@@ -54,29 +65,37 @@ function Login() {
 				</div>
 
 				<div className='input-role-container'>
-					<FormControl className="input-role">
-						<InputLabel>Role</InputLabel>
-						<Select
-							id="demo-simple-select"
-							value={role}
-							label="Role"
-							onChange={roleChange}
-						>
-							<MenuItem value={"/kitchen/main"}>Kitchen Staff</MenuItem>
-							<MenuItem value={"/waiter/main"}>Wait Staff</MenuItem>
-							<MenuItem value={"/manager/main"}>Manager</MenuItem>
-						</Select>
-					</FormControl>
-				</div>
+                    <FormControl className="input-role">
+                        <InputLabel>Role</InputLabel>
+                        <Select
+                            id="demo-simple-select"
+                            value={role}
+                            label="Role"
+                            onChange={roleChange}
+                        >
+                            <MenuItem value={"kitchen_staff"}>Kitchen Staff</MenuItem>
+                            <MenuItem value={"wait_staff"}>Wait Staff</MenuItem>
+                            <MenuItem value={"manager"}>Manager</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
 				<div className="button-container">
 					<Button 
 						variant="outlined"
 						onClick={async () => {
 							// Authentication goes here
+
+							if (username === "" || password === "" || role === "") {
+								setErrorMessage("Login failed. Please ensure all fields are filled.");
+								setErrorOpen(true);
+								return;
+							} 
+
 							try {
 								const response = await axios.post('http://127.0.0.1:8000/api/login', {
 									email: username,
-									password: password
+									password: password,
+									role: role
 								});
 
 								// Handle successful login, e.g., store token in local storage
@@ -85,18 +104,9 @@ function Login() {
 								navigateTo(role);
 							} catch (error) {
 								console.log(error)
-								if (error.response.status === 404) {
-									// Display error
-									// console.error('Login failed:', error.response.data);
-							   setErrorMessage("Login failed. Please check your username/password/role and try again.")
-									setErrorOpen(true);
-								}
-							}
-							if (username === "" || password === "" || role === "") {
-								setErrorMessage("Login failed. Please ensure all fields are filled.");
+								setErrorMessage("Login failed. Please check your username/password/role and try again.")
 								setErrorOpen(true);
-							} else {
-								navigateTo(role);
+								return;
 							}
 						}}
 						color='warning'
@@ -125,6 +135,16 @@ function Login() {
 							}}
 						>
 							Create account
+						</p>
+					</div>
+					<div className="login-help-link-container">
+						<p 
+							className="login-help-link-text"
+							onClick={() => {
+								navigateTo('/');
+							}}
+						>
+							Back
 						</p>
 					</div>
 				</div>
