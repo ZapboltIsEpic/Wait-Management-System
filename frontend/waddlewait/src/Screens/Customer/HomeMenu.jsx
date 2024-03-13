@@ -113,8 +113,8 @@ function Items({ items, cateId }) {
   return (
     <>
       <Grid container spacing={4} justifyContent="center" alignItems="center">
-        {cateItems.map((item, index) => (
-          <Grid item key={index}>
+        {cateItems.map((item) => (
+          <Grid item key={item.id}>
             <Item item={item} />
           </Grid>
         ))}
@@ -152,8 +152,8 @@ function Cart({ showCart, setShowCart, setBill }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((item, index) => (
-                <TableRow key={index}>
+              {items.map((item) => (
+                <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
                   <TableCell align="right">${item.price.toFixed(2)}</TableCell>
                 </TableRow>
@@ -187,6 +187,7 @@ function itemExample() {
 
   // {"id", "name", "description", "price",”image” "category": { "id", "name"} } 
   const item0 = {};
+  item0.id = 0
   item0.name = "Easy Appetizers"
   item0.image = "https://insanelygoodrecipes.com/wp-content/uploads/2021/05/antipasto-skewers-with-basil-1.jpg"
   item0.description = "description 0description 0description 0description 0description 0description 0description 0description "
@@ -196,6 +197,7 @@ function itemExample() {
   
 
   const item1 = {};
+  item1.id = 1
   item1.name = "Curry"
   item1.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item1.description = "description 1description 1description 1description 1description 1description 1description 1description "
@@ -204,6 +206,7 @@ function itemExample() {
   items.push(item1)
 
   const item2 = {};
+  item2.id = 2
   item2.name = "Curry Chicken"
   item2.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item2.description = "description 2"
@@ -212,6 +215,7 @@ function itemExample() {
   items.push(item2)
 
   const item3 = {};
+  item3.id = 3
   item3.name = "Curry Beef"
   item3.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item3.description = "description 3"
@@ -220,6 +224,7 @@ function itemExample() {
   items.push(item3)
 
   const item4 = {};
+  item4.id = 4
   item4.name = "Curry Seafood"
   item4.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item4.description = "description 4"
@@ -228,6 +233,7 @@ function itemExample() {
   items.push(item4)
 
   const item5 = {};
+  item5.id = 5
   item5.name = "Ice Cream"
   item5.image = "https://www.allrecipes.com/thmb/pH8hoFfytcOT9XVK1DSmxv3L0OU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/140877-easy-eggless-strawberry-ice-cream-ddmfs-3x4-1-092e4d11b59049c8b3843014ea3c57f2.jpg"
   item5.description = "description 5"
@@ -239,7 +245,29 @@ function itemExample() {
 }
 
 function cateExample() {
-  return ['Appetizers', 'Mains', 'Desserts', 'Drinks']
+  var cate = []
+
+  var cate0 = {}
+  cate0.id = 0
+  cate0.name = "Appetizers"
+  cate.push(cate0)
+
+  var cate1 = {}
+  cate1.id = 1
+  cate1.name = "Mains"
+  cate.push(cate1)
+
+  var cate2 = {}
+  cate2.id = 2
+  cate2.name = "Desserts"
+  cate.push(cate2)
+
+  var cate3 = {}
+  cate3.id = 3
+  cate3.name = "Drinks"
+  cate.push(cate3)
+  
+  return cate
 }
 
 function HomeMenu() {
@@ -312,14 +340,14 @@ function HomeMenu() {
             onChange={handleChangeTab}
             backgroundcolor="warning"
           >
-            {cates.map((cate, index) => (
-              <Tab label={cate} value={index} />
+            {cates.map((cate) => (
+              <Tab key={cate.id} label={cate.name} value={cate.id} />
             ))}
           </TabList>
         </Box>
-        {cates.map((cate, index) => (
-          <TabPanel value={index} key={index}>
-            <Items items={items} cateId={index} />
+        {cates.map((cate) => (
+          <TabPanel value={cate.id} key={cate.id}>
+            <Items items={items} cateId={cate.id} />
           </TabPanel>
         ))}
 
