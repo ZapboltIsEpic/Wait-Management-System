@@ -19,7 +19,8 @@ import {
   TabContext
 } from '@mui/lab';
 import {
-  ShoppingCart 
+  NotificationImportant,
+  ShoppingCart
 } from '@mui/icons-material';
 
 
@@ -129,6 +130,7 @@ function cateExample() {
 
 function HomeMenu() {
   const [value, setValue] = React.useState(0)
+  const [assistant, setAssistant] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -142,7 +144,25 @@ function HomeMenu() {
       <h1>
         Welcome! Please select your meal!
 
-        <Box textAlign='auto'>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginX: 2}}>
+          <Button
+            variant="contained"
+            color='warning'
+            endIcon={<NotificationImportant />}
+            onClick={() => setAssistant(true)}
+            >
+            Assistant 
+          </Button>
+          <Snackbar open={assistant} autoHideDuration={3000} onClose={() => setAssistant(false)}>
+            <Alert
+              onClose={() => setAssistant(false)}
+              severity="info"
+              variant="filled"
+              sx={{ width: '100%' }}
+            >
+              Assistant is coming!
+            </Alert>
+          </Snackbar>
           <Button
             variant="contained"
             color='warning'
