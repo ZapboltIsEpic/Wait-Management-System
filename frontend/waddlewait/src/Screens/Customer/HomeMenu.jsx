@@ -334,19 +334,19 @@ function HomeMenu() {
         </Box>
       </h1>
 
-      <TabContext value={value}>
+      <TabContext value={String(value)}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList value={value} 
+          <TabList value={String(value)} 
             onChange={handleChangeTab}
             backgroundcolor="warning"
           >
             {cates.map((cate) => (
-              <Tab key={cate.id} label={cate.name} value={cate.id} />
+              <Tab key={cate.id} label={cate.name} value={String(cate.id)} />
             ))}
           </TabList>
         </Box>
         {cates.map((cate) => (
-          <TabPanel value={cate.id} key={cate.id}>
+          <TabPanel value={String(cate.id)} key={cate.id}>
             <Items items={items} cateId={cate.id} />
           </TabPanel>
         ))}
