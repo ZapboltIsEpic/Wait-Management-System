@@ -10,7 +10,8 @@ import {
   CardContent,
   CardMedia,
   Grid,
-  Snackbar
+  Snackbar,
+  Alert
 } from '@mui/material';
 import {
   TabList,
@@ -71,11 +72,19 @@ function Item({ item }) {
       </Box>
       </CardActions>
       <Snackbar
-      open={showNotification}
-      message="Item added to cart"
-      autoHideDuration={3000} // Hide notification after 3 seconds
-      onClose={() => setShowNotification(false)}
-      />
+        open={showNotification}
+        autoHideDuration={2000}
+        onClose={() => setShowNotification(false)}
+      >
+        <Alert
+          onClose={() => setShowNotification(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {`${item.name} added to cart`}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 }
@@ -85,28 +94,28 @@ function itemExample() {
 
   const item1 = {};
   item1.name = "Curry"
-  item1.source = "/Screens/imgs/curry.png"
+  item1.source = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item1.description = "description 1description 1description 1description 1description 1description 1description 1description "
   item1.price = 15.95
   items.push(item1)
 
   const item2 = {};
   item2.name = "CurryChicken"
-  item2.source = ""
+  item2.source = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item2.description = "description 2"
   item2.price = 15
   items.push(item2)
 
   const item3 = {};
   item3.name = "CurryBeef"
-  item3.source = ""
+  item3.source = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item3.description = "description 3"
   item3.price = 15
   items.push(item3)
 
   const item4 = {};
   item4.name = "CurryBeef"
-  item4.source = ""
+  item4.source = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item4.description = "description 4"
   item4.price = 15
   items.push(item4)
@@ -148,6 +157,7 @@ function HomeMenu() {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList value={value} 
             onChange={handleChange}
+            backgroundColor="warning"
           >
             {cates.map((cate, index) => (
               <Tab label={cate} value={index} />
@@ -156,7 +166,7 @@ function HomeMenu() {
         </Box>
         {cates.map((cate, cIndex) => (
           <TabPanel value={cIndex} key={cIndex}>
-            <Grid container spacing={2}>
+            <Grid container spacing={4} justifyContent="center" alignItems="center">
               {items.map((item, index) => (
                 <Grid item key={index}>
                   <Item item={item} />
