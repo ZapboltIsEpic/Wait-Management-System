@@ -4,20 +4,24 @@ import {
   Typography,
   Box,
   Button,
-  // ShoppingCartIcon,
+  // ,
   Card,
   CardActions,
   CardContent,
-  CardMedia
+  CardMedia,
+  Grid
 } from '@mui/material';
 import {
   TabList,
   TabPanel,
   TabContext
 } from '@mui/lab';
+import {
+  ShoppingCart 
+} from '@mui/icons-material';
 
 
-function Items({ item }) {
+function Item({ item }) {
   return (
     <Card sx={{ width: 350, height: 300 }}>
       <CardMedia
@@ -30,7 +34,7 @@ function Items({ item }) {
           {item.name}
         </Typography>
         <Typography color="text.secondary" sx={{ height: 50 }} >
-          Ingredient of Curry
+          {item.description}
         </Typography>
       </CardContent>
       <CardActions>
@@ -51,17 +55,26 @@ function itemExample() {
   const item1 = {};
   item1.name = "Curry"
   item1.source = "/Users/a040/Desktop/COMP3900/capstone-project-3900h11a_chunkypenguins/frontend/waddlewait/src/Screens/imgs/curry.png"
+  item1.description = "description 1"
   items.push(item1)
 
   const item2 = {};
   item2.name = "CurryChicken"
   item2.source = "/Users/a040/Desktop/COMP3900/capstone-project-3900h11a_chunkypenguins/frontend/waddlewait/src/Screens/imgs/curry.png"
+  item2.description = "description 2"
   items.push(item2)
 
   const item3 = {};
   item3.name = "CurryBeef"
   item3.source = "/Users/a040/Desktop/COMP3900/capstone-project-3900h11a_chunkypenguins/frontend/waddlewait/src/Screens/imgs/curry.png"
+  item3.description = "description 3"
   items.push(item3)
+
+  const item4 = {};
+  item4.name = "CurryBeef"
+  item4.source = "/Users/a040/Desktop/COMP4900/capstone-project-4900h11a_chunkypenguins/frontend/waddlewait/src/Screens/imgs/curry.png"
+  item4.description = "description 4"
+  items.push(item4)
 
   return items
 }
@@ -88,9 +101,9 @@ function HomeMenu() {
         <Button
           variant="contained"
           color='warning'
-          // endIcon={<ShoppingCartIcon />}
         >
-          Cart
+          Cart 
+          <ShoppingCart />
         </Button>
       </h1>
 
@@ -105,10 +118,14 @@ function HomeMenu() {
           </TabList>
         </Box>
         {cates.map((cate, cIndex) => (
-          <TabPanel value={value} index={cIndex}>
-            {items.map((item, index) => (
-              <Items item={items[index]} />
-            ))}
+          <TabPanel value={cIndex} key={cIndex}>
+            <Grid container spacing={2}>
+              {items.map((item, index) => (
+                <Grid item key={index}>
+                  <Item item={item} />
+                </Grid>
+              ))}
+            </Grid>
           </TabPanel>
         ))}
       </TabContext>
