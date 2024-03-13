@@ -88,6 +88,16 @@ function Login() {
 							Create account
 						</p>
 					</div>
+					<div className="login-help-link-container">
+						<p 
+							className="login-help-link-text"
+							onClick={() => {
+								navigateTo('/');
+							}}
+						>
+							Back
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>

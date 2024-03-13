@@ -16,7 +16,7 @@ function CreateStaffAccount() {
 	// Input fields
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
+    const [confirmPassword, setConfirmPassword] = React.useState('');
 	const [passkey, setPasskey] = React.useState('');
 
 	// Dialog
@@ -92,6 +92,8 @@ function CreateStaffAccount() {
 								}
 
 								console.log(username, passkey, password, confirmPassword)
+
+
 								setSuccessOpen(true);
 							}}
 							className="button"
