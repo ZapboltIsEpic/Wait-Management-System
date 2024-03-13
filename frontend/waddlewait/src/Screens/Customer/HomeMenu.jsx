@@ -1,10 +1,6 @@
 import React from 'react';
 import {
-  Tabs,
   Tab,
-  TabContext,
-  TabList,
-  TabPanel,
   Typography,
   Box,
   Button,
@@ -14,7 +10,11 @@ import {
   CardContent,
   CardMedia
 } from '@mui/material';
-import PropTypes from 'prop-types';
+import {
+  TabList,
+  TabPanel,
+  TabContext
+} from '@mui/lab';
 
 
 function Items({ item }) {
@@ -43,39 +43,6 @@ function Items({ item }) {
       </CardActions>
     </Card>
   );
-}
-
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-CustomTabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
 }
 
 function itemExample() {
@@ -127,35 +94,23 @@ function HomeMenu() {
         </Button>
       </h1>
 
-      {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} 
-          onChange={handleChange}
-        >
-          {cates.map((cate, index) => (
-            <Tab label={cate} {...a11yProps(index)} />
-          ))}
-        </Tabs>
-      </Box>
-      {cates.map((cate, cIndex) => (
-        <CustomTabPanel value={value} index={cIndex}>
-          {items.map((item, index) => (
-            <Items item={items[index]} />
-          ))}
-        </CustomTabPanel>
-      ))} */}
-
-
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Item One" value="1" />
-            <Tab label="Item Two" value="2" />
-            <Tab label="Item Three" value="3" />
+          <TabList value={value} 
+            onChange={handleChange}
+          >
+            {cates.map((cate, index) => (
+              <Tab label={cate} value={index} />
+            ))}
           </TabList>
         </Box>
-        <TabPanel value="1">Item One</TabPanel>
-        <TabPanel value="2">Item Two</TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
+        {cates.map((cate, cIndex) => (
+          <TabPanel value={value} index={cIndex}>
+            {items.map((item, index) => (
+              <Items item={items[index]} />
+            ))}
+          </TabPanel>
+        ))}
       </TabContext>
     </>
   );
