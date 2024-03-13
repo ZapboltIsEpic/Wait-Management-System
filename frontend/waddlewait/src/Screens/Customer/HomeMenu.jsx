@@ -186,13 +186,21 @@ function itemExample() {
   var items = []
 
   // {"id", "name", "description", "price",”image” "category": { "id", "name"} } 
+  const item0 = {};
+  item0.name = "Easy Appetizers"
+  item0.image = "https://insanelygoodrecipes.com/wp-content/uploads/2021/05/antipasto-skewers-with-basil-1.jpg"
+  item0.description = "description 0description 0description 0description 0description 0description 0description 0description "
+  item0.price = 5.95
+  item0.category = { "id":0, "name":"Appetizers"}
+  items.push(item0)
+  
 
   const item1 = {};
   item1.name = "Curry"
   item1.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item1.description = "description 1description 1description 1description 1description 1description 1description 1description "
   item1.price = 15.95
-  item1.category = { "id":0, "name":"Appetizers"}
+  item1.category = { "id":1, "name":"Mains"}
   items.push(item1)
 
   const item2 = {};
@@ -200,7 +208,7 @@ function itemExample() {
   item2.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item2.description = "description 2"
   item2.price = 15.95
-  item2.category = { "id":0, "name":"Appetizers"}
+  item2.category = { "id":1, "name":"Mains"}
   items.push(item2)
 
   const item3 = {};
@@ -208,7 +216,7 @@ function itemExample() {
   item3.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item3.description = "description 3"
   item3.price = 15.95
-  item3.category = { "id":0, "name":"Appetizers"}
+  item3.category = { "id":1, "name":"Mains"}
   items.push(item3)
 
   const item4 = {};
@@ -216,15 +224,15 @@ function itemExample() {
   item4.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
   item4.description = "description 4"
   item4.price = 18.95
-  item4.category = { "id":0, "name":"Appetizers"}
+  item4.category = { "id":1, "name":"Mains"}
   items.push(item4)
 
   const item5 = {};
   item5.name = "Ice Cream"
-  item5.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
+  item5.image = "https://www.allrecipes.com/thmb/pH8hoFfytcOT9XVK1DSmxv3L0OU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/140877-easy-eggless-strawberry-ice-cream-ddmfs-3x4-1-092e4d11b59049c8b3843014ea3c57f2.jpg"
   item5.description = "description 5"
   item5.price = 15
-  item5.category = { "id":1, "name":"Mains"}
+  item5.category = { "id":2, "name":"Desserts"}
   items.push(item5)
 
   return items
@@ -285,7 +293,7 @@ function HomeMenu() {
             Orders 
           </Button>
           <Cart showCart={showCart} setShowCart={setShowCart} setBill={setBill} />
-          <Snackbar open={bill} autoHideDuration={3000} onClose={() => setBill(false)}>
+          <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
             <Alert
               onClose={() => setBill(false)}
               severity="info"
