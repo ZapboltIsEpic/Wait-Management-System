@@ -31,6 +31,7 @@ import {
   NotificationImportant,
   ShoppingCart
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 var cart = []
 
@@ -176,6 +177,7 @@ function Cart({ showCart, setShowCart, setBill }) {
           <Button onClick={() => setShowCart(false)} color='warning'>
             Close
           </Button>
+          
         </Box>
       </DialogActions>
     </Dialog>
@@ -288,6 +290,13 @@ function HomeMenu() {
   var items = itemExample()
   var cates = cateExample()
 
+
+  const navigate = useNavigate();
+
+	const navigateTo = (link) => {
+		navigate(link);
+	}
+
   return (
     <>
       <h1>
@@ -312,6 +321,18 @@ function HomeMenu() {
               A waiter will be with you shortly!
             </Alert>
           </Snackbar>
+          <div>
+            <Button 
+              variant="outlined"
+              onClick={() => {
+                navigateTo('/');
+              }}
+              className="button"
+              color='warning'
+            >
+              Exit
+            </Button>
+          </div>
           <Button
             variant="contained"
             color='warning'

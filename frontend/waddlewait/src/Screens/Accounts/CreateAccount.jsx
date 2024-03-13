@@ -104,6 +104,20 @@ function CreateStaffAccount() {
 							variant="outlined"
 							onClick={async () => {
 									// Authentication goes here
+									// Check that fields cannot be empty
+									if (password === "" || username === "" || role === "") {
+										setErrorMessage("Register Failed: Please ensure all fields are filled");
+										setErrorOpen(true);
+										return;
+									}
+									
+									// Passwords are same
+									if (password !== confirmPassword) {
+										setErrorMessage("Register Failed: Password/Confirm Password are not the same.")
+										setErrorOpen(true);
+										return;
+									}
+
 									try {
 										const response = await axios.post('http://127.0.0.1:8000/api/register', {
 									   		name: name,
@@ -129,19 +143,8 @@ function CreateStaffAccount() {
 									}
 									
 								// Temporary basic authentication
-								// Check that fields cannot be empty
-								if (password === "" || username === "" || role === "") {
-									setErrorMessage("Register Failed: Please ensure all fields are filled");
-									setErrorOpen(true);
-									return;
-								}
 
 								// Check Passwords are the same
-								if (password !== confirmPassword) {
-									setErrorMessage("Register Failed: Password/Confirm Password are not the same.")
-									setErrorOpen(true);
-									return;
-								}
 
 								console.log(username, role, password, confirmPassword)
 

@@ -82,6 +82,16 @@ function Login() {
 				<div className="button-container">
 					<Button 
 						variant="outlined"
+						onClick={() => {
+							navigateTo('/');
+						}}
+						className="button"
+						color='warning'
+					>
+						Back
+					</Button>
+					<Button 
+						variant="outlined"
 						onClick={async () => {
 							// Authentication goes here
 
@@ -135,16 +145,6 @@ function Login() {
 							}}
 						>
 							Create account
-						</p>
-					</div>
-					<div className="login-help-link-container">
-						<p 
-							className="login-help-link-text"
-							onClick={() => {
-								navigateTo('/');
-							}}
-						>
-							Back
 						</p>
 					</div>
 				</div>
