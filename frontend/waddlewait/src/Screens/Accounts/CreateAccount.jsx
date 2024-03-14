@@ -105,7 +105,7 @@ function CreateStaffAccount() {
 							onClick={async () => {
 									// Authentication goes here
 									// Check that fields cannot be empty
-									if (password === "" || username === "" || role === "") {
+									if (name === ""  || password === "" || username === "" || role === "") {
 										setErrorMessage("Register Failed: Please ensure all fields are filled");
 										setErrorOpen(true);
 										return;
@@ -117,7 +117,7 @@ function CreateStaffAccount() {
 										setErrorOpen(true);
 										return;
 									}
-
+									console.log("hi")
 									try {
 										const response = await axios.post('http://127.0.0.1:8000/api/register', {
 									   		name: name,
@@ -146,7 +146,6 @@ function CreateStaffAccount() {
 
 								// Check Passwords are the same
 
-								console.log(username, role, password, confirmPassword)
 
 
 								setSuccessOpen(true);

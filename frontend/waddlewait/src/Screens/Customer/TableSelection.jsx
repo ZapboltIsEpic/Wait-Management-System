@@ -17,12 +17,14 @@ function TableSelection() {
   const [groupSize, setGroupSize] = React.useState('')
   const [tableNum, setTableNum] = React.useState('')
   const [showError, setShowError] = React.useState(false)
+  const [errorMessage, setErrorMessage] = React.useState("")
   const [tableData, setTableData] = React.useState([]);
   const [currentTables, setCurrentTables] = React.useState([]);
 
   const changeGroupSize = (event) => {
     setGroupSize(event.target.value);
-
+    setTableNum('');
+    setShowError(false);
     // Change available tables
     let filteredTables = [];
     tableData.forEach(table => {
@@ -42,6 +44,11 @@ function TableSelection() {
     if (tableNum && groupSize && groupSize > 0) {
       navigate('/customer/home-menu')
     } else {
+      if (groupSize <= 0) {
+        setErrorMessage("Please have a group size of at least 1.")
+      } else if (tableNum === '') {
+        setErrorMessage("Please select a Table Number.")
+      }
       setShowError(true);
     }
   };
@@ -131,7 +138,7 @@ function TableSelection() {
       {showError && (
         <>
           <Alert severity="error" sx={{ width: '100%' }}>
-            Please fill in the 'Group Size' and 'Table Number' correctly.
+            {errorMessage}
           </Alert>
         </>
       )}
