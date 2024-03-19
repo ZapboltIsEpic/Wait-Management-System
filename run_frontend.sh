@@ -8,10 +8,10 @@ cd frontend/waddlewait/
 
 # Ensure files are up to date
 echo "Running installation..."
-npm install || { echo "Migration failed"; exit 1; }
+npm install || { echo "'npm install' failed"; exit 1; }
 
 # Run frontend 
 
 echo "Starting server..."
-npm run start || { echo "Migration failed"; exit 1; }
+npm run start || { echo "'npm run start' failed"; exit 1; }
 
