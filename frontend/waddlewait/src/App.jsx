@@ -11,6 +11,8 @@ import WaiterMain from './Screens/Waiter/WaiterMain';
 import ManagerMain from './Screens/Manager/ManagerMain';
 import CreateStaffAccount from './Screens/Accounts/CreateAccount';
 import KitchenOrderRequests from './Screens/Kitchen/KitchenOrderRequests';
+import WaiterOrderRequests from './Screens/Waiter/WaiterOrderRequests';
+import WaiterAssistanceRequests from './Screens/Waiter/WaiterAssistanceRequests';
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
 
         {/* Waiter Routes */}
         <Route path="/waiter/main" element={<WaiterMain/>} />
+        <Route path="/waiter/order-requests" element={<WaiterOrderRequests/>} />
+        <Route path="/waiter/assistance-requests" element={<WaiterAssistanceRequests/>} />
 
         {/* Manager Routes */}
         <Route path="/manager/main" element={<ManagerMain/>} />
