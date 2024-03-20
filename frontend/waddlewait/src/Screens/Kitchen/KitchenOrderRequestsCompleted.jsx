@@ -7,18 +7,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import './kitchen.css'
 
 function MakeOrder() {
-  const [status, setStatus] = useState("Not Started");
-
-  const handleStatus = (event) => {
-    setStatus(event.target.value);
-  };
 
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
@@ -36,37 +27,12 @@ function MakeOrder() {
         <Typography color="text.secondary">
           Notes
         </Typography>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Status</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={status}
-            label="status"
-            onChange={handleStatus}
-          >
-            <MenuItem value={"Not Started"}>Not Started</MenuItem>
-            <MenuItem value={"Preparing"}>Preparing</MenuItem>
-            <MenuItem value={"Ready"}>Ready</MenuItem>
-          </Select>
-        </FormControl>
-        {status === 'Ready' && (
-        <Button 
-          variant="contained" 
-          color="primary"
-          onClick={() => {
-            
-          }}
-        >
-          Close
-        </Button>
-      )}
       </CardContent>
     </Card>
   )
 }
 
-function KitchenOrderRequests() {
+function KitchenOrderRequestsCompleted() {
   const [orderRequests, setOrderRequests] = useState([]);
   
 	const [open, setOpen] = React.useState(false);
@@ -99,7 +65,7 @@ function KitchenOrderRequests() {
         </Drawer>
         <Button onClick={toggleSignOut}>Sign Out</Button>
       </div>
-      <h1>Order Requests</h1>
+      <h1>Completed Order Requests</h1>
       <div className="kitchen-orders-container">
         {MakeOrder()}
         {MakeOrder()}
@@ -113,4 +79,4 @@ function KitchenOrderRequests() {
   );
 }
 
-export default KitchenOrderRequests;
+export default KitchenOrderRequestsCompleted;
