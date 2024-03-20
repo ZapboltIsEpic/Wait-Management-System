@@ -27,3 +27,13 @@ Week 4:
 - Created Login and Create account basic layout
 - Created ForgotPassword layout
 - Fixed main branch with merging 
+
+Week 5:
+- Ran demo
+- Took meeting notes/ran meeting
+- Gave feedback for retrospective A
+- Submitted demo vide and retrospective
+- Fixed bugs from demo
+
+Week 7:
+- Wrote up Jira issues (Front end Interface) for Frontend team
