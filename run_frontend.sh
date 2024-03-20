@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 set -e
 # Navigate to root of frontend
 # Note: Relies on npm
@@ -13,5 +12,4 @@ npm install || { echo "'npm install' failed"; exit 1; }
 # Run frontend 
 
 echo "Starting server..."
-npm run start || { echo "'npm run start' failed"; exit 1; }
-
+npm run start
