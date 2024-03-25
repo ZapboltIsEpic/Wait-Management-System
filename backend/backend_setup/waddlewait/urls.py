@@ -24,5 +24,7 @@ urlpatterns = [
     path('api/', include('users.urls')),
     path('tables/', views.table_list),
     path('table/<int:table_number>', views.table_detail),
-    path('menu/', include('waddlewaitMenu.urls'))
+    path('menu/', include('waddlewaitMenu.urls')),
+    path('customer/', include('customer.urls')),
+    # path('orders/', include('orders.urls')),
 ]

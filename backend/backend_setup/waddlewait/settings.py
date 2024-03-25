@@ -41,12 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'waddlewait_app',
     # if the frontend have different port, it still works using corsheaders
     'corsheaders',
     'rest_framework',
     'users',
-    'waddlewaitMenu'
+    'waddlewaitMenu',
+    'customer',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +83,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'waddlewait.wsgi.application'
 
+ASGI_APPLICATION = 'waddlewait.asgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -91,7 +96,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': '127.0.0.1', 
-        'PORT': '8080',
+        'PORT': '5432',
     }
 }
 
