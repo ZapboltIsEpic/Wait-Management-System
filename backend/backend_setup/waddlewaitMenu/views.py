@@ -43,7 +43,7 @@ def menuItemsByCategory(request, categoryName):
 
             return JsonResponse(data)
         except:
-             return JsonResponse({'message': 'Menu category does not exist'}, status=404)
+            return JsonResponse({'message': 'Menu category does not exist'}, status=404)
 
     
     if request.method == 'POST':
