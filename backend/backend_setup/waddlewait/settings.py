@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'channels',
     'waddlewait_app',
     # if the frontend have different port, it still works using corsheaders
     'corsheaders',
@@ -82,8 +81,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'waddlewait.wsgi.application'
-
-ASGI_APPLICATION = 'waddlewait.asgi.application'
 
 
 # Database
