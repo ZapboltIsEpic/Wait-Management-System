@@ -47,8 +47,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'waddlewaitMenu',
-    'customer',
     'orders',
+    'assistance',
+    'customer',
+    'kitchenstaff',
+    'waitstaff',
+    'manager',
 ]
 
 MIDDLEWARE = [

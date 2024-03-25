@@ -26,5 +26,7 @@ urlpatterns = [
     path('table/<int:table_number>', views.table_detail),
     path('menu/', include('waddlewaitMenu.urls')),
     path('customer/', include('customer.urls')),
-    # path('orders/', include('orders.urls')),
+    path('kitchenstaff/', include('kitchenstaff.urls')),
+    path('waitstaff/', include('waitstaff.urls')),
+    path('manager/', include('manager.urls')),
 ]
