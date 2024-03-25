@@ -21,7 +21,8 @@ from waddlewait_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('users.urls')),
+    path('authentication/', include('users.urls')),
+    path('waitstaff/', include('waddlewait_wait_staff.urls')),
     path('tables/', views.table_list),
     path('table/<int:table_number>', views.table_detail),
     path('menu/', include('waddlewaitMenu.urls'))
