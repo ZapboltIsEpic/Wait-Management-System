@@ -46,7 +46,13 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'users',
-    'waddlewaitMenu'
+    'waddlewaitMenu',
+    'orders',
+    'assistance',
+    'customer',
+    'kitchenstaff',
+    'waitstaff',
+    'manager',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +97,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': '127.0.0.1', 
-        'PORT': '8080',
+        'PORT': '5432',
     }
 }
 

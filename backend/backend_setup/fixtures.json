@@ -386,6 +386,78 @@
   }
 },
 {
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add order item",
+    "content_type": 11,
+    "codename": "add_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change order item",
+    "content_type": 11,
+    "codename": "change_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete order item",
+    "content_type": 11,
+    "codename": "delete_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view order item",
+    "content_type": 11,
+    "codename": "view_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add order",
+    "content_type": 12,
+    "codename": "add_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change order",
+    "content_type": 12,
+    "codename": "change_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete order",
+    "content_type": 12,
+    "codename": "delete_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view order",
+    "content_type": 12,
+    "codename": "view_order"
+  }
+},
+{
   "model": "contenttypes.contenttype",
   "pk": 1,
   "fields": {
@@ -463,6 +535,22 @@
   "fields": {
     "app_label": "users",
     "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "orders",
+    "model": "orderitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "orders",
+    "model": "order"
   }
 },
 {
@@ -975,6 +1063,210 @@
     "role": "manager",
     "groups": [],
     "user_permissions": []
+  }
+},
+{
+  "model": "waddlewaitMenu.category",
+  "pk": 1,
+  "fields": {
+    "name": "Appetizers"
+  }
+},
+{
+  "model": "waddlewaitMenu.category",
+  "pk": 2,
+  "fields": {
+    "name": "Mains"
+  }
+},
+{
+  "model": "waddlewaitMenu.category",
+  "pk": 3,
+  "fields": {
+    "name": "Desserts"
+  }
+},
+{
+  "model": "waddlewaitMenu.category",
+  "pk": 4,
+  "fields": {
+    "name": "Drinks"
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 1,
+  "fields": {
+    "name": "Tomato Soup",
+    "description": "delicious tomato soup",
+    "price": "5.49",
+    "image": "menu_images/app1_tomatosoup.jpg",
+    "category": 1
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 2,
+  "fields": {
+    "name": "Chicken Salad",
+    "description": "healthy serving of chicken and salad greens",
+    "price": "4.49",
+    "image": "menu_images/app2_chickensalad.jpg",
+    "category": 1
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 3,
+  "fields": {
+    "name": "Crispy Corn",
+    "description": "roasted corn on a skillet",
+    "price": "4.99",
+    "image": "menu_images/app3_crispycorn.jpg",
+    "category": 1
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 4,
+  "fields": {
+    "name": "Grilled Fish",
+    "description": "barramundi fish grilled over nice heat",
+    "price": "12.99",
+    "image": "menu_images/mains1_grilledfish.jpg",
+    "category": 2
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 5,
+  "fields": {
+    "name": "Chicken and Rice",
+    "description": "some rice and some chick",
+    "price": "13.49",
+    "image": "menu_images/mains2_chickenandrice.jpg",
+    "category": 2
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 6,
+  "fields": {
+    "name": "Turkey and Ham Pie",
+    "description": "leftover turkey and ham type of vibe",
+    "price": "11.99",
+    "image": "menu_images/mains3_turkeyandhampie.jpg",
+    "category": 2
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 7,
+  "fields": {
+    "name": "Vegetable Pasta",
+    "description": "for the vegans",
+    "price": "15.49",
+    "image": "menu_images/mains4_vegetablepasta.jpg",
+    "category": 2
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 8,
+  "fields": {
+    "name": "Fruit Cream",
+    "description": "fruit mixed sweet evaporated milk",
+    "price": "8.49",
+    "image": "menu_images/dessert1_fruitcream.jpg",
+    "category": 3
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 9,
+  "fields": {
+    "name": "Ice Cream",
+    "description": "napeleon flavours of hardened milk",
+    "price": "6.99",
+    "image": "menu_images/dessert2_icecream.jpg",
+    "category": 3
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 10,
+  "fields": {
+    "name": "Oreo Cheesecake",
+    "description": "the best combo made by man",
+    "price": "9.99",
+    "image": "menu_images/dessert3_oreocheesecake.jpg",
+    "category": 3
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 11,
+  "fields": {
+    "name": "Apple Pie",
+    "description": "apple and flaky crust",
+    "price": "7.49",
+    "image": "menu_images/dessert4_applepie.jpg",
+    "category": 3
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 12,
+  "fields": {
+    "name": "Mineral Water",
+    "description": "a semi fancier water than tap",
+    "price": "4.49",
+    "image": "menu_images/drinks1_mineralwater.jpg",
+    "category": 4
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 13,
+  "fields": {
+    "name": "Fruit Juice",
+    "description": "sweetened water by sugar fruit",
+    "price": "6.99",
+    "image": "menu_images/drinks2_fruitjuice.jpg",
+    "category": 4
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 14,
+  "fields": {
+    "name": "Coffee",
+    "description": "roasted perfection for the sleep deprived",
+    "price": "7.49",
+    "image": "menu_images/drinks3_coffee.jpg",
+    "category": 4
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 15,
+  "fields": {
+    "name": "Tea",
+    "description": "leaf juice",
+    "price": "6.49",
+    "image": "menu_images/drinks4_tea.jpg",
+    "category": 4
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 16,
+  "fields": {
+    "name": "Wine",
+    "description": "for those looking for a fun time",
+    "price": "3.49",
+    "image": "menu_images/drinks5_wine.jpg",
+    "category": 4
   }
 }
 ]
