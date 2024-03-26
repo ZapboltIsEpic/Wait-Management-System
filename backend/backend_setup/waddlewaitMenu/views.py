@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 
 from .models import MenuItem, Category
-from .serializers import CategorySerializer, MenuItemSerializer
+from .serializers import CategorySerializer, MenuItemSerializer, MenuItemUpdateSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -83,3 +83,74 @@ def addMenuItem(request, categoryName):
             return Response(menu_item_serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(menu_item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['PUT', 'DELETE'])
+def modifyMenuItem(request, id):
+    
+    try:
+        menu_item = MenuItem.objects.get(pk = id)
+    except MenuItem.DoesNotExist:
+        return Response(str(MenuItem.objects.values_list('pk', flat=True)),status=status.HTTP_404_NOT_FOUND)
+
+
+    if request.method == 'PUT':
+        #serializer_full = MenuItemSerializer(menu_item)
+        serializer = MenuItemUpdateSerializer(menu_item, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'DELETE':
+        serializer = MenuItemSerializer(menu_item)
+        if serializer.is_valid():
+            serializer.delete()
+            return Response(f"Deleted: {id}", status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET', 'POST'])
+def categories(request):
+    if request.method == 'GET':
+        categories = Category.objects.all()
+        categories_serializer = CategorySerializer(categories, many = True)
+        return JsonResponse(categories_serializer)
+    
+    if request.method == 'POST':
+        inputData = {
+            'name' : request.query_params.get('name')
+        }
+        categories_serializer = CategorySerializer(inputData, many = True)
+        if categories_serializer.is_valid():
+            categories_serializer.save()
+            return Response(categories_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT', 'DELETE'])
+def modifyMenuOrder(request, id):
+        if request.method == 'GET':
+        orders = Order.objects.filter(is_completed=True)
+        orders_serializer = OrderSerializer(orders, many=True)
+
+        return JsonResponse(orders_serializer.data)
+
+    try:
+        menu_item = Category.objects.get(pk = id)
+    except MenuItem.DoesNotExist:
+        return Response(str(MenuItem.objects.values_list('pk', flat=True)),status=status.HTTP_404_NOT_FOUND)
+
+
+    if request.method == 'PUT':
+        #serializer_full = MenuItemSerializer(menu_item)
+        serializer = MenuItemUpdateSerializer(menu_item, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'DELETE':
+        serializer = MenuItemSerializer(menu_item)
+        if serializer.is_valid():
+            serializer.delete()
+            return Response(f"Deleted: {id}", status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
