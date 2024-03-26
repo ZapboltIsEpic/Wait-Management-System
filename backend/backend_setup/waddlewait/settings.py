@@ -46,7 +46,13 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'users',
-    'waddlewaitMenu'
+    'waddlewaitMenu',
+    'orders',
+    'assistance',
+    'customer',
+    'kitchenstaff',
+    'waitstaff',
+    'manager',
 ]
 
 MIDDLEWARE = [
@@ -87,11 +93,11 @@ WSGI_APPLICATION = 'waddlewait.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres', 
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'depzai2910',
-        'HOST': '127.0.0.1', 
-        'PORT': '8080',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 

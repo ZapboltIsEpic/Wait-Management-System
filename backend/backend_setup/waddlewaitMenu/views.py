@@ -5,8 +5,6 @@ from .models import MenuItem, Category
 from .serializers import CategorySerializer, MenuItemSerializer
 
 from rest_framework.decorators import api_view
-
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -45,7 +43,7 @@ def menuItemsByCategory(request, categoryName):
 
             return JsonResponse(data)
         except:
-             return JsonResponse({'message': 'Menu category does not exist'}, status=404)
+            return JsonResponse({'message': 'Menu category does not exist'}, status=404)
 
     
     if request.method == 'POST':

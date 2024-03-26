@@ -22,8 +22,13 @@ from waddlewait_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('authentication/', include('users.urls')),
-    path('waitstaff/', include('waddlewait_wait_staff.urls')),
+    path('assistance/', include('assistance.urls')),
+    path('orders/', include('orders.urls')),
     path('tables/', views.table_list),
     path('table/<int:table_number>', views.table_detail),
-    path('menu/', include('waddlewaitMenu.urls'))
+    path('menu/', include('waddlewaitMenu.urls')),
+    path('customer/', include('customer.urls')),
+    path('kitchenstaff/', include('kitchenstaff.urls')),
+    path('waitstaff/', include('waitstaff.urls')),
+    path('manager/', include('manager.urls')),
 ]
