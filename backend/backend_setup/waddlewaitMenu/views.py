@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 
 from .models import MenuItem, Category
-from .serializers import CategorySerializer, MenuItemSerializer, MenuItemUpdateSerializer
+from .serializers import CategorySerializer, MenuItemSerializer, MenuItemUpdateSerializer, MenuItemCondensedSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -126,31 +126,48 @@ def categories(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['PUT', 'DELETE'])
-def modifyMenuOrder(request, id):
-        if request.method == 'GET':
-        orders = Order.objects.filter(is_completed=True)
-        orders_serializer = OrderSerializer(orders, many=True)
+@api_view(['GET', 'POST'])
+def modifyMenuOrder(request):
+    if request.method == 'GET':
+        menu_items = MenuItem.objects.all()
+        menu_items_serializer = MenuItemCondensedSerializer(menu_items, many = True)
+        return JsonResponse(menu_items_serializer.data)
 
-        return JsonResponse(orders_serializer.data)
+    if request.method == 'POST':
+        try:
+            list = request.queryparams.get('menuItems')
+            for item in list:
+                menu_item = get_object_or_404(MenuItem, pk=item)
+        except MenuItem.DoesNotExist:
+            return Response(str(MenuItem.objects.values_list('pk', flat=True)),status=status.HTTP_404_NOT_FOUND)
+        if len(list) != len(set(list)):
+            return Response("Duplicate or Missing values", status=status.HTTP_400_BAD_REQUEST)
+    
+        for i, pk in enumerate(list):
+            MenuItem.objects.filter(pk=pk).update(order=i)
+        menu_items = MenuItem.objects.all()
+        menu_items_serializer = MenuItemCondensedSerializer(menu_items, many = True)
+        return JsonResponse(menu_items_serializer.data)
 
-    try:
-        menu_item = Category.objects.get(pk = id)
-    except MenuItem.DoesNotExist:
-        return Response(str(MenuItem.objects.values_list('pk', flat=True)),status=status.HTTP_404_NOT_FOUND)
+@api_view(['GET', 'POST'])
+def modifyCategoryOrder(request):
+    if request.method == 'GET':
+        category_items = Category.objects.all()
+        category_items_serializer = Category(category_items, many = True)
+        return JsonResponse(category_items_serializer.data)
 
-
-    if request.method == 'PUT':
-        #serializer_full = MenuItemSerializer(menu_item)
-        serializer = MenuItemUpdateSerializer(menu_item, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    if request.method == 'DELETE':
-        serializer = MenuItemSerializer(menu_item)
-        if serializer.is_valid():
-            serializer.delete()
-            return Response(f"Deleted: {id}", status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'POST':
+        try:
+            list = request.queryparams.get('categories')
+            for item in list:
+                category_item = get_object_or_404(Category, pk=item)
+        except Category.DoesNotExist:
+            return Response(str(Category.objects.values_list('pk', flat=True)),status=status.HTTP_404_NOT_FOUND)
+        if len(list) != len(set(list)):
+            return Response("Duplicate or Missing values", status=status.HTTP_400_BAD_REQUEST)
+    
+        for i, pk in enumerate(list):
+            Category.objects.filter(pk=pk).update(order=i)
+        category_items = Category.objects.all()
+        category_items_serializer = MenuItemCondensedSerializer(category_items, many = True)
+        return JsonResponse(category_items_serializer.data)
