@@ -8,7 +8,6 @@ urlpatterns = [
     path('<str:categoryName>/add/', views.addMenuItem, name='add-menu-item'),
     path('modify/<int:pk>/', views.modifyMenuItem, name='modify-menu-item'),
     path('order/categorised/<int:pk>/', views.modifyMenuOrder, name='modify-menu-item'), #pk is category id
-    path('categories', views.categories, name ="category")
+    path('categories', views.categories, name ="category"),
     path('order/categories', views.categories, name ="category")
-
 ]
