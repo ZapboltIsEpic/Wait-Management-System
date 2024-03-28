@@ -1,1308 +1,1272 @@
 [
-  {
-    "model": "admin.logentry",
-    "pk": 1,
-    "fields": {
-      "action_time": "2024-03-11T04:02:58.537Z",
-      "user": 1,
-      "content_type": 7,
-      "object_id": "3",
-      "object_repr": "Table object (3)",
-      "action_flag": 1,
-      "change_message": "[{\"added\": {}}]"
-    }
-  },
-  {
-    "model": "admin.logentry",
-    "pk": 2,
-    "fields": {
-      "action_time": "2024-03-11T05:42:23.951Z",
-      "user": 1,
-      "content_type": 7,
-      "object_id": "4",
-      "object_repr": "table 2",
-      "action_flag": 1,
-      "change_message": "[{\"added\": {}}]"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 1,
-    "fields": {
-      "name": "Can add log entry",
-      "content_type": 1,
-      "codename": "add_logentry"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 2,
-    "fields": {
-      "name": "Can change log entry",
-      "content_type": 1,
-      "codename": "change_logentry"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 3,
-    "fields": {
-      "name": "Can delete log entry",
-      "content_type": 1,
-      "codename": "delete_logentry"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 4,
-    "fields": {
-      "name": "Can view log entry",
-      "content_type": 1,
-      "codename": "view_logentry"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 5,
-    "fields": {
-      "name": "Can add permission",
-      "content_type": 2,
-      "codename": "add_permission"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 6,
-    "fields": {
-      "name": "Can change permission",
-      "content_type": 2,
-      "codename": "change_permission"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 7,
-    "fields": {
-      "name": "Can delete permission",
-      "content_type": 2,
-      "codename": "delete_permission"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 8,
-    "fields": {
-      "name": "Can view permission",
-      "content_type": 2,
-      "codename": "view_permission"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 9,
-    "fields": {
-      "name": "Can add group",
-      "content_type": 3,
-      "codename": "add_group"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 10,
-    "fields": {
-      "name": "Can change group",
-      "content_type": 3,
-      "codename": "change_group"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 11,
-    "fields": {
-      "name": "Can delete group",
-      "content_type": 3,
-      "codename": "delete_group"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 12,
-    "fields": {
-      "name": "Can view group",
-      "content_type": 3,
-      "codename": "view_group"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 13,
-    "fields": {
-      "name": "Can add user",
-      "content_type": 4,
-      "codename": "add_user"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 14,
-    "fields": {
-      "name": "Can change user",
-      "content_type": 4,
-      "codename": "change_user"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 15,
-    "fields": {
-      "name": "Can delete user",
-      "content_type": 4,
-      "codename": "delete_user"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 16,
-    "fields": {
-      "name": "Can view user",
-      "content_type": 4,
-      "codename": "view_user"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 17,
-    "fields": {
-      "name": "Can add content type",
-      "content_type": 5,
-      "codename": "add_contenttype"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 18,
-    "fields": {
-      "name": "Can change content type",
-      "content_type": 5,
-      "codename": "change_contenttype"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 19,
-    "fields": {
-      "name": "Can delete content type",
-      "content_type": 5,
-      "codename": "delete_contenttype"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 20,
-    "fields": {
-      "name": "Can view content type",
-      "content_type": 5,
-      "codename": "view_contenttype"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 21,
-    "fields": {
-      "name": "Can add session",
-      "content_type": 6,
-      "codename": "add_session"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 22,
-    "fields": {
-      "name": "Can change session",
-      "content_type": 6,
-      "codename": "change_session"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 23,
-    "fields": {
-      "name": "Can delete session",
-      "content_type": 6,
-      "codename": "delete_session"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 24,
-    "fields": {
-      "name": "Can view session",
-      "content_type": 6,
-      "codename": "view_session"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 25,
-    "fields": {
-      "name": "Can add table",
-      "content_type": 7,
-      "codename": "add_table"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 26,
-    "fields": {
-      "name": "Can change table",
-      "content_type": 7,
-      "codename": "change_table"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 27,
-    "fields": {
-      "name": "Can delete table",
-      "content_type": 7,
-      "codename": "delete_table"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 28,
-    "fields": {
-      "name": "Can view table",
-      "content_type": 7,
-      "codename": "view_table"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 29,
-    "fields": {
-      "name": "Can add category",
-      "content_type": 8,
-      "codename": "add_category"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 30,
-    "fields": {
-      "name": "Can change category",
-      "content_type": 8,
-      "codename": "change_category"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 31,
-    "fields": {
-      "name": "Can delete category",
-      "content_type": 8,
-      "codename": "delete_category"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 32,
-    "fields": {
-      "name": "Can view category",
-      "content_type": 8,
-      "codename": "view_category"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 33,
-    "fields": {
-      "name": "Can add menu item",
-      "content_type": 9,
-      "codename": "add_menuitem"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 34,
-    "fields": {
-      "name": "Can change menu item",
-      "content_type": 9,
-      "codename": "change_menuitem"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 35,
-    "fields": {
-      "name": "Can delete menu item",
-      "content_type": 9,
-      "codename": "delete_menuitem"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 36,
-    "fields": {
-      "name": "Can view menu item",
-      "content_type": 9,
-      "codename": "view_menuitem"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 37,
-    "fields": {
-      "name": "Can add user",
-      "content_type": 10,
-      "codename": "add_user"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 38,
-    "fields": {
-      "name": "Can change user",
-      "content_type": 10,
-      "codename": "change_user"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 39,
-    "fields": {
-      "name": "Can delete user",
-      "content_type": 10,
-      "codename": "delete_user"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 40,
-    "fields": {
-      "name": "Can view user",
-      "content_type": 10,
-      "codename": "view_user"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 41,
-    "fields": {
-      "name": "Can add order item",
-      "content_type": 11,
-      "codename": "add_orderitem"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 42,
-    "fields": {
-      "name": "Can change order item",
-      "content_type": 11,
-      "codename": "change_orderitem"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 43,
-    "fields": {
-      "name": "Can delete order item",
-      "content_type": 11,
-      "codename": "delete_orderitem"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 44,
-    "fields": {
-      "name": "Can view order item",
-      "content_type": 11,
-      "codename": "view_orderitem"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 45,
-    "fields": {
-      "name": "Can add order",
-      "content_type": 12,
-      "codename": "add_order"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 46,
-    "fields": {
-      "name": "Can change order",
-      "content_type": 12,
-      "codename": "change_order"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 47,
-    "fields": {
-      "name": "Can delete order",
-      "content_type": 12,
-      "codename": "delete_order"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 48,
-    "fields": {
-      "name": "Can view order",
-      "content_type": 12,
-      "codename": "view_order"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 1,
-    "fields": {
-      "app_label": "admin",
-      "model": "logentry"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 2,
-    "fields": {
-      "app_label": "auth",
-      "model": "permission"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 3,
-    "fields": {
-      "app_label": "auth",
-      "model": "group"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 4,
-    "fields": {
-      "app_label": "auth",
-      "model": "user"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 5,
-    "fields": {
-      "app_label": "contenttypes",
-      "model": "contenttype"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 6,
-    "fields": {
-      "app_label": "sessions",
-      "model": "session"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 7,
-    "fields": {
-      "app_label": "waddlewait_app",
-      "model": "table"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 8,
-    "fields": {
-      "app_label": "waddlewaitMenu",
-      "model": "category"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 9,
-    "fields": {
-      "app_label": "waddlewaitMenu",
-      "model": "menuitem"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 10,
-    "fields": {
-      "app_label": "users",
-      "model": "user"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 11,
-    "fields": {
-      "app_label": "orders",
-      "model": "orderitem"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 12,
-    "fields": {
-      "app_label": "orders",
-      "model": "order"
-    }
-  },
-  {
-    "model": "sessions.session",
-    "pk": "g60mcinpuk0ka6k8z7qter2wegh8rm5b",
-    "fields": {
-      "session_data": ".eJxVjDsOwjAQBe_iGln-fyjpOYPl9a5xADlSnFSIu0OkFNC-mXkvlvK2trQNWtKE7MwkO_1ukMuD-g7wnvtt5mXu6zIB3xV-0MGvM9Lzcrh_By2P9q0tEFqvhNXGhhB8dJ4yOqwykA21UPVO2ahQQC3ReOV11kZKEkYDgWDvD9SuN4c:1rjWof:DMGI0rgkS-2fGj73xWTmMxsMgeyOw9CuQYJIapKrwAc",
-      "expire_date": "2024-03-25T03:59:09.912Z"
-    }
-  },
-  {
-    "model": "waddlewait_app.table",
-    "pk": 1,
-    "fields": {
-      "table_in_use": false,
-      "seats_max": 6,
-      "seats_in_use": 0,
-      "order_id": 3,
-      "is_near_window": true,
-      "is_quiet_area": true
-    }
-  },
-  {
-    "model": "waddlewait_app.table",
-    "pk": 2,
-    "fields": {
-      "table_in_use": false,
-      "seats_max": 2,
-      "seats_in_use": 0,
-      "order_id": -1,
-      "is_near_window": false,
-      "is_quiet_area": false
-    }
-  },
-  {
-    "model": "waddlewait_app.table",
-    "pk": 3,
-    "fields": {
-      "table_in_use": false,
-      "seats_max": 2,
-      "seats_in_use": 0,
-      "order_id": -1,
-      "is_near_window": false,
-      "is_quiet_area": false
-    }
-  },
-  {
-    "model": "waddlewait_app.table",
-    "pk": 4,
-    "fields": {
-      "table_in_use": true,
-      "seats_max": 2,
-      "seats_in_use": 0,
-      "order_id": -1,
-      "is_near_window": false,
-      "is_quiet_area": false
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 1,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-11T04:59:46.238Z",
-      "name": "bob",
-      "email": "bob@gmail.com",
-      "password": "helloworld",
-      "role": "",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 2,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-11T05:18:46.922Z",
-      "name": "boby",
-      "email": "boby@gmail.com",
-      "password": "pbkdf2_sha256$600000$oojD10Vh7mniUIlND6aIIX$dx893r1Ug6dMTffzMr6jIJL8dIXQECPQcCx5fEzhfmQ=",
-      "role": "",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 3,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-11T10:14:23.406Z",
-      "name": "nam",
-      "email": "nam@gmail.com",
-      "password": "pbkdf2_sha256$600000$wW8GAHKFtk3gQMea6a3HtM$Ua34JGkZ+HdfvYVmTS7bt07REzNNn9EsP9e53nLPUFU=",
-      "role": "",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 4,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T12:33:02.231Z",
-      "name": "yijun",
-      "email": "yijun@gmail.com",
-      "password": "pbkdf2_sha256$720000$FotXoB0PC7G5jCLu2D9pKs$9GGOWzAgINIHajDWzBRe9nIoMYgG6bVBZJ1MLWthKvk=",
-      "role": "1",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 5,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T12:50:36.026Z",
-      "name": "ryan",
-      "email": "ryan@gmail.com",
-      "password": "pbkdf2_sha256$720000$nK2tb9lOiPIPAX3wxuQyP3$xSVNAyfoBEmiCc0wcf9oLE4kDFRpsBqXIyJyk2mbgLE=",
-      "role": "1",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 6,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T12:57:03.216Z",
-      "name": "george",
-      "email": "george@gmail.com",
-      "password": "pbkdf2_sha256$720000$LahGkRBvDC2PD50rSaLu1S$C+TwSauTUAHelahZuQ7dB+dXzg9Oz2ApD2aRZoyQRcw=",
-      "role": "1",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 7,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T13:20:25.239Z",
-      "name": "a",
-      "email": "a@gmail.com",
-      "password": "pbkdf2_sha256$720000$eMKp63OUYaAvY9pglEaEVP$d+nkDlxB1GCQ3xp54vOUUjRbQPXUxgGFFLPIWDM5c98=",
-      "role": "1",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 8,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T13:46:45.519Z",
-      "name": "brat",
-      "email": "brat@gmail.com",
-      "password": "pbkdf2_sha256$720000$HEWLjeWSAGetW3O7grmhNM$ihn6g/rDOrE2TJgMKd1lnWmi5L9hZH8OzuPhKKbkKRs=",
-      "role": "k",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 9,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T13:50:40.272Z",
-      "name": "aut",
-      "email": "aut@gmail.com",
-      "password": "pbkdf2_sha256$720000$uujSoMXZYKX5RLREh7pedr$Q29i1N6qI00LaWfWc6le7AV/nMFvd8kUju6IbULjeU0=",
-      "role": "kitchen_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 10,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T15:03:52.333Z",
-      "name": "abc",
-      "email": "abc@gmail.com",
-      "password": "pbkdf2_sha256$720000$37YS6TWT5NuCFuL2ekXyMb$cYnm5M5MblyM2Gb5wNU7rP63hQhZ9YQoRgkdN4qWbLs=",
-      "role": "kitchen_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 11,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T15:04:23.942Z",
-      "name": "cba",
-      "email": "cba@gmail.com",
-      "password": "pbkdf2_sha256$720000$YFtMKFxKntoM3au68Xd69b$TY2b+RuXvtucSFPQOt7d3pnaEi8pCgOue2WxEehJutc=",
-      "role": "wait_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 12,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T15:05:46.538Z",
-      "name": "cba",
-      "email": "cbaa@gmail.com",
-      "password": "pbkdf2_sha256$720000$63QiWQ1snqUCIVnakoLK8A$8P+V0ISztkHG7FmLXWxcbZKat4MzID8TNCWy5SoJEo0=",
-      "role": "wait_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 13,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-13T15:07:05.360Z",
-      "name": "jane",
-      "email": "jane@gmail.com",
-      "password": "pbkdf2_sha256$720000$T5bwrSMAnDTTiz7GpLnE4j$swuoQ6RrlAp1NEIu+MEuDMaS7MR5atRwFD/ADQhHeos=",
-      "role": "manager",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 14,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T00:47:00.757Z",
-      "name": "Abbie",
-      "email": "abbie@gmail.com",
-      "password": "pbkdf2_sha256$720000$DaQDkzEnWkJ49x6zAluT41$iUd0/jF+nylrypVXdgcWOOEEIYKtaDah3AuOLs13qa4=",
-      "role": "kitchen_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 15,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T00:49:18.800Z",
-      "name": "ryann",
-      "email": "ryann@gmail.com",
-      "password": "pbkdf2_sha256$720000$fPdOtlUpexZQ1JVYV4MJSv$15gwAX8DTd4ryF8aPe0UwEb/EHHRMLNBcQrw7iDHOLg=",
-      "role": "wait_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 16,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T00:50:04.671Z",
-      "name": "calvin",
-      "email": "calvin@gmail.com",
-      "password": "pbkdf2_sha256$720000$yZCtEUJG9jz1kef7wWnXWy$Ce1Aup474J6bSZwyQgdutZGW56LQ6T3fomBm1BSEMvE=",
-      "role": "manager",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 17,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T01:44:34.159Z",
-      "name": "george",
-      "email": "ppopp",
-      "password": "pbkdf2_sha256$720000$gXxedoqQ5kcdvRWwZVLRSq$PmmxU1eygaQR/Yn4Jp7JWyS1WQu4fnoZdUw6qTs+2kY=",
-      "role": "kitchen_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 18,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T01:45:03.189Z",
-      "name": "mel",
-      "email": "mel",
-      "password": "pbkdf2_sha256$720000$rAhYjU1FcNDrCuh3d75wab$J8C3C0uqdgqjwFXV5xC6JTUJdaOnnSZ/Jw/0VbRDxpg=",
-      "role": "kitchen_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 19,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T01:45:18.290Z",
-      "name": "mell",
-      "email": "mell",
-      "password": "pbkdf2_sha256$720000$lOWMUD4I8RPUshPaEBdiTh$+NZ95eMRuBjESnuvT8rsl/Z0O9N6ZMtSAPi6K+bnGoA=",
-      "role": "kitchen_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 20,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T01:46:03.128Z",
-      "name": "mel",
-      "email": "melll",
-      "password": "pbkdf2_sha256$720000$MPG07lbdkK7uRIPtAIEBJd$kzuABgf3WUrwI2BH7+ttl2KAOi8xS5jxuJ8ZGaYa52Y=",
-      "role": "wait_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 21,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T01:47:07.477Z",
-      "name": "george",
-      "email": "george",
-      "password": "pbkdf2_sha256$720000$xBmit17x3oiCRcc1TuGtpM$PVCIfUu9F6tFxIPH2QW44wnCHnB312ylAK2OMo+eo3E=",
-      "role": "kitchen_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 22,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T01:47:34.612Z",
-      "name": "abbie",
-      "email": "abbie",
-      "password": "pbkdf2_sha256$720000$I37lnjfmR0XQvFoMlAyayn$elUlI+Qp0fnCimvYIyMSa7dZgdLfpKrLpqNUt0lFzrg=",
-      "role": "wait_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 23,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T01:50:37.780Z",
-      "name": "a",
-      "email": "abbie1",
-      "password": "pbkdf2_sha256$720000$Qcijq7HiSWizXzZIDaPqCE$TYBhIhuoMkFOBpxVW9DERt5W5D/avcobBdV4LRbSOmE=",
-      "role": "kitchen_staff",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "users.user",
-    "pk": 24,
-    "fields": {
-      "last_login": null,
-      "is_superuser": false,
-      "first_name": "",
-      "last_name": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2024-03-14T01:50:55.509Z",
-      "name": "32",
-      "email": "32",
-      "password": "pbkdf2_sha256$720000$xpgoGzOjlrTOfzPqZTF73E$7KwhD0iFDQywpzOexs6EOi8EkkwTGjYcNUPKw5+T4B0=",
-      "role": "manager",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "waddlewaitMenu.category",
-    "pk": 1,
-    "fields": {
-      "name": "Appetizers",
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.category",
-    "pk": 2,
-    "fields": {
-      "name": "Mains",
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.category",
-    "pk": 3,
-    "fields": {
-      "name": "Desserts",
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.category",
-    "pk": 4,
-    "fields": {
-      "name": "Drinks",
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.category",
-    "pk": 5,
-    "fields": {
-      "name": "cat",
-      "display_order": 4
-    }
-  },
-  {
-    "model": "waddlewaitMenu.category",
-    "pk": 6,
-    "fields": {
-      "name": "scooby dooby doo",
-      "display_order": 5
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 1,
-    "fields": {
-      "name": "Tomato Soup",
-      "description": "delicious tomato soup",
-      "price": "5.49",
-      "image": "menu_images/app1_tomatosoup.jpg",
-      "category": 1,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 2,
-    "fields": {
-      "name": "Chicken Salad",
-      "description": "healthy serving of chicken and salad greens",
-      "price": "4.49",
-      "image": "menu_images/app2_chickensalad.jpg",
-      "category": 1,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 3,
-    "fields": {
-      "name": "Crispy Corn",
-      "description": "roasted corn on a skillet",
-      "price": "4.99",
-      "image": "menu_images/app3_crispycorn.jpg",
-      "category": 1,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 4,
-    "fields": {
-      "name": "Grilled Fish",
-      "description": "barramundi fish grilled over nice heat",
-      "price": "12.99",
-      "image": "menu_images/mains1_grilledfish.jpg",
-      "category": 2,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 5,
-    "fields": {
-      "name": "Chicken and Rice",
-      "description": "some rice and some chick",
-      "price": "13.49",
-      "image": "menu_images/mains2_chickenandrice.jpg",
-      "category": 2,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 6,
-    "fields": {
-      "name": "Turkey and Ham Pie",
-      "description": "leftover turkey and ham type of vibe",
-      "price": "11.99",
-      "image": "menu_images/mains3_turkeyandhampie.jpg",
-      "category": 2,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 7,
-    "fields": {
-      "name": "Vegetable Pasta",
-      "description": "for the vegans",
-      "price": "15.49",
-      "image": "menu_images/mains4_vegetablepasta.jpg",
-      "category": 2,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 8,
-    "fields": {
-      "name": "Fruit Cream",
-      "description": "fruit mixed sweet evaporated milk",
-      "price": "8.49",
-      "image": "menu_images/dessert1_fruitcream.jpg",
-      "category": 3,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 9,
-    "fields": {
-      "name": "Ice Cream",
-      "description": "napeleon flavours of hardened milk",
-      "price": "6.99",
-      "image": "menu_images/dessert2_icecream.jpg",
-      "category": 3,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 10,
-    "fields": {
-      "name": "Oreo Cheesecake",
-      "description": "the best combo made by man",
-      "price": "9.99",
-      "image": "menu_images/dessert3_oreocheesecake.jpg",
-      "category": 3,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 11,
-    "fields": {
-      "name": "Apple Pie",
-      "description": "apple and flaky crust",
-      "price": "7.49",
-      "image": "menu_images/dessert4_applepie.jpg",
-      "category": 3,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 12,
-    "fields": {
-      "name": "Mineral Water",
-      "description": "a semi fancier water than tap",
-      "price": "4.49",
-      "image": "menu_images/drinks1_mineralwater.jpg",
-      "category": 4,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 13,
-    "fields": {
-      "name": "Fruit Juice",
-      "description": "sweetened water by sugar fruit",
-      "price": "6.99",
-      "image": "menu_images/drinks2_fruitjuice.jpg",
-      "category": 4,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 14,
-    "fields": {
-      "name": "Coffee",
-      "description": "roasted perfection for the sleep deprived",
-      "price": "7.49",
-      "image": "menu_images/drinks3_coffee.jpg",
-      "category": 4,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 15,
-    "fields": {
-      "name": "Tea",
-      "description": "leaf juice",
-      "price": "6.49",
-      "image": "menu_images/drinks4_tea.jpg",
-      "category": 4,
-      "display_order": 99999
-    }
-  },
-  {
-    "model": "waddlewaitMenu.menuitem",
-    "pk": 16,
-    "fields": {
-      "name": "Wine",
-      "description": "for those looking for a fun time",
-      "price": "3.49",
-      "image": "menu_images/drinks5_wine.jpg",
-      "category": 4,
-      "display_order": 99999
-    }
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2024-03-11T04:02:58.537Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Table object (3)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
   }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2024-03-11T05:42:23.951Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "4",
+    "object_repr": "table 2",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 4,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 4,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 4,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 4,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 5,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 5,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 5,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 5,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 6,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 6,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 6,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 6,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add table",
+    "content_type": 7,
+    "codename": "add_table"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change table",
+    "content_type": 7,
+    "codename": "change_table"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete table",
+    "content_type": 7,
+    "codename": "delete_table"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view table",
+    "content_type": 7,
+    "codename": "view_table"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add category",
+    "content_type": 8,
+    "codename": "add_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change category",
+    "content_type": 8,
+    "codename": "change_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete category",
+    "content_type": 8,
+    "codename": "delete_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view category",
+    "content_type": 8,
+    "codename": "view_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add menu item",
+    "content_type": 9,
+    "codename": "add_menuitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change menu item",
+    "content_type": 9,
+    "codename": "change_menuitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete menu item",
+    "content_type": 9,
+    "codename": "delete_menuitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view menu item",
+    "content_type": 9,
+    "codename": "view_menuitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 10,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 10,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 10,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 10,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add order item",
+    "content_type": 11,
+    "codename": "add_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change order item",
+    "content_type": 11,
+    "codename": "change_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete order item",
+    "content_type": 11,
+    "codename": "delete_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view order item",
+    "content_type": 11,
+    "codename": "view_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add order",
+    "content_type": 12,
+    "codename": "add_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change order",
+    "content_type": 12,
+    "codename": "change_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete order",
+    "content_type": 12,
+    "codename": "delete_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view order",
+    "content_type": 12,
+    "codename": "view_order"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "waddlewait_app",
+    "model": "table"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "waddlewaitMenu",
+    "model": "category"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "waddlewaitMenu",
+    "model": "menuitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "users",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "orders",
+    "model": "orderitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "orders",
+    "model": "order"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "g60mcinpuk0ka6k8z7qter2wegh8rm5b",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGln-fyjpOYPl9a5xADlSnFSIu0OkFNC-mXkvlvK2trQNWtKE7MwkO_1ukMuD-g7wnvtt5mXu6zIB3xV-0MGvM9Lzcrh_By2P9q0tEFqvhNXGhhB8dJ4yOqwykA21UPVO2ahQQC3ReOV11kZKEkYDgWDvD9SuN4c:1rjWof:DMGI0rgkS-2fGj73xWTmMxsMgeyOw9CuQYJIapKrwAc",
+    "expire_date": "2024-03-25T03:59:09.912Z"
+  }
+},
+{
+  "model": "waddlewait_app.table",
+  "pk": 1,
+  "fields": {
+    "table_in_use": false,
+    "seats_max": 6,
+    "seats_in_use": 0,
+    "order_id": 3,
+    "is_near_window": true,
+    "is_quiet_area": true
+  }
+},
+{
+  "model": "waddlewait_app.table",
+  "pk": 2,
+  "fields": {
+    "table_in_use": false,
+    "seats_max": 2,
+    "seats_in_use": 0,
+    "order_id": -1,
+    "is_near_window": false,
+    "is_quiet_area": false
+  }
+},
+{
+  "model": "waddlewait_app.table",
+  "pk": 3,
+  "fields": {
+    "table_in_use": false,
+    "seats_max": 2,
+    "seats_in_use": 0,
+    "order_id": -1,
+    "is_near_window": false,
+    "is_quiet_area": false
+  }
+},
+{
+  "model": "waddlewait_app.table",
+  "pk": 4,
+  "fields": {
+    "table_in_use": true,
+    "seats_max": 2,
+    "seats_in_use": 0,
+    "order_id": -1,
+    "is_near_window": false,
+    "is_quiet_area": false
+  }
+},
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-11T04:59:46.238Z",
+    "name": "bob",
+    "email": "bob@gmail.com",
+    "password": "helloworld",
+    "role": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 2,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-11T05:18:46.922Z",
+    "name": "boby",
+    "email": "boby@gmail.com",
+    "password": "pbkdf2_sha256$600000$oojD10Vh7mniUIlND6aIIX$dx893r1Ug6dMTffzMr6jIJL8dIXQECPQcCx5fEzhfmQ=",
+    "role": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 3,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-11T10:14:23.406Z",
+    "name": "nam",
+    "email": "nam@gmail.com",
+    "password": "pbkdf2_sha256$600000$wW8GAHKFtk3gQMea6a3HtM$Ua34JGkZ+HdfvYVmTS7bt07REzNNn9EsP9e53nLPUFU=",
+    "role": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 4,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T12:33:02.231Z",
+    "name": "yijun",
+    "email": "yijun@gmail.com",
+    "password": "pbkdf2_sha256$720000$FotXoB0PC7G5jCLu2D9pKs$9GGOWzAgINIHajDWzBRe9nIoMYgG6bVBZJ1MLWthKvk=",
+    "role": "1",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 5,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T12:50:36.026Z",
+    "name": "ryan",
+    "email": "ryan@gmail.com",
+    "password": "pbkdf2_sha256$720000$nK2tb9lOiPIPAX3wxuQyP3$xSVNAyfoBEmiCc0wcf9oLE4kDFRpsBqXIyJyk2mbgLE=",
+    "role": "1",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 6,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T12:57:03.216Z",
+    "name": "george",
+    "email": "george@gmail.com",
+    "password": "pbkdf2_sha256$720000$LahGkRBvDC2PD50rSaLu1S$C+TwSauTUAHelahZuQ7dB+dXzg9Oz2ApD2aRZoyQRcw=",
+    "role": "1",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 7,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T13:20:25.239Z",
+    "name": "a",
+    "email": "a@gmail.com",
+    "password": "pbkdf2_sha256$720000$eMKp63OUYaAvY9pglEaEVP$d+nkDlxB1GCQ3xp54vOUUjRbQPXUxgGFFLPIWDM5c98=",
+    "role": "1",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 8,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T13:46:45.519Z",
+    "name": "brat",
+    "email": "brat@gmail.com",
+    "password": "pbkdf2_sha256$720000$HEWLjeWSAGetW3O7grmhNM$ihn6g/rDOrE2TJgMKd1lnWmi5L9hZH8OzuPhKKbkKRs=",
+    "role": "k",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 9,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T13:50:40.272Z",
+    "name": "aut",
+    "email": "aut@gmail.com",
+    "password": "pbkdf2_sha256$720000$uujSoMXZYKX5RLREh7pedr$Q29i1N6qI00LaWfWc6le7AV/nMFvd8kUju6IbULjeU0=",
+    "role": "kitchen_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 10,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T15:03:52.333Z",
+    "name": "abc",
+    "email": "abc@gmail.com",
+    "password": "pbkdf2_sha256$720000$37YS6TWT5NuCFuL2ekXyMb$cYnm5M5MblyM2Gb5wNU7rP63hQhZ9YQoRgkdN4qWbLs=",
+    "role": "kitchen_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 11,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T15:04:23.942Z",
+    "name": "cba",
+    "email": "cba@gmail.com",
+    "password": "pbkdf2_sha256$720000$YFtMKFxKntoM3au68Xd69b$TY2b+RuXvtucSFPQOt7d3pnaEi8pCgOue2WxEehJutc=",
+    "role": "wait_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 12,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T15:05:46.538Z",
+    "name": "cba",
+    "email": "cbaa@gmail.com",
+    "password": "pbkdf2_sha256$720000$63QiWQ1snqUCIVnakoLK8A$8P+V0ISztkHG7FmLXWxcbZKat4MzID8TNCWy5SoJEo0=",
+    "role": "wait_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 13,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-13T15:07:05.360Z",
+    "name": "jane",
+    "email": "jane@gmail.com",
+    "password": "pbkdf2_sha256$720000$T5bwrSMAnDTTiz7GpLnE4j$swuoQ6RrlAp1NEIu+MEuDMaS7MR5atRwFD/ADQhHeos=",
+    "role": "manager",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 14,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T00:47:00.757Z",
+    "name": "Abbie",
+    "email": "abbie@gmail.com",
+    "password": "pbkdf2_sha256$720000$DaQDkzEnWkJ49x6zAluT41$iUd0/jF+nylrypVXdgcWOOEEIYKtaDah3AuOLs13qa4=",
+    "role": "kitchen_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 15,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T00:49:18.800Z",
+    "name": "ryann",
+    "email": "ryann@gmail.com",
+    "password": "pbkdf2_sha256$720000$fPdOtlUpexZQ1JVYV4MJSv$15gwAX8DTd4ryF8aPe0UwEb/EHHRMLNBcQrw7iDHOLg=",
+    "role": "wait_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 16,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T00:50:04.671Z",
+    "name": "calvin",
+    "email": "calvin@gmail.com",
+    "password": "pbkdf2_sha256$720000$yZCtEUJG9jz1kef7wWnXWy$Ce1Aup474J6bSZwyQgdutZGW56LQ6T3fomBm1BSEMvE=",
+    "role": "manager",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 17,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T01:44:34.159Z",
+    "name": "george",
+    "email": "ppopp",
+    "password": "pbkdf2_sha256$720000$gXxedoqQ5kcdvRWwZVLRSq$PmmxU1eygaQR/Yn4Jp7JWyS1WQu4fnoZdUw6qTs+2kY=",
+    "role": "kitchen_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 18,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T01:45:03.189Z",
+    "name": "mel",
+    "email": "mel",
+    "password": "pbkdf2_sha256$720000$rAhYjU1FcNDrCuh3d75wab$J8C3C0uqdgqjwFXV5xC6JTUJdaOnnSZ/Jw/0VbRDxpg=",
+    "role": "kitchen_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 19,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T01:45:18.290Z",
+    "name": "mell",
+    "email": "mell",
+    "password": "pbkdf2_sha256$720000$lOWMUD4I8RPUshPaEBdiTh$+NZ95eMRuBjESnuvT8rsl/Z0O9N6ZMtSAPi6K+bnGoA=",
+    "role": "kitchen_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 20,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T01:46:03.128Z",
+    "name": "mel",
+    "email": "melll",
+    "password": "pbkdf2_sha256$720000$MPG07lbdkK7uRIPtAIEBJd$kzuABgf3WUrwI2BH7+ttl2KAOi8xS5jxuJ8ZGaYa52Y=",
+    "role": "wait_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 21,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T01:47:07.477Z",
+    "name": "george",
+    "email": "george",
+    "password": "pbkdf2_sha256$720000$xBmit17x3oiCRcc1TuGtpM$PVCIfUu9F6tFxIPH2QW44wnCHnB312ylAK2OMo+eo3E=",
+    "role": "kitchen_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 22,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T01:47:34.612Z",
+    "name": "abbie",
+    "email": "abbie",
+    "password": "pbkdf2_sha256$720000$I37lnjfmR0XQvFoMlAyayn$elUlI+Qp0fnCimvYIyMSa7dZgdLfpKrLpqNUt0lFzrg=",
+    "role": "wait_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 23,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T01:50:37.780Z",
+    "name": "a",
+    "email": "abbie1",
+    "password": "pbkdf2_sha256$720000$Qcijq7HiSWizXzZIDaPqCE$TYBhIhuoMkFOBpxVW9DERt5W5D/avcobBdV4LRbSOmE=",
+    "role": "kitchen_staff",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 24,
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-03-14T01:50:55.509Z",
+    "name": "32",
+    "email": "32",
+    "password": "pbkdf2_sha256$720000$xpgoGzOjlrTOfzPqZTF73E$7KwhD0iFDQywpzOexs6EOi8EkkwTGjYcNUPKw5+T4B0=",
+    "role": "manager",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "waddlewaitMenu.category",
+  "pk": 1,
+  "fields": {
+    "name": "Appetizers"
+  }
+},
+{
+  "model": "waddlewaitMenu.category",
+  "pk": 2,
+  "fields": {
+    "name": "Mains"
+  }
+},
+{
+  "model": "waddlewaitMenu.category",
+  "pk": 3,
+  "fields": {
+    "name": "Desserts"
+  }
+},
+{
+  "model": "waddlewaitMenu.category",
+  "pk": 4,
+  "fields": {
+    "name": "Drinks"
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 1,
+  "fields": {
+    "name": "Tomato Soup",
+    "description": "delicious tomato soup",
+    "price": "5.49",
+    "image": "menu_images/app1_tomatosoup.jpg",
+    "category": 1
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 2,
+  "fields": {
+    "name": "Chicken Salad",
+    "description": "healthy serving of chicken and salad greens",
+    "price": "4.49",
+    "image": "menu_images/app2_chickensalad.jpg",
+    "category": 1
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 3,
+  "fields": {
+    "name": "Crispy Corn",
+    "description": "roasted corn on a skillet",
+    "price": "4.99",
+    "image": "menu_images/app3_crispycorn.jpg",
+    "category": 1
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 4,
+  "fields": {
+    "name": "Grilled Fish",
+    "description": "barramundi fish grilled over nice heat",
+    "price": "12.99",
+    "image": "menu_images/mains1_grilledfish.jpg",
+    "category": 2
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 5,
+  "fields": {
+    "name": "Chicken and Rice",
+    "description": "some rice and some chick",
+    "price": "13.49",
+    "image": "menu_images/mains2_chickenandrice.jpg",
+    "category": 2
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 6,
+  "fields": {
+    "name": "Turkey and Ham Pie",
+    "description": "leftover turkey and ham type of vibe",
+    "price": "11.99",
+    "image": "menu_images/mains3_turkeyandhampie.jpg",
+    "category": 2
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 7,
+  "fields": {
+    "name": "Vegetable Pasta",
+    "description": "for the vegans",
+    "price": "15.49",
+    "image": "menu_images/mains4_vegetablepasta.jpg",
+    "category": 2
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 8,
+  "fields": {
+    "name": "Fruit Cream",
+    "description": "fruit mixed sweet evaporated milk",
+    "price": "8.49",
+    "image": "menu_images/dessert1_fruitcream.jpg",
+    "category": 3
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 9,
+  "fields": {
+    "name": "Ice Cream",
+    "description": "napeleon flavours of hardened milk",
+    "price": "6.99",
+    "image": "menu_images/dessert2_icecream.jpg",
+    "category": 3
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 10,
+  "fields": {
+    "name": "Oreo Cheesecake",
+    "description": "the best combo made by man",
+    "price": "9.99",
+    "image": "menu_images/dessert3_oreocheesecake.jpg",
+    "category": 3
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 11,
+  "fields": {
+    "name": "Apple Pie",
+    "description": "apple and flaky crust",
+    "price": "7.49",
+    "image": "menu_images/dessert4_applepie.jpg",
+    "category": 3
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 12,
+  "fields": {
+    "name": "Mineral Water",
+    "description": "a semi fancier water than tap",
+    "price": "4.49",
+    "image": "menu_images/drinks1_mineralwater.jpg",
+    "category": 4
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 13,
+  "fields": {
+    "name": "Fruit Juice",
+    "description": "sweetened water by sugar fruit",
+    "price": "6.99",
+    "image": "menu_images/drinks2_fruitjuice.jpg",
+    "category": 4
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 14,
+  "fields": {
+    "name": "Coffee",
+    "description": "roasted perfection for the sleep deprived",
+    "price": "7.49",
+    "image": "menu_images/drinks3_coffee.jpg",
+    "category": 4
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 15,
+  "fields": {
+    "name": "Tea",
+    "description": "leaf juice",
+    "price": "6.49",
+    "image": "menu_images/drinks4_tea.jpg",
+    "category": 4
+  }
+},
+{
+  "model": "waddlewaitMenu.menuitem",
+  "pk": 16,
+  "fields": {
+    "name": "Wine",
+    "description": "for those looking for a fun time",
+    "price": "3.49",
+    "image": "menu_images/drinks5_wine.jpg",
+    "category": 4
+  }
+}
 ]
