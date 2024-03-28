@@ -26,16 +26,6 @@ class MenuItemSerializer(serializers.ModelSerializer):
         category, _ = Category.objects.get_or_create(**categoryData)
         menu_item = MenuItem.objects.create(category=category, **validated_data)
         return menu_item
-
-class MenuItemUpdateSerializer(serializers.ModelSerializer): # new serializer class
-    class Meta:
-        model = MenuItem
-        fields = ['name', 'description', 'price', "image", "category"] # define required fields
-
-class MenuItemCondensedSerializer(serializers.ModelSerializer): # new serializer class
-    class Meta:
-        model = MenuItem
-        fields = ['id','name'] # define required fields
-
+    
 
         
