@@ -29,6 +29,6 @@ urlpatterns = [
     path('menu/', include('waddlewaitMenu.urls')),
     path('customer/', include('customer.urls')),
     path('kitchenstaff/', include('kitchenstaff.urls')),
-    path('waitstaff/', include('waitstaff.urls')),
+    # path('waitstaff/', include('waitstaff.urls')),
     path('manager/', include('manager.urls')),
 ]

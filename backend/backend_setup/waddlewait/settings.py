@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'assistance',
     'customer',
     'kitchenstaff',
-    'waitstaff',
+    # 'waitstaff',
     'manager',
 ]
 

@@ -3,65 +3,100 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import OrderItem, Order
+import json
 
 # Import the serializer
-from .serializer import OrderItemSerializer
+from .serializer import OrderSerializer
 
 class OrderDeliverRequestNotificationView(APIView):
-    def post(self, request):
-        serializer = OrderItemSerializer(data=request.data)
+    def put(self, request):
+        tableCheck = request.data.get('table')
+        readyToServeCheck = False
+        orderDeliverRequest = Order.objects.filter(table = tableCheck, is_complete = readyToServeCheck, deliver=False)
         
-        # Validate the serializer
-        if serializer.is_valid():
-            # Save the validated data
-            serializer.save()
-            # Return success response
-            return Response("Notification request received", status=status.HTTP_200_OK)
+        if orderDeliverRequest.exists():
+            updated_data = []
+            for request in orderDeliverRequest:
+                request.ready_to_serve = True
+                request.save()
+                
+                # Convert necessary fields to built-in types
+                table_number = request.table.table_number
+                ready_to_serve = request.ready_to_serve
+                
+                # Create a dictionary with updated order data
+                updated_order_data = {
+                    'table': table_number,
+                    'ready_to_serve': ready_to_serve,
+                }
+                updated_data.append(updated_order_data)
+                
+            return Response(updated_data, status=status.HTTP_200_OK)
         else:
             # Return error response if validation fails
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response("Notification Error", status=status.HTTP_400_BAD_REQUEST)
 
 class OrderDeliverNotificationAcceptedView(APIView):
     def put(self, request):
-        orderCheck  = request.data.get('order')
+        tableCheck = request.data.get('table')
         wait_staff_assigned = request.data.get('wait_staff_assigned')
-        
-        orderDeliverRequest = OrderItem.objects.filter(order=orderCheck, deliver=False)
+        orderDeliverRequest = Order.objects.filter(table=tableCheck, wait_staff_assigned='none', deliver=False)
         
         if orderDeliverRequest.exists():
+            updated_data = []
             for request in orderDeliverRequest:
                 request.wait_staff_assigned = wait_staff_assigned
                 request.save()
+                
+                # Convert necessary fields to built-in types
+                table_number = request.table.table_number
+                wait_staff_assigned = request.wait_staff_assigned
+                
+                updated_order_data = {
+                    'table': table_number,
+                    'wait_staff_assigned': wait_staff_assigned,
+                }
+                updated_data.append(updated_order_data)
+                
             
-            return Response("Notifications accepted", status=status.HTTP_200_OK)
+            return Response(updated_data, status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that
             return Response("No notifications found for the provided table number and status", status=status.HTTP_404_NOT_FOUND)
 
 class OrderDeliverNotificationCompleteView(APIView):
     def put(self, request):
-        orderCheck  = request.data.get('order')
+        tableCheck = request.data.get('table')
+        orderDeliverRequest = Order.objects.filter(table=tableCheck, deliver=False)
         
-        orderRequest = OrderItem.objects.filter(order=orderCheck, deliver=False)
-        
-        if orderRequest.exists():
-            for request in orderRequest:
+        if orderDeliverRequest.exists():
+            updated_data = []
+            for request in orderDeliverRequest:
                 # Update status or perform other actions as needed
                 request.deliver = True
                 request.save()
+                
+                # Convert necessary fields to built-in types
+                table_number = request.table.table_number
+                deliver = request.deliver
+                
+                updated_order_data = {
+                    'table': table_number,
+                    'deliver': deliver,
+                }
+                updated_data.append(updated_order_data)
             
-            return Response("Notifications accepted", status=status.HTTP_200_OK)
+            return Response(updated_data, status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that
             return Response("No notifications found for the provided table number and status", status=status.HTTP_404_NOT_FOUND)
 
 class OrdersDeliverGetAllNotificationsView(APIView):
     def get(self, request):
-        # Retrieve all assistance requests with tableStatus=False from the database
-        order = OrderItem.objects.filter(deliver=False, is_ready=True)
+        # Retrieve all assistance requests with Deliver = False from the database
+        order = Order.objects.filter(deliver=False, ready_to_serve=True)
         
-        # Serialize the assistance data
-        orderSerializer = OrderItemSerializer(order, many=True)
+        orderSerializer = OrderSerializer(order, many=True)
         
         # Return the serialized data as a response
         return Response(orderSerializer.data, status=status.HTTP_200_OK)
