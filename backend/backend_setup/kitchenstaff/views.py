@@ -13,10 +13,10 @@ from rest_framework import status
 @api_view(['GET'])
 def pendingOrders(request):
     if request.method == 'GET':
-        orders = Order.objects.filter(is_completed=False).order_by('created_at')
+        orders = Order.objects.filter(is_complete=False).order_by('created_at')
         orders_serializer = OrderSerializer(orders, many=True)
 
-        return JsonResponse(orders_serializer.data)
+        return JsonResponse(orders_serializer.data, safe=False)
 
 @api_view(['GET'])
 def newestOrder(request):
@@ -30,10 +30,10 @@ def newestOrder(request):
 @api_view(['GET'])
 def completedOrders(request):
     if request.method == 'GET':
-        orders = Order.objects.filter(is_completed=True)
+        orders = Order.objects.filter(is_complete=True)
         orders_serializer = OrderSerializer(orders, many=True)
 
-        return JsonResponse(orders_serializer.data)
+        return JsonResponse(orders_serializer.data, safe=False)
 
 
 @api_view(['PUT'])

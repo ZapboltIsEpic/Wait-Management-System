@@ -7,6 +7,7 @@ django.setup()
 from waddlewaitMenu.models import Category,MenuItem
 
 def populateMenu():
+
     categories = ['Appetizers', 'Mains', 'Desserts', 'Drinks']
 
     for category_name in categories:
