@@ -18,6 +18,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
 function MakeOrder({ orderRequest }) {
+  const navigate = useNavigate();
 
   const handleAcceptRequest = () => {
     axios.put('http://localhost:8000/orders/delivernotifications/accepted', {
@@ -36,8 +37,8 @@ function MakeOrder({ orderRequest }) {
     .catch(error => {
       console.log(error);
     });
-
-    useNavigate("/waiter/order-request");
+    // not sure how to implement order-request page for specific accepted order request
+    // navigate("/waiter/order-request");
   }
 
   // or orderRequest.wait_staff_assigned == is not me
@@ -79,34 +80,6 @@ function WaiterOrderRequests() {
   const [orderRequests, setOrderRequests] = useState([]);
 
   const [alerts, setAlerts] = useState([]);
-
-  const [shouldContinue, setShouldContinue] = useState(false);
-
-  // alerts not implemented yet for other users
-  // useEffect(() => {
-  //     const getAlerts = () => {
-  //         if (!shouldContinue) {
-  //             return;
-  //         }
-  //         axios.get('http://localhost:8000/api/waiter/order-requests-alerts')
-  //             .then(response => {
-  //                 setAlerts(response.data);
-  //             })
-  //             .catch(error => {
-  //                 console.log(error);
-  //             });
-  //     }
-  
-  //     getAlerts(); 
-  //     const interval = setInterval(getAlerts, 1000); 
-  //     if (alerts.length > 0) {
-  //         setShouldContinue(false);
-  //     }
-  
-  //     return () => {
-  //         clearInterval(interval);
-  //     }
-  // }, [])
 
 	const [openDrawer, setOpenDrawer] = React.useState(false);
 
