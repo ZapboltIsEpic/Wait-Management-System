@@ -9,13 +9,12 @@ class OrderItemSerializer(serializers.ModelSerializer):
                   'order', 
                   'item', 
                   'quantity', 
-                  'is_preparing', 
+                  'is_preparing',
                   'is_ready']
         
 class OrderSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True, read_only=True)  # Serialize order items
-
-    table = TableSerializer(read_only=True)
+    # items = OrderItemSerializer(many=True, read_only=True)
+    # table = TableSerializer(read_only=True)
 
     class Meta:
         model = Order
@@ -23,7 +22,12 @@ class OrderSerializer(serializers.ModelSerializer):
                   'created_at',
                   'table', 
                   'items', 
-                  'is_complete']
+                  'ready_to_serve',
+                  'is_complete',
+                  'wait_staff_assigned',
+                  'deliver',
+                  'bill']
+        read_only_fields = ['created_at']
 
     def create(self, validated_data):
         items_data = validated_data.pop('items')  # Extract items data from validated data
