@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Drawer } from '@mui/material';
 import { KitchenSidebar } from './layout/KitchenSidebar';
+import './kitchen.css'
+
 
 function KitchenMain() {
 	const navigate = useNavigate();
@@ -22,14 +24,16 @@ function KitchenMain() {
 
 	return (
 		<div className="App">
-			<Button onClick={toggleDrawer(true)}>Open drawer</Button>
-			<Drawer open={open} onClose={toggleDrawer(false)}>
-				{ <KitchenSidebar />}
-			</Drawer>
+			<div className="kitchen-header-bar">
+        <Button onClick={toggleDrawer(true)}>Open drawer</Button>
+        <Drawer open={open} onClose={toggleDrawer(false)}>
+            { <KitchenSidebar />}
+        </Drawer>
+				<Button onClick={toggleSignOut}>Sign Out</Button>
+      </div>
 			<p>
 				This is the Kitchen Main Screen <code>src/App.js</code> and save to reload.
 			</p>
-			<Button onClick={toggleSignOut}>Sign Out</Button>
 		</div>
 	);
 }

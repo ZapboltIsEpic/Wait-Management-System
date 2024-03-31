@@ -35,4 +35,13 @@ Week 4
 
 Week 5
 - created models, serializer, urls, views for menu viewing
-- linked with frontend how layout of menus should ideally look 
+- linked with frontend how layout of menus should ideally look
+- acted as secretary for retropective meeting A
+- completed documentation of retrospective meetingA
+
+Week 6
+- completed API design for customer and kitchen staff user stories
+- started creating models and serializers for order and order items
+
+Week 7
+- started creating paths and views for customer and kitchen staff user stories
