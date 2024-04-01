@@ -43,4 +43,3 @@ class BillRequestSerializer(serializers.ModelSerializer):
                   'staff_name',
                   'request_status'
                   ]
-        
