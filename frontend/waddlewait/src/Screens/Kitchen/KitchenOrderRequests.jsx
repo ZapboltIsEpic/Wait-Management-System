@@ -31,10 +31,7 @@ function MakeOrder() {
           Order details
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Salmon, Tuna, Sashimi
-        </Typography>
-        <Typography color="text.secondary">
-          Notes
+          Salmon roll, Tuna roll, Small Sashimi
         </Typography>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Status</InputLabel>

@@ -22,10 +22,7 @@ function MakeOrder() {
           Order details
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Salmon, Tuna, Sashimi
-        </Typography>
-        <Typography color="text.secondary">
-          Notes
+          Salmon roll, Tuna roll, Small Sashimi
         </Typography>
       </CardContent>
     </Card>
@@ -46,15 +43,16 @@ function KitchenOrderRequestsCompleted() {
 		setOpen(isOpen);
 	};
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/api/kitchen/order-requests')
-  //     .then(response => {
-  //       setOrderRequests(response.data.table_number);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios.get('http://localhost:8000/kitchenstaff/pending ')
+      .then(response => {
+        setOrderRequests(response);
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div style={{width: '100vw', height: '100vh'}}>
