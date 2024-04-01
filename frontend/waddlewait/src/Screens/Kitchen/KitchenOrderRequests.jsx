@@ -20,6 +20,19 @@ function MakeOrder() {
     setStatus(event.target.value);
   };
 
+  useEffect(() => {
+    if (status === "Preparing") {
+      axios.get('http://localhost:8000/kitchenstaff/prepare/<orderId>/<itemId>')
+      .catch(error => {
+        console.log(error);
+      });
+    } else if (status === "Ready") {
+      axios.get('http://localhost:8000/kitchenstaff/ready/<orderId>/<itemId>')
+      .catch(error => {
+        console.log(error);
+      });
+    }
+  }, [status])
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
@@ -52,10 +65,13 @@ function MakeOrder() {
           variant="contained" 
           color="primary"
           onClick={() => {
-            
+            axios.get('http://localhost:8000/kitchenstaff/complete/<orderId>')
+            .catch(error => {
+              console.log(error);
+            });
           }}
         >
-          Close
+          Complete
         </Button>
       )}
       </CardContent>
@@ -78,7 +94,7 @@ function KitchenOrderRequests() {
 	};
 
   // useEffect(() => {
-  //   axios.get('http://localhost:8000/api/kitchen/order-requests')
+  //   axios.get('http://localhost:8000/kitchenstaff/pending ')
   //     .then(response => {
   //       setOrderRequests(response.data.table_number);
   //     })

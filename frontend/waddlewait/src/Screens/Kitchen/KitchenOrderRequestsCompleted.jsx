@@ -43,16 +43,16 @@ function KitchenOrderRequestsCompleted() {
 		setOpen(isOpen);
 	};
 
-  useEffect(() => {
-    axios.get('http://localhost:8000/kitchenstaff/pending ')
-      .then(response => {
-        setOrderRequests(response);
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('http://localhost:8000/kitchenstaff/completed')
+  //     .then(response => {
+  //       setOrderRequests(response);
+  //       console.log(response);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   return (
     <div style={{width: '100vw', height: '100vh'}}>
