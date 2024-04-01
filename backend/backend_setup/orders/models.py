@@ -30,5 +30,6 @@ class OrderItem(models.Model):
 
 class BillRequest(models.Model):
     table_number = models.ForeignKey(Order, on_delete=models.CASCADE)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     staff_name = models.CharField(max_length=255, default="")
     request_status = models.BooleanField(default=False)

@@ -40,6 +40,7 @@ class BillRequestSerializer(serializers.ModelSerializer):
         model = BillRequest
         fields = ['id',
                   'table_number',
+                  'total_amount',
                   'staff_name',
                   'request_status'
                   ]
