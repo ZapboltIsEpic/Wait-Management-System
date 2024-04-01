@@ -1364,7 +1364,6 @@
     "created_at": "2024-03-30T12:00:00Z",
     "table": 1,
     "ready_to_serve": true,
-
     "is_complete": false,
     "wait_staff_assigned": "Bob",
     "deliver": true,
