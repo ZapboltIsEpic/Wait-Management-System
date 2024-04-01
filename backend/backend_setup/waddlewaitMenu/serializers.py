@@ -26,6 +26,11 @@ class MenuItemSerializer(serializers.ModelSerializer):
         category, _ = Category.objects.get_or_create(**categoryData)
         menu_item = MenuItem.objects.create(category=category, **validated_data)
         return menu_item
+    
+    def get_photo_url(self, obj):
+        if obj.image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.image.url)
 
 class MenuItemUpdateSerializer(serializers.ModelSerializer): # new serializer class
     class Meta:

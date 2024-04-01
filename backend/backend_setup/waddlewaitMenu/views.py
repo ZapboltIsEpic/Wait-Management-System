@@ -20,7 +20,7 @@ def menu(request):
 
         # Serialize the queryset
         categories_serializer = CategorySerializer(categories, many = True)
-        menuItems_serializer = MenuItemSerializer(menuItems, many = True)
+        menuItems_serializer = MenuItemSerializer(menuItems, many = True, context={'request': request})
 
         data = {
             'categories': categories_serializer.data, 
@@ -36,7 +36,7 @@ def menuItemsByCategory(request, categoryName):
             category = Category.objects.get(name=categoryName)
 
             menuItems = MenuItem.objects.filter(category=category)
-            menuItems_serializer = MenuItemSerializer(menuItems, many = True)
+            menuItems_serializer = MenuItemSerializer(menuItems, many = True, context={'request': request})
 
             data = {
                 'category': categoryName, 
@@ -59,11 +59,10 @@ def menuItemsByCategory(request, categoryName):
         return Response(category_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 @api_view(['GET'])
-def menuItem(request, categoryName, id):
+def menuItem(request, categoryName, pk):
     if request.method == 'GET':
-        menu_item = get_object_or_404(MenuItem, pk=id)
-        menu_item_serializer = MenuItemSerializer(menu_item)
-        # menu_item_serializer.data['image'] = request.build_absolute_uri(settings.MEDIA_URL + menu_item_serializer.data['image'])
+        menu_item = get_object_or_404(MenuItem, pk=pk)
+        menu_item_serializer = MenuItemSerializer(menu_item, context={'request': request})
         return JsonResponse(menu_item_serializer.data)
 
 @api_view(['POST'])
