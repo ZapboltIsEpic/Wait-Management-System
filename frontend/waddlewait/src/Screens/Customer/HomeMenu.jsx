@@ -48,21 +48,6 @@ function Item({ item }) {
   const handleAddToCart = () => {
     cart.push(item)
 
-
-    axios.post('http://127.0.0.1:8000/customer/order', { 
-      "table_number": 1, 
-      "items" : [ 
-        {
-          "item_id": 1, 
-          "quantity" : 1
-        }, 
-        {
-          "item_id": 2, 
-          "quantity": 2
-        }],
-      "bill" : 99.60
-  });
-
     setShowNotification(true);
     setTimeout(() => {
       setShowNotification(false);
@@ -76,13 +61,14 @@ function Item({ item }) {
     console.log('click')
   }
 
+  console.log(item.image)
   return (
     <Card sx={{ width: 350, height: 300 }}>
       <Grid onClick={handlePopUpItem}>
         <CardMedia
           sx={{ height: 140 }}
-          // image={item.image}
-          image='http://127.0.0.1:8000/media/menu_images/app1_tomatosoup.jpg'
+          image={item.image}
+          // image='http://127.0.0.1:8000/media/menu_images/app1_tomatosoup.jpg'
           title={item.name}
           />
         <CardContent>
@@ -368,7 +354,7 @@ function HomeMenu() {
   };
 
   const handleAssistance = () => {
-    axios.post('http://127.0.0.1:8000/assistance', {
+    axios.post('http://127.0.0.1:8000/customer/assistance', {
       tableNumber: 1
     });
     setAssistance(true)

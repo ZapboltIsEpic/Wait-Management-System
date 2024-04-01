@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.db.models import Sum
 
 from orders.models import Order
 from waddlewait_app.models import Table
@@ -22,6 +23,8 @@ def createOrder(request):
         if not table_number or not items_data: ## or not items_data:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
+        request_data['table'] = table_number
+
         order_serializer = OrderSerializer(data=request_data)
         if order_serializer.is_valid():
             order_serializer.validated_data['items'] = items_data # Assign table_number to validated data
@@ -53,7 +56,7 @@ def viewCustomerOrder(request, tableNumber):
 def requestCustomerAssistance(request):
     if request.method == 'POST':
 
-        request_data = request.POST
+        request_data = request.data
         table_number = request_data.get('tableNumber')
 
         if not table_number:
@@ -64,21 +67,35 @@ def requestCustomerAssistance(request):
             assistance_serializer.save()
             return JsonResponse({ "message": "Assistance requested successfully"}, status=status.HTTP_201_CREATED)
 
-        return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'message': 'Table number not found',
+                             'error': assistance_serializer.errors}, status=status.HTTP_404_NOT_FOUND)
     
 @api_view(['POST'])
 def requestCustomerBill(request):
     if request.method == 'POST':
 
-        request_data = request.POST
-        table_number = request_data.get('tableNumber')
+        request_data = request.data
+        table_number = request_data.get('table_number')
 
         if not table_number:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
 
+        orders = Order.objects.filter(table=table_number)
+
+        if not orders.exists():
+            return JsonResponse({'message': 'No orders found for the table number'}, status=status.HTTP_404_NOT_FOUND)
+
+        total_amount = orders.aggregate(total=Sum('bill'))['total']
+        if total_amount is None:
+            return JsonResponse({'message': 'No bill available for the table number'}, status=status.HTTP_404_NOT_FOUND)
+
+        request_data['total_amount'] = total_amount
+
         bill_serializer = BillRequestSerializer(data=request_data)
         if bill_serializer.is_valid():
            bill_serializer.save()
-           return JsonResponse({ "message": "Bill requested successfully"}, status=status.HTTP_201_CREATED)
+           return JsonResponse({'total_amount': total_amount, 
+                                'message': "Bill requested successfully"}, status=status.HTTP_201_CREATED)
 
-        return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'message': 'Table number not found',
+                             'errors': bill_serializer.errors}, status=status.HTTP_404_NOT_FOUND)
