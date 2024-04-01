@@ -8,7 +8,7 @@ from waddlewaitMenu.models import MenuItem
 class Order(models.Model):
     # Reference to the table model
     created_at = models.DateTimeField(auto_now_add=True)
-    table_number = models.ForeignKey(Table, on_delete=models.CASCADE)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE)
     
     ready_to_serve = models.BooleanField(default=False)
     is_complete = models.BooleanField(default=False)

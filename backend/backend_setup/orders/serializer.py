@@ -16,9 +16,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 
+        fields = ['id',
                   'created_at',
-                  'table_number', 
+                  'table',
                   'ready_to_serve',
                   'is_complete',
                   'wait_staff_assigned',
