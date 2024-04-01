@@ -53,7 +53,7 @@ def viewCustomerOrder(request, tableNumber):
 def requestCustomerAssistance(request):
     if request.method == 'POST':
 
-        request_data = request.POST
+        request_data = request.data
         table_number = request_data.get('tableNumber')
 
         if not table_number:
@@ -64,14 +64,15 @@ def requestCustomerAssistance(request):
             assistance_serializer.save()
             return JsonResponse({ "message": "Assistance requested successfully"}, status=status.HTTP_201_CREATED)
 
-        return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'message': 'Table number not found',
+                             'error': assistance_serializer.errors}, status=status.HTTP_404_NOT_FOUND)
     
 @api_view(['POST'])
 def requestCustomerBill(request):
     if request.method == 'POST':
 
-        request_data = request.POST
-        table_number = request_data.get('tableNumber')
+        request_data = request.data
+        table_number = request_data.get('table_number')
 
         if not table_number:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
@@ -81,4 +82,5 @@ def requestCustomerBill(request):
            bill_serializer.save()
            return JsonResponse({ "message": "Bill requested successfully"}, status=status.HTTP_201_CREATED)
 
-        return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'message': 'Table number not found',
+                             'errors': bill_serializer.errors}, status=status.HTTP_404_NOT_FOUND)

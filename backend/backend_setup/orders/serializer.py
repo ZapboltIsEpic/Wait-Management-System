@@ -39,7 +39,7 @@ class BillRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BillRequest
         fields = ['id',
-                  'order',
+                  'table_number',
                   'staff_name',
                   'request_status'
                   ]
