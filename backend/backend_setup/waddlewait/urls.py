@@ -21,10 +21,13 @@ from waddlewait_app import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('authentication/', include('users.urls')),
-    # path('assistance/', include('assistance.urls')),
+    path('assistance/', include('assistance.urls')),
     path('orders/', include('orders.urls')),
     path('tables/', views.table_list),
     path('table/<int:table_number>', views.table_detail),

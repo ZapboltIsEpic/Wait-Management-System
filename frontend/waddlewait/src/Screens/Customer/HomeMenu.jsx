@@ -22,7 +22,12 @@ import {
   TableHead, 
   TableRow, 
   TableCell, 
-  TableBody
+  TableBody,
+  FormControl,
+  TextField,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material';
 import {
   TabPanel,
@@ -42,11 +47,19 @@ function Item({ item, setShowPopUpItem }) {
   const handleAddToCart = () => {
     cart.push(item)
 
-    // axios.post('http://127.0.0.1:8000/customer/order', {
-    //   tableNumber: 1,
-    //   items: [{item_id: 1, quantity: 1}, {item_id: 2, quantity: 2}],
-    //   bill: ''
-    // });
+    axios.post('http://127.0.0.1:8000/customer/order', { 
+      "table_number": 1, 
+      "items" : [ 
+        {
+          "item_id": 1, 
+          "quantity" : 1
+        }, 
+        {
+          "item_id": 2, 
+          "quantity": 2
+        }],
+      "bill" : 99.60
+  });
 
     setShowNotification(true);
     setTimeout(() => {
@@ -208,14 +221,55 @@ function Cart({ showCart, setShowCart, setBill }) {
   );
 }
 
+
 function HomeMenu() {
-  const [value, setValue] = React.useState(1)
+  const [cateId, setCateId] = React.useState(1)
+
+  // Table Selection variables
+  const [groupSize, setGroupSize] = React.useState('')
+  const [tableNum, setTableNum] = React.useState('')
+  const [showError, setShowError] = React.useState(false)
+  const [errorMessage, setErrorMessage] = React.useState("")
+  const [tableData, setTableData] = React.useState([]);
+  const [currentTables, setCurrentTables] = React.useState([]);
+  const [confirmTable, setConfirmTable] = React.useState('')
+
+  // Menu variables
   const [assistance, setAssistance] = React.useState(false);
   const [showPopUpItem, setShowPopUpItem] = React.useState(false);
   const [showCart, setShowCart] = React.useState(false);
   const [bill, setBill] = React.useState(false)
   const [categories, setCategories] = React.useState([]);
   const [items, setItems] = React.useState([]);
+
+  const navigate = useNavigate();
+	const navigateTo = (link) => {
+		navigate(link);
+	}
+
+  React.useEffect(() => {
+    const fetchTables = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/tables');
+        const data = response.data;
+        let newData = [];
+        data.forEach(table => {
+          // Check if table is used
+          if (table.table_in_use === false) {
+            newData.push(table);
+          }
+
+        })
+        setTableData(newData);
+        setCurrentTables(newData);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchTables();
+  }, []);
 
   React.useEffect(() => {
     const fetchMenu = async () => {
@@ -231,12 +285,46 @@ function HomeMenu() {
     fetchMenu();
   }, []);
 
+  // Table Selection helpers
+  const changeGroupSize = (event) => {
+    setGroupSize(event.target.value);
+    setTableNum('');
+    setShowError(false);
+    // Change available tables
+    let filteredTables = [];
+    tableData.forEach(table => {
+      if (table.seats_max >= event.target.value) {
+        filteredTables.push(table);
+      }
+    })
+    setCurrentTables(filteredTables);
+
+  };
+
+  const changeTableNum = (event) => {
+    setTableNum(event.target.value);
+  };
+
+  const handleConfirm = () => {
+    if (tableNum && groupSize && groupSize > 0) {
+      setConfirmTable(tableNum)
+    } else if (tableNum === '' && groupSize <= 0) {
+      setErrorMessage("Please enter the group size and select the table number.")
+    } else if (groupSize <= 0) {
+      setErrorMessage("Please enter the group size.")
+    } else if (tableNum === '') {
+      setErrorMessage("Please select a Table Number.")
+    }
+    setShowError(true);
+  };
+
+  // Menu helpers
   const handleOpenCart = () => {
     setShowCart(true);
   };
   
-  const handleChangeTab = (event, newValue) => {
-    setValue(newValue);
+  const handleChangeTab = (event, newCateId) => {
+    setCateId(newCateId);
   };
 
   const handleAssistance = () => {
@@ -246,91 +334,159 @@ function HomeMenu() {
     setAssistance(true)
   }
 
-  const navigate = useNavigate();
-
-	const navigateTo = (link) => {
-		navigate(link);
-	}
-
   return (
     <>
-      <h1>
-        Welcome! Please select your meal!
+    {confirmTable === '' ? (
+      // Table Selection
+      <>
+        <h1 >
+          Table Selection
+        </h1>
+        
+        <Grid container spacing={5} style={{ justifyContent: 'center' }}>
+          <Grid item>
+            <FormControl fullWidth>
+              <TextField
+                id="groupSizeField"
+                label="Group Size"
+                type="number"
+                inputProps={{
+                  min: 1
+                }}
+                value={groupSize}
+                onChange={changeGroupSize}
+                sx={{ width: 150 }}
+              />
+            </FormControl>
+          </Grid>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginX: 2}}>
-          <Button
-            variant="contained"
-            color='warning'
-            endIcon={<NotificationImportant />}
-            onClick={handleAssistance}
-            >
-            Assistance 
-          </Button>
-          <Snackbar open={assistance} autoHideDuration={3000} onClose={() => setAssistance(false)}>
-            <Alert
-              onClose={() => setAssistance(false)}
-              severity="info"
-              variant="filled"
-              sx={{ width: '100%' }}
-            >
-              A waiter will be with you shortly!
+          <Grid item>
+            <FormControl fullWidth>
+              <InputLabel id="groupSizeLabel">Table Number</InputLabel>
+              <Select 
+                labelId="tableNumField"
+                label="Table Number" 
+                type="number"
+                value={tableNum}
+                onChange={changeTableNum}
+                sx={{ width: 150 }}
+              >
+                {currentTables.length > 0 ? (
+                  currentTables.map((item, index) => (
+                    <MenuItem key={index} value={item.table_number}>{item.table_number}</MenuItem>
+                  ))
+                ) : (
+                  <MenuItem value="">No tables available</MenuItem>
+                )}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+
+        <br />
+
+        <Button variant="contained" onClick={handleConfirm} className="custom-button" color='warning' >
+          Confirm
+        </Button>
+
+        <br /><br />
+
+        <Button variant="outlined" onClick={() => navigate('/')} className="custom-button" color='warning' >
+          Back
+        </Button>
+
+        <br /><br />
+
+        {showError && (
+          <>
+            <Alert severity="error" sx={{ width: '100%' }}>
+              {errorMessage}
             </Alert>
-          </Snackbar>
-          <div>
-            <Button 
-              variant="outlined"
-              onClick={() => {
-                navigateTo('/');
-              }}
-              className="button"
+          </>
+        )}
+      </>
+    ):(
+      // Menu
+      <>
+        <h1>
+          Welcome! Please select your meal!
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginX: 2}}>
+            <Button
+              variant="contained"
               color='warning'
-            >
-              Exit
+              endIcon={<NotificationImportant />}
+              onClick={handleAssistance}
+              >
+              Assistance 
             </Button>
-          </div>
-          <Button
-            variant="contained"
-            color='warning'
-            endIcon={<ShoppingCart />}
-            onClick={handleOpenCart}
-            >
-            Orders 
-          </Button>
-          <Cart showCart={showCart} setShowCart={setShowCart} setBill={setBill} />
-          <PopUpItem showPopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem} />
-          <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
-            <Alert
-              onClose={() => setBill(false)}
-              severity="info"
-              variant="filled"
-              sx={{ width: '100%' }}
-            >
-              A waiter is coming with the bill. Thank you for dining with us!
-            </Alert>
-          </Snackbar>
-        </Box>
-      </h1>
+            <Snackbar open={assistance} autoHideDuration={3000} onClose={() => setAssistance(false)}>
+              <Alert
+                onClose={() => setAssistance(false)}
+                severity="info"
+                variant="filled"
+                sx={{ width: '100%' }}
+              >
+                A waiter will be with you shortly!
+              </Alert>
+            </Snackbar>
+            <div>
+              <Button 
+                variant="outlined"
+                onClick={() => {
+                  navigateTo('/');
+                }}
+                className="button"
+                color='warning'
+              >
+                Exit
+              </Button>
+            </div>
+            <Button
+              variant="contained"
+              color='warning'
+              endIcon={<ShoppingCart />}
+              onClick={handleOpenCart}
+              >
+              Orders 
+            </Button>
+            <Cart showCart={showCart} setShowCart={setShowCart} setBill={setBill} />
+            <PopUpItem showPopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem} />
+            <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
+              <Alert
+                onClose={() => setBill(false)}
+                severity="info"
+                variant="filled"
+                sx={{ width: '100%' }}
+              >
+                A waiter is coming with the bill. Thank you for dining with us!
+              </Alert>
+            </Snackbar>
+          </Box>
+        </h1>
 
-      <TabContext value={String(value)}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={String(value)} 
-            onChange={handleChangeTab}
-            textColor="inherit"
-            indicatorColor="inherit"
-          >
-            {categories.map((cate) => (
-              <Tab key={cate.id} label={cate.name} value={String(cate.id)} />
-            ))}
-          </Tabs>
-        </Box>
-        {categories.map((cate) => (
-          <TabPanel value={String(cate.id)} key={cate.id}>
-            <Items items={items} cateId={cate.id} PopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem}/>
-          </TabPanel>
-        ))}
+        <TabContext value={String(cateId)}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={String(cateId)} 
+              onChange={handleChangeTab}
+              textColor="inherit"
+              indicatorColor="inherit"
+            >
+              {categories.map((cate) => (
+                <Tab key={cate.id} label={cate.name} value={String(cate.id)} />
+              ))}
+            </Tabs>
+          </Box>
+          {categories.map((cate) => (
+            <TabPanel value={String(cate.id)} key={cate.id}>
+              <Items items={items} cateId={cate.id} PopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem}/>
+            </TabPanel>
+          ))}
 
-      </TabContext>
-    </>
+        </TabContext>
+      </>
+    )}
+  </>
   );
 }
 

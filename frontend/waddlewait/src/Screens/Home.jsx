@@ -30,7 +30,7 @@ function Home() {
         <Grid item>
           <Button 
             variant='outlined'
-            onClick={() => navigate('/customer/table-selection')}
+            onClick={() => navigate('/customer')}
             color='warning'
           >
             Costumer

@@ -458,6 +458,78 @@
   }
 },
 {
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add assistance",
+    "content_type": 13,
+    "codename": "add_assistance"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change assistance",
+    "content_type": 13,
+    "codename": "change_assistance"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete assistance",
+    "content_type": 13,
+    "codename": "delete_assistance"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view assistance",
+    "content_type": 13,
+    "codename": "view_assistance"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add bill request",
+    "content_type": 14,
+    "codename": "add_billrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change bill request",
+    "content_type": 14,
+    "codename": "change_billrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete bill request",
+    "content_type": 14,
+    "codename": "delete_billrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view bill request",
+    "content_type": 14,
+    "codename": "view_billrequest"
+  }
+},
+{
   "model": "contenttypes.contenttype",
   "pk": 1,
   "fields": {
@@ -551,6 +623,22 @@
   "fields": {
     "app_label": "orders",
     "model": "order"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "assistance",
+    "model": "assistance"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "orders",
+    "model": "billrequest"
   }
 },
 {
@@ -1267,6 +1355,50 @@
     "price": "3.49",
     "image": "menu_images/drinks5_wine.jpg",
     "category": 4
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 1,
+  "fields": {
+    "created_at": "2024-03-30T12:00:00Z",
+    "table_number": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.00"
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 1,
+  "fields": {
+    "order": 1,
+    "item": 1,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": true
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 2,
+  "fields": {
+    "order": 1,
+    "item": 1,
+    "quantity": 3,
+    "is_preparing": true,
+    "is_ready": true
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 1,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "Bob",
+    "tableStatus": false
   }
 }
 ]

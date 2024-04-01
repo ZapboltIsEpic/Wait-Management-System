@@ -12,6 +12,8 @@ import ManagerMain from './Screens/Manager/ManagerMain';
 import CreateStaffAccount from './Screens/Accounts/CreateAccount';
 import KitchenOrderRequests from './Screens/Kitchen/KitchenOrderRequests';
 import KitchenOrderRequestsCompleted from './Screens/Kitchen/KitchenOrderRequestsCompleted';
+import WaiterOrderRequests from './Screens/Waiter/WaiterOrderRequests';
+import WaiterAssistanceRequests from './Screens/Waiter/WaiterAssistanceRequests';
 
 function App() {
   return (
@@ -25,8 +27,7 @@ function App() {
         <Route path="/staff/create-account" element={<CreateStaffAccount/>} />
 
         {/* Customer Routes */}
-        <Route path="/customer/table-selection" element={<CustomerTableSelection/>} />
-        <Route path="/customer/home-menu" element={<CustomerHomeMenu/>} />
+        <Route path="/customer" element={<CustomerHomeMenu/>} />
 
         {/* Kitchen Routes */}
         <Route path="/kitchen/main" element={<KitchenMain/>} />
@@ -35,6 +36,8 @@ function App() {
 
         {/* Waiter Routes */}
         <Route path="/waiter/main" element={<WaiterMain/>} />
+        <Route path="/waiter/order-requests" element={<WaiterOrderRequests/>} />
+        <Route path="/waiter/assistance-requests" element={<WaiterAssistanceRequests/>} />
 
         {/* Manager Routes */}
         <Route path="/manager/main" element={<ManagerMain/>} />
