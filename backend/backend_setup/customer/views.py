@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Sum
 
+from collections import defaultdict, Counter
 from orders.models import Order
 from waddlewait_app.models import Table
-from orders.serializer import OrderSerializer, BillRequestSerializer
+from orders.serializer import OrderSerializer, BillRequestSerializer, OrderItemSerializer
 from assistance.serializer import AssistanceSerializer
 
 from rest_framework.decorators import api_view
@@ -23,15 +24,39 @@ def createOrder(request):
         if not table_number or not items_data: ## or not items_data:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
-        request_data['table'] = table_number
+        total_bill = sum(item['price'] for item in items_data)
 
-        order_serializer = OrderSerializer(data=request_data)
+        order_data = {
+            'table': table_number,
+            'bill' : total_bill
+        }
+
+        order_serializer = OrderSerializer(data=order_data)
+
         if order_serializer.is_valid():
-            order_serializer.validated_data['items'] = items_data # Assign table_number to validated data
-            order_serializer.save()  # Save the serializer
-            return JsonResponse({ "message": "Items added to order successfully"}, status=status.HTTP_201_CREATED)
+            order_instance = order_serializer.save()  # Save the serializer
 
-        return JsonResponse({'message': 'Table number or order item not found'}, status=status.HTTP_404_NOT_FOUND)
+            item_counts = Counter(item_data['id'] for item_data in items_data)
+            
+            for item_id in item_counts.keys():
+                # item_id, quantity = item_data.items()
+                order_item_data = {
+                    'order': order_instance.id,
+                    'item': item_id,
+                    'quantity': item_counts[item_id]
+                }
+
+                order_item_serializer = OrderItemSerializer(data=order_item_data)
+
+                if order_item_serializer.is_valid():
+                    order_item_serializer.save()
+                else:
+                    return JsonResponse({'message': 'Invalid item data'}, status=status.HTTP_400_BAD_REQUEST)
+
+            return JsonResponse({"message": "Items added to order successfully",
+                                 'total_amount': total_bill}, status=status.HTTP_201_CREATED)
+
+        return JsonResponse({'message': 'Invalid order data'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
 def viewCustomerOrder(request, tableNumber):

@@ -26,14 +26,6 @@ class OrderSerializer(serializers.ModelSerializer):
                   'bill']
         read_only_fields = ['created_at']
 
-    def create(self, validated_data):
-        items_data = validated_data.pop('items')  # Extract items data from validated data
-        order = Order.objects.create(**validated_data)  # Create order instance
-
-        for item_data in items_data:
-            OrderItem.objects.create(order=order, **item_data)  # Create order items
-        return order
-
 class BillRequestSerializer(serializers.ModelSerializer):
 
     class Meta:

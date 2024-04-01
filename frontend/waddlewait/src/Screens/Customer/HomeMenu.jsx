@@ -58,17 +58,14 @@ function Item({ item }) {
 
   const handlePopUpItem = () => {
     setShowPopUpItem(true)
-    console.log('click')
   }
 
-  console.log(item.image)
   return (
     <Card sx={{ width: 350, height: 300 }}>
       <Grid onClick={handlePopUpItem}>
         <CardMedia
           sx={{ height: 140 }}
           image={item.image}
-          // image='http://127.0.0.1:8000/media/menu_images/app1_tomatosoup.jpg'
           title={item.name}
           />
         <CardContent>
@@ -190,10 +187,22 @@ function Items({ items, cateId }) {
   )
 }
 
-function Cart({ showCart, setShowCart, setBill }) {
+function Cart({ showCart, setShowCart, setBill, setOrder, tableNum }) {
   const handleBill = () => {
     setShowCart(false)
+    axios.post('http://127.0.0.1:8000/customer/bill', {
+      table_number: tableNum,
+    });
     setBill(true)
+  }
+
+  const handleOrder = () => {
+    setShowCart(false)
+    // axios.post('http://127.0.0.1:8000/customer/order', {
+    //   table_number: tableNum,
+    //   items: cart
+    // });
+    setOrder(true)
   }
 
   var items = cart
@@ -240,8 +249,8 @@ function Cart({ showCart, setShowCart, setBill }) {
           <Button onClick={handleBill} color='warning' variant="contained">
             Bill
           </Button>
-          <Button onClick={() => setShowCart(false)} color='warning'>
-            Close
+          <Button onClick={handleOrder} color='warning' variant="contained">
+            Order
           </Button>
           
         </Box>
@@ -266,6 +275,7 @@ function HomeMenu() {
   const [assistance, setAssistance] = React.useState(false);
   const [showCart, setShowCart] = React.useState(false);
   const [bill, setBill] = React.useState(false)
+  const [order, setOrder] = React.useState(false)
   const [categories, setCategories] = React.useState([]);
   const [items, setItems] = React.useState([]);
 
@@ -478,7 +488,14 @@ function HomeMenu() {
               >
               Orders 
             </Button>
-            <Cart showCart={showCart} setShowCart={setShowCart} setBill={setBill} />
+
+            <Cart 
+              showCart={showCart} 
+              setShowCart={setShowCart} 
+              setBill={setBill} 
+              setOrder={setOrder} 
+              tableNum={confirmTable}
+            />
 
             <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
               <Alert
@@ -488,6 +505,17 @@ function HomeMenu() {
                 sx={{ width: '100%' }}
               >
                 A waiter is coming with the bill. Thank you for dining with us!
+              </Alert>
+            </Snackbar>
+
+            <Snackbar open={order} autoHideDuration={8000} onClose={() => setOrder(false)}>
+              <Alert
+                onClose={() => setBill(false)}
+                severity="info"
+                variant="filled"
+                sx={{ width: '100%' }}
+              >
+                Your order is been place. Please wait for your meal!
               </Alert>
             </Snackbar>
 
