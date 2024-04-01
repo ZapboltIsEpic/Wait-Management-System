@@ -29,6 +29,6 @@ class OrderItem(models.Model):
     is_ready = models.BooleanField(default=False)
 
 class BillRequest(models.Model):
-    table = models.ForeignKey(Order, on_delete=models.CASCADE)
-    staff_name = models.CharField(max_length=255)
+    table_number = models.ForeignKey(Order, on_delete=models.CASCADE)
+    staff_name = models.CharField(max_length=255, default="")
     request_status = models.BooleanField(default=False)
