@@ -35,18 +35,19 @@ import {
 } from '@mui/lab';
 import {
   NotificationImportant,
-  ShoppingCart
+  ShoppingCart,
+  DeleteOutline
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
-var cart = []
-
-function Item({ item }) {
+function Item({ item, cart, setCart }) {
   const [showNotification, setShowNotification] = React.useState(false);
   const [showPopUpItem, setShowPopUpItem] = React.useState(false);
 
   const handleAddToCart = () => {
-    cart.push(item)
+    var newCart = cart
+    newCart.push(item)
+    setCart(newCart)
 
     setShowNotification(true);
     setTimeout(() => {
@@ -164,7 +165,7 @@ function Item({ item }) {
   );
 }
 
-function Items({ items, cateId }) {
+function Items({ items, cateId, cart, setCart }) {
   var cateItems = [];
 
   for (var index in items) {
@@ -179,7 +180,7 @@ function Items({ items, cateId }) {
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         {cateItems.map((item) => (
           <Grid item key={item.id}>
-            <Item item={item} />
+            <Item item={item} cart={cart} setCart={setCart}/>
           </Grid>
         ))}
       </Grid>
@@ -187,7 +188,7 @@ function Items({ items, cateId }) {
   )
 }
 
-function Cart({ showCart, setShowCart, setBill, setOrder, tableNum }) {
+function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNum }) {
   const handleBill = () => {
     setShowCart(false)
     axios.post('http://127.0.0.1:8000/customer/bill', {
@@ -205,7 +206,12 @@ function Cart({ showCart, setShowCart, setBill, setOrder, tableNum }) {
     setOrder(true)
   }
 
-  var items = cart
+  const handleDeleteItem = (itemIndex) => {
+    var newCart = cart
+    newCart.splice(itemIndex,1)
+    setCart(newCart)
+  }
+
   return (
     <Dialog 
       open={showCart} 
@@ -225,13 +231,17 @@ function Cart({ showCart, setShowCart, setBill, setOrder, tableNum }) {
               <TableRow>
                 <TableCell>Item Name</TableCell>
                 <TableCell align="right">Price</TableCell>
+                <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((item) => (
+              {cart.map((item, itemIndex) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
                   <TableCell align="right">${item.price}</TableCell>
+                  <TableCell align="right">
+                    <DeleteOutline onClick={() => handleDeleteItem(itemIndex)} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -278,6 +288,7 @@ function HomeMenu() {
   const [order, setOrder] = React.useState(false)
   const [categories, setCategories] = React.useState([]);
   const [items, setItems] = React.useState([]);
+  const [cart, setCart] = React.useState([]);
 
   const navigate = useNavigate();
 	const navigateTo = (link) => {
@@ -495,6 +506,8 @@ function HomeMenu() {
               setBill={setBill} 
               setOrder={setOrder} 
               tableNum={confirmTable}
+              cart={cart}
+              setCart={setCart}
             />
 
             <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
@@ -536,7 +549,7 @@ function HomeMenu() {
           </Box>
           {categories.map((cate) => (
             <TabPanel value={String(cate.id)} key={cate.id}>
-              <Items items={items} cateId={cate.id} />
+              <Items items={items} cateId={cate.id} cart={cart} setCart={setCart} />
             </TabPanel>
           ))}
         </TabContext>
