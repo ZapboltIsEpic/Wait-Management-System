@@ -16,13 +16,12 @@ Start coding. Working on customer(table selection, menu) and home page. Finished
 ### Week 5:
 Working on customer menu page. Done the design interface of the menu and buttons(e.g. assistance, order and bill) using own example. 
 
-### Week 6:
-
-
-
 ### Week 7:
-
-
+Connecting with the backend database. 
+    E.g. 
+        get menu from backend
+        post table number, bills, orders
+Added pop up dialog to the items.
 
 ### Week 8:
 
