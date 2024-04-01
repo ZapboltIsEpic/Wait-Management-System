@@ -1363,10 +1363,11 @@
   "fields": {
     "created_at": "2024-03-30T12:00:00Z",
     "table": 1,
-    "ready_to_serve": false,
+    "ready_to_serve": true,
+
     "is_complete": false,
-    "wait_staff_assigned": "",
-    "deliver": false,
+    "wait_staff_assigned": "Bob",
+    "deliver": true,
     "bill": "99.00"
   }
 },
@@ -1391,14 +1392,4 @@
     "is_preparing": true,
     "is_ready": true
   }
-},
-{
-  "model": "assistance.assistance",
-  "pk": 1,
-  "fields": {
-    "tableNumber": 1,
-    "staffName": "Bob",
-    "tableStatus": false
-  }
 }
-]
