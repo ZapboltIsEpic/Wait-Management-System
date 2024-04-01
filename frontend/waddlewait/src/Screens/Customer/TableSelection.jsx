@@ -43,14 +43,14 @@ function TableSelection() {
   const handleConfirm = () => {
     if (tableNum && groupSize && groupSize > 0) {
       navigate('/customer/home-menu')
-    } else {
-      if (groupSize <= 0) {
-        setErrorMessage("Please have a group size of at least 1.")
-      } else if (tableNum === '') {
-        setErrorMessage("Please select a Table Number.")
-      }
-      setShowError(true);
+    } else if (tableNum === '' && groupSize <= 0) {
+      setErrorMessage("Please enter the group size and select the table number.")
+    } else if (groupSize <= 0) {
+      setErrorMessage("Please enter the group size.")
+    } else if (tableNum === '') {
+      setErrorMessage("Please select a Table Number.")
     }
+    setShowError(true);
   };
 
 
@@ -91,6 +91,9 @@ function TableSelection() {
               id="groupSizeField"
               label="Group Size"
               type="number"
+              inputProps={{
+                min: 1
+              }}
               value={groupSize}
               onChange={changeGroupSize}
               sx={{ width: 150 }}

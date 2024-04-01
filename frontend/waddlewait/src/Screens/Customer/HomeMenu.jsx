@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
   Tab,
   Typography,
@@ -35,32 +36,46 @@ import { useNavigate } from 'react-router-dom';
 
 var cart = []
 
-function Item({ item }) {
+function Item({ item, setShowPopUpItem }) {
   const [showNotification, setShowNotification] = React.useState(false);
 
   const handleAddToCart = () => {
     cart.push(item)
+
+    // axios.post('http://127.0.0.1:8000/customer/order', {
+    //   tableNumber: 1,
+    //   items: [{item_id: 1, quantity: 1}, {item_id: 2, quantity: 2}],
+    //   bill: ''
+    // });
+
     setShowNotification(true);
     setTimeout(() => {
       setShowNotification(false);
     }, 2000);
   };
 
+  const handlePopUpItem = () => {
+    setShowPopUpItem(true)
+    console.log('click')
+  }
+
   return (
     <Card sx={{ width: 350, height: 300 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={item.image}
-        title={item.name}
-      />
-      <CardContent>
-        <Typography gutterBottom>
-          {item.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ height: 50 }} >
-          {item.description}
-        </Typography>
-      </CardContent>
+      <Grid onClick={handlePopUpItem}>
+        <CardMedia
+          sx={{ height: 140 }}
+          image={item.image}
+          title={item.name}
+          />
+        <CardContent>
+          <Typography gutterBottom>
+            {item.name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ height: 50 }} >
+            {item.description}
+          </Typography>
+        </CardContent>
+      </Grid>
       <CardActions>
       <Box 
         sx={{ 
@@ -71,7 +86,7 @@ function Item({ item }) {
         }}
       >
         <Typography variant="body1" color="textSecondary">
-          $ {item.price.toFixed(2)}
+          $ {item.price}
         </Typography>
         <Button 
           size="small" 
@@ -97,11 +112,19 @@ function Item({ item }) {
           {`${item.name} added to cart`}
         </Alert>
       </Snackbar>
+
+
     </Card>
   );
 }
 
-function Items({ items, cateId }) {
+function PopUpItem() {
+  return (<>
+  
+  </>);
+}
+
+function Items({ items, cateId, showPopUpItem, setShowPopUpItem}) {
   var cateItems = [];
 
   for (var index in items) {
@@ -116,7 +139,7 @@ function Items({ items, cateId }) {
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         {cateItems.map((item) => (
           <Grid item key={item.id}>
-            <Item item={item} />
+            <Item item={item} showPopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem}/>
           </Grid>
         ))}
       </Grid>
@@ -156,7 +179,7 @@ function Cart({ showCart, setShowCart, setBill }) {
               {items.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
-                  <TableCell align="right">${item.price.toFixed(2)}</TableCell>
+                  <TableCell align="right">${item.price}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -184,100 +207,28 @@ function Cart({ showCart, setShowCart, setBill }) {
   );
 }
 
-function itemExample() {
-  var items = []
-
-  // {"id", "name", "description", "price",”image” "category": { "id", "name"} } 
-  const item0 = {};
-  item0.id = 0
-  item0.name = "Easy Appetizers"
-  item0.image = "https://insanelygoodrecipes.com/wp-content/uploads/2021/05/antipasto-skewers-with-basil-1.jpg"
-  item0.description = "description 0description 0description 0description 0description 0description 0description 0description "
-  item0.price = 5.95
-  item0.category = { "id":0, "name":"Appetizers"}
-  items.push(item0)
-  
-
-  const item1 = {};
-  item1.id = 1
-  item1.name = "Curry"
-  item1.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
-  item1.description = "description 1description 1description 1description 1description 1description 1description 1description "
-  item1.price = 15.95
-  item1.category = { "id":1, "name":"Mains"}
-  items.push(item1)
-
-  const item2 = {};
-  item2.id = 2
-  item2.name = "Curry Chicken"
-  item2.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
-  item2.description = "description 2"
-  item2.price = 15.95
-  item2.category = { "id":1, "name":"Mains"}
-  items.push(item2)
-
-  const item3 = {};
-  item3.id = 3
-  item3.name = "Curry Beef"
-  item3.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
-  item3.description = "description 3"
-  item3.price = 15.95
-  item3.category = { "id":1, "name":"Mains"}
-  items.push(item3)
-
-  const item4 = {};
-  item4.id = 4
-  item4.name = "Curry Seafood"
-  item4.image = "https://www.allrecipes.com/thmb/FL-xnyAllLyHcKdkjUZkotVlHR8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/46822-indian-chicken-curry-ii-DDMFS-4x3-39160aaa95674ee395b9d4609e3b0988.jpg"
-  item4.description = "description 4"
-  item4.price = 18.95
-  item4.category = { "id":1, "name":"Mains"}
-  items.push(item4)
-
-  const item5 = {};
-  item5.id = 5
-  item5.name = "Ice Cream"
-  item5.image = "https://www.allrecipes.com/thmb/pH8hoFfytcOT9XVK1DSmxv3L0OU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/140877-easy-eggless-strawberry-ice-cream-ddmfs-3x4-1-092e4d11b59049c8b3843014ea3c57f2.jpg"
-  item5.description = "description 5"
-  item5.price = 15
-  item5.category = { "id":2, "name":"Desserts"}
-  items.push(item5)
-
-  return items
-}
-
-function cateExample() {
-  var cate = []
-
-  var cate0 = {}
-  cate0.id = 0
-  cate0.name = "Appetizers"
-  cate.push(cate0)
-
-  var cate1 = {}
-  cate1.id = 1
-  cate1.name = "Mains"
-  cate.push(cate1)
-
-  var cate2 = {}
-  cate2.id = 2
-  cate2.name = "Desserts"
-  cate.push(cate2)
-
-  var cate3 = {}
-  cate3.id = 3
-  cate3.name = "Drinks"
-  cate.push(cate3)
-  
-  return cate
-}
-
 function HomeMenu() {
-  const [value, setValue] = React.useState(0)
-  const [assistant, setAssistant] = React.useState(false);
+  const [value, setValue] = React.useState(1)
+  const [assistance, setAssistance] = React.useState(false);
+  const [showPopUpItem, setShowPopUpItem] = React.useState(false);
   const [showCart, setShowCart] = React.useState(false);
   const [bill, setBill] = React.useState(false)
+  const [categories, setCategories] = React.useState([]);
+  const [items, setItems] = React.useState([]);
 
+  React.useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/menu');
+        const data = response.data;
+        setCategories(data['categories'])
+        setItems(data['menuItems'])
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchMenu();
+  }, []);
 
   const handleOpenCart = () => {
     setShowCart(true);
@@ -287,9 +238,12 @@ function HomeMenu() {
     setValue(newValue);
   };
 
-  var items = itemExample()
-  var cates = cateExample()
-
+  const handleAssistance = () => {
+    // axios.post('http://127.0.0.1:8000/assistance', {
+    //   tableNumber: 1
+    // });
+    setAssistance(true)
+  }
 
   const navigate = useNavigate();
 
@@ -307,13 +261,13 @@ function HomeMenu() {
             variant="contained"
             color='warning'
             endIcon={<NotificationImportant />}
-            onClick={() => setAssistant(true)}
+            onClick={handleAssistance}
             >
-            Assistant 
+            Assistance 
           </Button>
-          <Snackbar open={assistant} autoHideDuration={3000} onClose={() => setAssistant(false)}>
+          <Snackbar open={assistance} autoHideDuration={3000} onClose={() => setAssistance(false)}>
             <Alert
-              onClose={() => setAssistant(false)}
+              onClose={() => setAssistance(false)}
               severity="info"
               variant="filled"
               sx={{ width: '100%' }}
@@ -342,6 +296,7 @@ function HomeMenu() {
             Orders 
           </Button>
           <Cart showCart={showCart} setShowCart={setShowCart} setBill={setBill} />
+          <PopUpItem showPopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem} />
           <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
             <Alert
               onClose={() => setBill(false)}
@@ -361,14 +316,14 @@ function HomeMenu() {
             onChange={handleChangeTab}
             backgroundcolor="warning"
           >
-            {cates.map((cate) => (
+            {categories.map((cate) => (
               <Tab key={cate.id} label={cate.name} value={String(cate.id)} />
             ))}
           </TabList>
         </Box>
-        {cates.map((cate) => (
+        {categories.map((cate) => (
           <TabPanel value={String(cate.id)} key={cate.id}>
-            <Items items={items} cateId={cate.id} />
+            <Items items={items} cateId={cate.id} PopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem}/>
           </TabPanel>
         ))}
 
