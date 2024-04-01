@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {
   Tab,
+  Tabs,
   Typography,
   Box,
   Button,
@@ -24,7 +25,6 @@ import {
   TableBody
 } from '@mui/material';
 import {
-  TabList,
   TabPanel,
   TabContext
 } from '@mui/lab';
@@ -58,13 +58,14 @@ function Item({ item, setShowPopUpItem }) {
     setShowPopUpItem(true)
     console.log('click')
   }
-
+  console.log()
   return (
     <Card sx={{ width: 350, height: 300 }}>
       <Grid onClick={handlePopUpItem}>
         <CardMedia
           sx={{ height: 140 }}
-          image={item.image}
+          // image={item.image}
+          image='http://127.0.0.1:8000/media/menu_images/app1_tomatosoup.jpg'
           title={item.name}
           />
         <CardContent>
@@ -239,9 +240,9 @@ function HomeMenu() {
   };
 
   const handleAssistance = () => {
-    // axios.post('http://127.0.0.1:8000/assistance', {
-    //   tableNumber: 1
-    // });
+    axios.post('http://127.0.0.1:8000/assistance', {
+      tableNumber: 1
+    });
     setAssistance(true)
   }
 
@@ -312,14 +313,15 @@ function HomeMenu() {
 
       <TabContext value={String(value)}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList value={String(value)} 
+          <Tabs value={String(value)} 
             onChange={handleChangeTab}
-            backgroundcolor="warning"
+            textColor="inherit"
+            indicatorColor="inherit"
           >
             {categories.map((cate) => (
               <Tab key={cate.id} label={cate.name} value={String(cate.id)} />
             ))}
-          </TabList>
+          </Tabs>
         </Box>
         {categories.map((cate) => (
           <TabPanel value={String(cate.id)} key={cate.id}>
