@@ -41,11 +41,13 @@ import { useNavigate } from 'react-router-dom';
 
 var cart = []
 
-function Item({ item, setShowPopUpItem }) {
+function Item({ item }) {
   const [showNotification, setShowNotification] = React.useState(false);
+  const [showPopUpItem, setShowPopUpItem] = React.useState(false);
 
   const handleAddToCart = () => {
     cart.push(item)
+
 
     axios.post('http://127.0.0.1:8000/customer/order', { 
       "table_number": 1, 
@@ -65,13 +67,15 @@ function Item({ item, setShowPopUpItem }) {
     setTimeout(() => {
       setShowNotification(false);
     }, 2000);
+
+    setShowPopUpItem(false)
   };
 
   const handlePopUpItem = () => {
     setShowPopUpItem(true)
     console.log('click')
   }
-  console.log()
+
   return (
     <Card sx={{ width: 350, height: 300 }}>
       <Grid onClick={handlePopUpItem}>
@@ -127,18 +131,57 @@ function Item({ item, setShowPopUpItem }) {
         </Alert>
       </Snackbar>
 
+      <Dialog
+        open={showPopUpItem}
+        onClose={() => setShowPopUpItem(false)}
+      >
+        <Card sx={{ width: 700, height: 600 }}>
+          <Grid onClick={handlePopUpItem}>
+            <CardMedia
+              sx={{ height: 250 }}
+              // image={item.image}
+              image='http://127.0.0.1:8000/media/menu_images/app1_tomatosoup.jpg'
+              title={item.name}
+              />
+            <CardContent sx={{ height: 250 }}>
+              <Typography variant="h4">
+                {item.name}
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                {item.description}
+              </Typography>
+            </CardContent>
+          </Grid>
+          <CardActions>
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center', 
+              width: '580px' 
+            }}
+          >
+            <Typography variant="body1" color="textSecondary">
+              $ {item.price}
+            </Typography>
+            <Button 
+              size="small" 
+              color='warning'
+              endIcon={<ShoppingCart />}
+              onClick={handleAddToCart}
+            >
+              Add
+            </Button>
+          </Box>
+          </CardActions>
+        </Card>
+      </Dialog>
 
     </Card>
   );
 }
 
-function PopUpItem() {
-  return (<>
-  
-  </>);
-}
-
-function Items({ items, cateId, showPopUpItem, setShowPopUpItem}) {
+function Items({ items, cateId }) {
   var cateItems = [];
 
   for (var index in items) {
@@ -153,7 +196,7 @@ function Items({ items, cateId, showPopUpItem, setShowPopUpItem}) {
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         {cateItems.map((item) => (
           <Grid item key={item.id}>
-            <Item item={item} showPopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem}/>
+            <Item item={item} />
           </Grid>
         ))}
       </Grid>
@@ -221,7 +264,6 @@ function Cart({ showCart, setShowCart, setBill }) {
   );
 }
 
-
 function HomeMenu() {
   const [cateId, setCateId] = React.useState(1)
 
@@ -236,7 +278,6 @@ function HomeMenu() {
 
   // Menu variables
   const [assistance, setAssistance] = React.useState(false);
-  const [showPopUpItem, setShowPopUpItem] = React.useState(false);
   const [showCart, setShowCart] = React.useState(false);
   const [bill, setBill] = React.useState(false)
   const [categories, setCategories] = React.useState([]);
@@ -298,7 +339,6 @@ function HomeMenu() {
       }
     })
     setCurrentTables(filteredTables);
-
   };
 
   const changeTableNum = (event) => {
@@ -420,6 +460,7 @@ function HomeMenu() {
               >
               Assistance 
             </Button>
+
             <Snackbar open={assistance} autoHideDuration={3000} onClose={() => setAssistance(false)}>
               <Alert
                 onClose={() => setAssistance(false)}
@@ -430,6 +471,7 @@ function HomeMenu() {
                 A waiter will be with you shortly!
               </Alert>
             </Snackbar>
+
             <div>
               <Button 
                 variant="outlined"
@@ -451,7 +493,7 @@ function HomeMenu() {
               Orders 
             </Button>
             <Cart showCart={showCart} setShowCart={setShowCart} setBill={setBill} />
-            <PopUpItem showPopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem} />
+
             <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
               <Alert
                 onClose={() => setBill(false)}
@@ -462,6 +504,7 @@ function HomeMenu() {
                 A waiter is coming with the bill. Thank you for dining with us!
               </Alert>
             </Snackbar>
+
           </Box>
         </h1>
 
@@ -479,10 +522,9 @@ function HomeMenu() {
           </Box>
           {categories.map((cate) => (
             <TabPanel value={String(cate.id)} key={cate.id}>
-              <Items items={items} cateId={cate.id} PopUpItem={showPopUpItem} setShowPopUpItem={setShowPopUpItem}/>
+              <Items items={items} cateId={cate.id} />
             </TabPanel>
           ))}
-
         </TabContext>
       </>
     )}
