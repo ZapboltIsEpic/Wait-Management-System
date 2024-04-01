@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 from .models import MenuItem, Category
 from .serializers import CategorySerializer, MenuItemSerializer
@@ -57,10 +59,11 @@ def menuItemsByCategory(request, categoryName):
         return Response(category_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 @api_view(['GET'])
-def menuItem(request, categoryName, id):
+def menuItem(request, categoryName, pk):
     if request.method == 'GET':
-        menu_item = get_object_or_404(MenuItem, pk=id)
+        menu_item = get_object_or_404(MenuItem, pk=pk)
         menu_item_serializer = MenuItemSerializer(menu_item)
+        # menu_item_serializer.data['image'] = request.build_absolute_uri(settings.MEDIA_URL + menu_item_serializer.data['image'])
         return JsonResponse(menu_item_serializer.data)
 
 @api_view(['POST'])
