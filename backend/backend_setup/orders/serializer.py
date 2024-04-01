@@ -18,7 +18,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['id', 
                   'created_at',
-                  'table_number', 
+                  'table', 
                   'ready_to_serve',
                   'is_complete',
                   'wait_staff_assigned',
@@ -40,6 +40,7 @@ class BillRequestSerializer(serializers.ModelSerializer):
         model = BillRequest
         fields = ['id',
                   'table_number',
+                  'total_amount',
                   'staff_name',
                   'request_status'
                   ]

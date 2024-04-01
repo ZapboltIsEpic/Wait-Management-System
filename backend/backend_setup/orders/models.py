@@ -8,7 +8,7 @@ from waddlewaitMenu.models import MenuItem
 class Order(models.Model):
     # Reference to the table model
     created_at = models.DateTimeField(auto_now_add=True)
-    table_number = models.ForeignKey(Table, on_delete=models.CASCADE)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE)
     
     ready_to_serve = models.BooleanField(default=False)
     is_complete = models.BooleanField(default=False)
@@ -30,5 +30,6 @@ class OrderItem(models.Model):
 
 class BillRequest(models.Model):
     table_number = models.ForeignKey(Order, on_delete=models.CASCADE)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     staff_name = models.CharField(max_length=255, default="")
     request_status = models.BooleanField(default=False)
