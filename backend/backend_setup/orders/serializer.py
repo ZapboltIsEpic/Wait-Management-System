@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Order, OrderItem
+from waddlewait_app.models import Table
+from .models import Order, OrderItem, BillRequest
 from waddlewait_app.serializers import TableSerializer
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -13,9 +14,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
                   'is_ready']
         
 class OrderSerializer(serializers.ModelSerializer):
-    # items = OrderItemSerializer(many=True, read_only=True)
-    # table = TableSerializer(read_only=True)
-
     class Meta:
         model = Order
         fields = ['id',
@@ -31,6 +29,17 @@ class OrderSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         items_data = validated_data.pop('items')  # Extract items data from validated data
         order = Order.objects.create(**validated_data)  # Create order instance
+
         for item_data in items_data:
             OrderItem.objects.create(order=order, **item_data)  # Create order items
         return order
+
+class BillRequestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = BillRequest
+        fields = ['id',
+                  'table_number',
+                  'staff_name',
+                  'request_status'
+                  ]

@@ -12,8 +12,8 @@ class Order(models.Model):
     
     ready_to_serve = models.BooleanField(default=False)
     is_complete = models.BooleanField(default=False)
-    
-    wait_staff_assigned = models.CharField(max_length=255)
+
+    wait_staff_assigned = models.CharField(max_length=255, default="")
     deliver = models.BooleanField(default=False)
     bill = models.DecimalField(max_digits=10, decimal_places=2)
 
@@ -27,3 +27,8 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
     is_preparing = models.BooleanField(default=False)
     is_ready = models.BooleanField(default=False)
+
+class BillRequest(models.Model):
+    table_number = models.ForeignKey(Order, on_delete=models.CASCADE)
+    staff_name = models.CharField(max_length=255, default="")
+    request_status = models.BooleanField(default=False)

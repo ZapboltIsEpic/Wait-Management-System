@@ -6,11 +6,11 @@ export const WaiterSidebar = () => {
     const navigate = useNavigate();
 
     const handleOrderRequestsClick = () => {
-        navigate("/waiter/orderRequests"); 
+        navigate("/waiter/order-requests"); 
     };
 
     const handleAssistanceRequestClick = () => {
-        navigate("/waiter/assistanceRequests"); 
+        navigate("/waiter/assistance-requests"); 
     };
 
     return (
