@@ -461,72 +461,72 @@
   "model": "auth.permission",
   "pk": 49,
   "fields": {
-    "name": "Can add assistance",
+    "name": "Can add bill request",
     "content_type": 13,
-    "codename": "add_assistance"
+    "codename": "add_billrequest"
   }
 },
 {
   "model": "auth.permission",
   "pk": 50,
   "fields": {
-    "name": "Can change assistance",
+    "name": "Can change bill request",
     "content_type": 13,
-    "codename": "change_assistance"
+    "codename": "change_billrequest"
   }
 },
 {
   "model": "auth.permission",
   "pk": 51,
   "fields": {
-    "name": "Can delete assistance",
+    "name": "Can delete bill request",
     "content_type": 13,
-    "codename": "delete_assistance"
+    "codename": "delete_billrequest"
   }
 },
 {
   "model": "auth.permission",
   "pk": 52,
   "fields": {
-    "name": "Can view assistance",
+    "name": "Can view bill request",
     "content_type": 13,
-    "codename": "view_assistance"
+    "codename": "view_billrequest"
   }
 },
 {
   "model": "auth.permission",
   "pk": 53,
   "fields": {
-    "name": "Can add bill request",
+    "name": "Can add assistance",
     "content_type": 14,
-    "codename": "add_billrequest"
+    "codename": "add_assistance"
   }
 },
 {
   "model": "auth.permission",
   "pk": 54,
   "fields": {
-    "name": "Can change bill request",
+    "name": "Can change assistance",
     "content_type": 14,
-    "codename": "change_billrequest"
+    "codename": "change_assistance"
   }
 },
 {
   "model": "auth.permission",
   "pk": 55,
   "fields": {
-    "name": "Can delete bill request",
+    "name": "Can delete assistance",
     "content_type": 14,
-    "codename": "delete_billrequest"
+    "codename": "delete_assistance"
   }
 },
 {
   "model": "auth.permission",
   "pk": 56,
   "fields": {
-    "name": "Can view bill request",
+    "name": "Can view assistance",
     "content_type": 14,
-    "codename": "view_billrequest"
+    "codename": "view_assistance"
   }
 },
 {
@@ -629,16 +629,16 @@
   "model": "contenttypes.contenttype",
   "pk": 13,
   "fields": {
-    "app_label": "assistance",
-    "model": "assistance"
+    "app_label": "orders",
+    "model": "billrequest"
   }
 },
 {
   "model": "contenttypes.contenttype",
   "pk": 14,
   "fields": {
-    "app_label": "orders",
-    "model": "billrequest"
+    "app_label": "assistance",
+    "model": "assistance"
   }
 },
 {
@@ -1157,28 +1157,32 @@
   "model": "waddlewaitMenu.category",
   "pk": 1,
   "fields": {
-    "name": "Appetizers"
+    "name": "Appetizers",
+    "display_order": 99999
   }
 },
 {
   "model": "waddlewaitMenu.category",
   "pk": 2,
   "fields": {
-    "name": "Mains"
+    "name": "Mains",
+    "display_order": 99999
   }
 },
 {
   "model": "waddlewaitMenu.category",
   "pk": 3,
   "fields": {
-    "name": "Desserts"
+    "name": "Desserts",
+    "display_order": 99999
   }
 },
 {
   "model": "waddlewaitMenu.category",
   "pk": 4,
   "fields": {
-    "name": "Drinks"
+    "name": "Drinks",
+    "display_order": 99999
   }
 },
 {
@@ -1189,7 +1193,8 @@
     "description": "delicious tomato soup",
     "price": "5.49",
     "image": "menu_images/app1_tomatosoup.jpg",
-    "category": 1
+    "category": 1,
+    "display_order": 99999
   }
 },
 {
@@ -1200,7 +1205,8 @@
     "description": "healthy serving of chicken and salad greens",
     "price": "4.49",
     "image": "menu_images/app2_chickensalad.jpg",
-    "category": 1
+    "category": 1,
+    "display_order": 99999
   }
 },
 {
@@ -1211,7 +1217,8 @@
     "description": "roasted corn on a skillet",
     "price": "4.99",
     "image": "menu_images/app3_crispycorn.jpg",
-    "category": 1
+    "category": 1,
+    "display_order": 99999
   }
 },
 {
@@ -1222,7 +1229,8 @@
     "description": "barramundi fish grilled over nice heat",
     "price": "12.99",
     "image": "menu_images/mains1_grilledfish.jpg",
-    "category": 2
+    "category": 2,
+    "display_order": 99999
   }
 },
 {
@@ -1233,7 +1241,8 @@
     "description": "some rice and some chick",
     "price": "13.49",
     "image": "menu_images/mains2_chickenandrice.jpg",
-    "category": 2
+    "category": 2,
+    "display_order": 99999
   }
 },
 {
@@ -1244,7 +1253,8 @@
     "description": "leftover turkey and ham type of vibe",
     "price": "11.99",
     "image": "menu_images/mains3_turkeyandhampie.jpg",
-    "category": 2
+    "category": 2,
+    "display_order": 99999
   }
 },
 {
@@ -1255,7 +1265,8 @@
     "description": "for the vegans",
     "price": "15.49",
     "image": "menu_images/mains4_vegetablepasta.jpg",
-    "category": 2
+    "category": 2,
+    "display_order": 99999
   }
 },
 {
@@ -1266,7 +1277,8 @@
     "description": "fruit mixed sweet evaporated milk",
     "price": "8.49",
     "image": "menu_images/dessert1_fruitcream.jpg",
-    "category": 3
+    "category": 3,
+    "display_order": 99999
   }
 },
 {
@@ -1277,7 +1289,8 @@
     "description": "napeleon flavours of hardened milk",
     "price": "6.99",
     "image": "menu_images/dessert2_icecream.jpg",
-    "category": 3
+    "category": 3,
+    "display_order": 99999
   }
 },
 {
@@ -1288,7 +1301,8 @@
     "description": "the best combo made by man",
     "price": "9.99",
     "image": "menu_images/dessert3_oreocheesecake.jpg",
-    "category": 3
+    "category": 3,
+    "display_order": 99999
   }
 },
 {
@@ -1299,7 +1313,8 @@
     "description": "apple and flaky crust",
     "price": "7.49",
     "image": "menu_images/dessert4_applepie.jpg",
-    "category": 3
+    "category": 3,
+    "display_order": 99999
   }
 },
 {
@@ -1310,7 +1325,8 @@
     "description": "a semi fancier water than tap",
     "price": "4.49",
     "image": "menu_images/drinks1_mineralwater.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1321,7 +1337,8 @@
     "description": "sweetened water by sugar fruit",
     "price": "6.99",
     "image": "menu_images/drinks2_fruitjuice.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1332,7 +1349,8 @@
     "description": "roasted perfection for the sleep deprived",
     "price": "7.49",
     "image": "menu_images/drinks3_coffee.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1343,7 +1361,8 @@
     "description": "leaf juice",
     "price": "6.49",
     "image": "menu_images/drinks4_tea.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1354,20 +1373,151 @@
     "description": "for those looking for a fun time",
     "price": "3.49",
     "image": "menu_images/drinks5_wine.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
   "model": "orders.order",
   "pk": 1,
   "fields": {
-    "created_at": "2024-03-30T12:00:00Z",
+    "created_at": "2024-04-01T09:35:57.488Z",
     "table": 1,
-    "ready_to_serve": true,
+    "ready_to_serve": false,
     "is_complete": false,
-    "wait_staff_assigned": "Bob",
-    "deliver": true,
-    "bill": "99.00"
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 2,
+  "fields": {
+    "created_at": "2024-04-01T09:36:02.510Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 3,
+  "fields": {
+    "created_at": "2024-04-01T09:37:47.048Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 4,
+  "fields": {
+    "created_at": "2024-04-01T09:37:47.589Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 5,
+  "fields": {
+    "created_at": "2024-04-01T09:55:24.941Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 6,
+  "fields": {
+    "created_at": "2024-04-01T09:55:26.565Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 7,
+  "fields": {
+    "created_at": "2024-04-01T10:23:53.261Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 8,
+  "fields": {
+    "created_at": "2024-04-01T11:32:12.885Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 9,
+  "fields": {
+    "created_at": "2024-04-01T11:32:59.511Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 10,
+  "fields": {
+    "created_at": "2024-04-01T11:33:00.393Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 11,
+  "fields": {
+    "created_at": "2024-04-01T11:33:03.469Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
   }
 },
 {
@@ -1376,9 +1526,9 @@
   "fields": {
     "order": 1,
     "item": 1,
-    "quantity": 2,
+    "quantity": 1,
     "is_preparing": false,
-    "is_ready": true
+    "is_ready": false
   }
 },
 {
@@ -1386,9 +1536,341 @@
   "pk": 2,
   "fields": {
     "order": 1,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 3,
+  "fields": {
+    "order": 2,
     "item": 1,
-    "quantity": 3,
-    "is_preparing": true,
-    "is_ready": true
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 4,
+  "fields": {
+    "order": 2,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 5,
+  "fields": {
+    "order": 3,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 6,
+  "fields": {
+    "order": 3,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 7,
+  "fields": {
+    "order": 4,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 8,
+  "fields": {
+    "order": 4,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 9,
+  "fields": {
+    "order": 5,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 10,
+  "fields": {
+    "order": 5,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 11,
+  "fields": {
+    "order": 6,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 12,
+  "fields": {
+    "order": 6,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 13,
+  "fields": {
+    "order": 7,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 14,
+  "fields": {
+    "order": 7,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 15,
+  "fields": {
+    "order": 8,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 16,
+  "fields": {
+    "order": 8,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 17,
+  "fields": {
+    "order": 9,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 18,
+  "fields": {
+    "order": 9,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 19,
+  "fields": {
+    "order": 10,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 20,
+  "fields": {
+    "order": 10,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 21,
+  "fields": {
+    "order": 11,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 22,
+  "fields": {
+    "order": 11,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.billrequest",
+  "pk": 1,
+  "fields": {
+    "table_number": 1,
+    "total_amount": "1095.60",
+    "staff_name": "",
+    "request_status": false
+  }
+},
+{
+  "model": "orders.billrequest",
+  "pk": 2,
+  "fields": {
+    "table_number": 1,
+    "total_amount": "1095.60",
+    "staff_name": "",
+    "request_status": false
+  }
+},
+{
+  "model": "orders.billrequest",
+  "pk": 3,
+  "fields": {
+    "table_number": 1,
+    "total_amount": "1095.60",
+    "staff_name": "",
+    "request_status": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 1,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 2,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 3,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 4,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 5,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 6,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 7,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 8,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 9,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
   }
 }
+]
