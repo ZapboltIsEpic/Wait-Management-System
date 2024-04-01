@@ -494,6 +494,42 @@
   }
 },
 {
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add bill request",
+    "content_type": 14,
+    "codename": "add_billrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change bill request",
+    "content_type": 14,
+    "codename": "change_billrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete bill request",
+    "content_type": 14,
+    "codename": "delete_billrequest"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view bill request",
+    "content_type": 14,
+    "codename": "view_billrequest"
+  }
+},
+{
   "model": "contenttypes.contenttype",
   "pk": 1,
   "fields": {
@@ -595,6 +631,14 @@
   "fields": {
     "app_label": "assistance",
     "model": "assistance"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "orders",
+    "model": "billrequest"
   }
 },
 {
@@ -1318,8 +1362,11 @@
   "pk": 1,
   "fields": {
     "created_at": "2024-03-30T12:00:00Z",
-    "table": 1,
+    "table_number": 1,
+    "ready_to_serve": false,
     "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
     "bill": "99.00"
   }
 },
