@@ -142,6 +142,16 @@ function KitchenOrderRequests() {
           if (lastOrder.table != null && (lastOrder.table != response.data.table || lastOrder.id != response.data.id)) {
             setNewOrder(true)
             setLastOrder(response.data)
+
+            // Recall orders
+
+            axios.get('http://localhost:8000/kitchenstaff/pending ')
+            .then(response => {
+              setOrderRequests(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
           } else {
             setNewOrder(false)
           }
