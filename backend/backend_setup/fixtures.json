@@ -1,4 +1,5 @@
-[{
+[
+{
   "model": "admin.logentry",
   "pk": 1,
   "fields": {
@@ -1521,41 +1522,171 @@
 },
 {
   "model": "orders.order",
-  "pk": 2,
+  "pk": 12,
   "fields": {
-    "created_at": "2024-04-01T11:13:00.597Z",
-    "table": 2,
+    "created_at": "2024-04-02T11:52:13.487Z",
+    "table": 1,
     "ready_to_serve": false,
     "is_complete": false,
     "wait_staff_assigned": "",
     "deliver": false,
-    "bill": "99.60"
+    "bill": "9.98"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 13,
+  "fields": {
+    "created_at": "2024-04-02T11:58:36.219Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "9.98"
   }
 },
 {
   "model": "orders.order",
   "pk": 14,
   "fields": {
-    "created_at": "2024-04-01T12:36:04.309Z",
-    "table": 3,
+    "created_at": "2024-04-02T13:44:32.217Z",
+    "table": 1,
     "ready_to_serve": false,
     "is_complete": false,
     "wait_staff_assigned": "",
     "deliver": false,
-    "bill": "14.47"
+    "bill": "16.98"
   }
 },
 {
   "model": "orders.order",
   "pk": 15,
   "fields": {
-    "created_at": "2024-04-01T12:37:34.457Z",
-    "table": 4,
+    "created_at": "2024-04-02T13:46:28.174Z",
+    "table": 1,
     "ready_to_serve": false,
     "is_complete": false,
     "wait_staff_assigned": "",
     "deliver": false,
-    "bill": "14.47"
+    "bill": "9.48"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 16,
+  "fields": {
+    "created_at": "2024-04-02T13:58:27.311Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "9.48"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 17,
+  "fields": {
+    "created_at": "2024-04-02T14:01:06.925Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "9.48"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 18,
+  "fields": {
+    "created_at": "2024-04-02T14:01:43.989Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "4.49"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 19,
+  "fields": {
+    "created_at": "2024-04-02T14:03:23.600Z",
+    "table": 2,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "9.48"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 20,
+  "fields": {
+    "created_at": "2024-04-02T14:06:17.681Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "14.97"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 21,
+  "fields": {
+    "created_at": "2024-04-02T14:06:23.445Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "14.97"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 22,
+  "fields": {
+    "created_at": "2024-04-02T14:10:54.883Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "20.96"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 23,
+  "fields": {
+    "created_at": "2024-04-02T14:12:38.536Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "24.97"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 24,
+  "fields": {
+    "created_at": "2024-04-02T14:14:24.586Z",
+    "table": 3,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "26.97"
   }
 },
 {
@@ -1574,10 +1705,10 @@
   "pk": 2,
   "fields": {
     "order": 1,
-    "item": 4,
-    "quantity": 3,
-    "is_preparing": true,
-    "is_ready": true
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
   }
 },
 {
@@ -1604,11 +1735,33 @@
 },
 {
   "model": "orders.orderitem",
+  "pk": 5,
+  "fields": {
+    "order": 3,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 6,
+  "fields": {
+    "order": 3,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
   "pk": 7,
   "fields": {
-    "order": 14,
-    "item": 5,
-    "quantity": 3,
+    "order": 4,
+    "item": 1,
+    "quantity": 1,
     "is_preparing": false,
     "is_ready": false
   }
@@ -1617,9 +1770,9 @@
   "model": "orders.orderitem",
   "pk": 8,
   "fields": {
-    "order": 14,
-    "item": 8,
-    "quantity": 1,
+    "order": 4,
+    "item": 2,
+    "quantity": 2,
     "is_preparing": false,
     "is_ready": false
   }
@@ -1628,9 +1781,9 @@
   "model": "orders.orderitem",
   "pk": 9,
   "fields": {
-    "order": 15,
+    "order": 5,
     "item": 1,
-    "quantity": 2,
+    "quantity": 1,
     "is_preparing": false,
     "is_ready": false
   }
@@ -1639,11 +1792,565 @@
   "model": "orders.orderitem",
   "pk": 10,
   "fields": {
+    "order": 5,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 11,
+  "fields": {
+    "order": 6,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 12,
+  "fields": {
+    "order": 6,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 13,
+  "fields": {
+    "order": 7,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 14,
+  "fields": {
+    "order": 7,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 15,
+  "fields": {
+    "order": 8,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 16,
+  "fields": {
+    "order": 8,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 17,
+  "fields": {
+    "order": 9,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 18,
+  "fields": {
+    "order": 9,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 19,
+  "fields": {
+    "order": 10,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 20,
+  "fields": {
+    "order": 10,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 21,
+  "fields": {
+    "order": 11,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 22,
+  "fields": {
+    "order": 11,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 23,
+  "fields": {
+    "order": 12,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 24,
+  "fields": {
+    "order": 12,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 25,
+  "fields": {
+    "order": 13,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 26,
+  "fields": {
+    "order": 13,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 27,
+  "fields": {
+    "order": 14,
+    "item": 10,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 28,
+  "fields": {
+    "order": 14,
+    "item": 9,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 29,
+  "fields": {
     "order": 15,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 30,
+  "fields": {
+    "order": 15,
+    "item": 3,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 31,
+  "fields": {
+    "order": 16,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 32,
+  "fields": {
+    "order": 16,
+    "item": 3,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 33,
+  "fields": {
+    "order": 17,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 34,
+  "fields": {
+    "order": 17,
+    "item": 3,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 35,
+  "fields": {
+    "order": 18,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 36,
+  "fields": {
+    "order": 19,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 37,
+  "fields": {
+    "order": 19,
+    "item": 3,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 38,
+  "fields": {
+    "order": 20,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 39,
+  "fields": {
+    "order": 20,
+    "item": 3,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 40,
+  "fields": {
+    "order": 20,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 41,
+  "fields": {
+    "order": 21,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 42,
+  "fields": {
+    "order": 21,
+    "item": 3,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 43,
+  "fields": {
+    "order": 21,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 44,
+  "fields": {
+    "order": 22,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 45,
+  "fields": {
+    "order": 22,
+    "item": 12,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 46,
+  "fields": {
+    "order": 22,
     "item": 16,
     "quantity": 1,
     "is_preparing": false,
     "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 47,
+  "fields": {
+    "order": 22,
+    "item": 14,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 48,
+  "fields": {
+    "order": 23,
+    "item": 2,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 49,
+  "fields": {
+    "order": 23,
+    "item": 8,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 50,
+  "fields": {
+    "order": 23,
+    "item": 6,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 51,
+  "fields": {
+    "order": 24,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 52,
+  "fields": {
+    "order": 24,
+    "item": 8,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 53,
+  "fields": {
+    "order": 24,
+    "item": 4,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 1,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 2,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 3,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 4,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 5,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 6,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 7,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 8,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
+  }
+},
+{
+  "model": "assistance.assistance",
+  "pk": 9,
+  "fields": {
+    "tableNumber": 1,
+    "staffName": "",
+    "tableStatus": false
   }
 }
 ]
