@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, Drawer } from '@mui/material';
+import { Button, Drawer, Alert, Snackbar } from '@mui/material';
 import { KitchenSidebar } from './layout/KitchenSidebar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -42,9 +42,9 @@ function MakeOrder({order, getOrders, setOrders}) {
             .catch(error => {
               console.log(error);
             });
-            let currentOrders = getOrders()
-            setOrders(currentOrders => currentOrders.filter(currentOrder => currentOrder.id !== order.id));
-            
+            let currentOrders = getOrders();
+            let filteredOrders = currentOrders.filter(currentOrder => currentOrder.id !== order.id);
+            setOrders(filteredOrders);
           }}
         >
           Complete
@@ -100,10 +100,11 @@ function ItemStatus({orderId, itemId, itemPrepare, itemReady}) {
       </Select>
     </FormControl>
   )
-
 }
 
 function KitchenOrderRequests() {
+
+  const [lastOrder, setLastOrder] = useState({})
   const [orderRequests, setOrderRequests] = useState([]);
   
 	const [open, setOpen] = React.useState(false);
@@ -117,6 +118,7 @@ function KitchenOrderRequests() {
 		setOpen(isOpen);
 	};
 
+  const [newOrder, setNewOrder] = React.useState(false);
   useEffect(() => {
     axios.get('http://localhost:8000/kitchenstaff/pending ')
       .then(response => {
@@ -125,6 +127,35 @@ function KitchenOrderRequests() {
       .catch(error => {
         console.log(error);
       });
+  }, []);
+
+
+
+  useEffect(() => {
+    function checkNotifications() {
+      axios.get('http://localhost:8000/kitchenstaff/new')
+      .then(response => {
+        if (lastOrder == {}) {
+          console.log("hi")
+          setLastOrder(response.data)
+        } else {
+          if (lastOrder.table != null && (lastOrder.table != response.data.table || lastOrder.id != response.data.id)) {
+            setNewOrder(true)
+            setLastOrder(response.data)
+          } else {
+            setNewOrder(false)
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+
+    const notificationLoop = setInterval(checkNotifications, 2000);
+
+    // Cleanup function to stop the loop when the component unmounts
+    return () => clearInterval(notificationLoop);
   }, []);
 
   return (
@@ -142,6 +173,16 @@ function KitchenOrderRequests() {
           <MakeOrder key={index} order={order} getOrders={orderRequests} setOrders={setOrderRequests}/>
         ))}
       </div>
+      <Snackbar open={newOrder} autoHideDuration={3000} onClose={() => setNewOrder(false)}>
+        <Alert
+          onClose={() => setNewOrder(false)}
+          severity="info"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          A new order has arrived!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
