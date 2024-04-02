@@ -3,8 +3,9 @@ from django.http import JsonResponse
 from django.db.models import Sum
 
 from collections import defaultdict, Counter
-from orders.models import Order
+from orders.models import Order, BillRequest
 from waddlewait_app.models import Table
+from assistance.models import Assistance
 from orders.serializer import OrderSerializer, BillRequestSerializer, OrderItemSerializer
 from assistance.serializer import AssistanceSerializer
 
@@ -85,6 +86,10 @@ def requestCustomerAssistance(request):
         if not table_number:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
+        existingAssistance = Assistance.objects.filter(tableNumber=table_number, tableStatus=False).exists()
+        if existingAssistance:
+            return JsonResponse({'message': 'Assistance request for table already sent'}, status=status.HTTP_400_BAD_REQUEST)
+        
         req_data = {
             'tableNumber': table_number
         }
@@ -105,6 +110,10 @@ def requestCustomerBill(request):
 
         if not table_number:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
+
+        existingBillRequest = BillRequest.objects.filter(table_number=table_number, request_status=False).exists()
+        if existingBillRequest:
+            return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_400_BAD_REQUEST)
 
         orders = Order.objects.filter(table=table_number)
 
