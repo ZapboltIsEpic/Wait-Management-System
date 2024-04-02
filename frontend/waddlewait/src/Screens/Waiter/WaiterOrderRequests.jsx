@@ -17,19 +17,17 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
-function MakeOrder({ orderRequest }) {
-  const navigate = useNavigate();
-
+function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequest}) {
   const handleAcceptRequest = () => {
     axios.put('http://localhost:8000/orders/delivernotifications/accepted', {
       "table": orderRequest.table, 
-      "items": orderRequest.items, 
       "ready_to_serve": orderRequest.ready_to_serve, 
       "is_complete": orderRequest.is_complete, 
       // should be the waiter's name
       "wait_staff_assigned": "yijun", 
       "deliver": orderRequest.deliver, 
       "bill": orderRequest.bill, 
+      "created_at": orderRequest.created_at,
     })
     .then(response => {
       console.log(response.json);
@@ -37,28 +35,22 @@ function MakeOrder({ orderRequest }) {
     .catch(error => {
       console.log(error);
     });
-    // not sure how to implement order-request page for specific accepted order request
-    // navigate("/waiter/order-request");
+    setOrderRequestAccepted(true);
+    setAcceptedOrderRequest(orderRequest);
   }
 
   // or orderRequest.wait_staff_assigned == is not me
-  if (orderRequest.is_complete) {
+  if (orderRequest.deliver || orderRequest.is_complete) {
     return null;
   }
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Table no" + orderRequest.table}
+        title={"Table no " + orderRequest.table}
       />
       <CardContent className="order-card-contents">
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Order details
-        </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {orderRequest.items}
-        </Typography>
         <Typography color="text.secondary">
-          Notes
+          Time Created: {orderRequest.created_at}
         </Typography>
         <FormControl fullWidth>
           <Button 
@@ -77,12 +69,11 @@ function MakeOrder({ orderRequest }) {
 }
 
 function WaiterOrderRequests() {
+  const [acceptedOrderRequest, setAcceptedOrderRequest] = useState(null);
+  const [orderRequestAccepted, setOrderRequestAccepted] = useState(false);
   const [orderRequests, setOrderRequests] = useState([]);
-
   const [alerts, setAlerts] = useState([]);
-
 	const [openDrawer, setOpenDrawer] = React.useState(false);
-
   const [openAlert, setOpenAlert] = React.useState(false);
 
 	const toggleDrawer = (isOpen) => () => {
@@ -93,13 +84,15 @@ function WaiterOrderRequests() {
       setOpenAlert(false);
   };
 
+  const callManager = () => {
+    // call manager
+  };
+
   useEffect(() => {
-    axios.get('http://localhost:8000/orders/requests')
+    axios.get('http://localhost:8000/orders/deliverrequests')
       .then(response => {
         setOrderRequests(response.data);
-        response.data.forEach(item => {
-          console.log(item.table, item.items, item.ready_to_serve, item.is_complete, item.wait_staff_assigned, item.deliver, item.bill);
-        });
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -111,6 +104,28 @@ function WaiterOrderRequests() {
       console.log(alerts);
       setOpenAlert(true);
       console.log(alerts.length)
+  }
+
+  const handleCompletedOrderRequest = () => {
+    axios.put('http://localhost:8000/orders/delivernotifications/completed', {
+      "table": acceptedOrderRequest.table, 
+      "ready_to_serve": acceptedOrderRequest.ready_to_serve, 
+      "is_complete": acceptedOrderRequest.is_complete, 
+      // should be the waiter's name
+      "wait_staff_assigned": "yijun", 
+      "deliver": acceptedOrderRequest.deliver, 
+      "bill": acceptedOrderRequest.bill, 
+      "created_at": acceptedOrderRequest.created_at,
+    })
+    .then(response => {
+      console.log(response.json);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    setOrderRequestAccepted(false);
+    setAcceptedOrderRequest(null);
+    window.location.reload();
   }
 
   return (
@@ -138,17 +153,36 @@ function WaiterOrderRequests() {
         </DialogActions>
       </Dialog>
 
-        <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-        <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
-            { <WaiterSidebar />}
-        </Drawer>
-        <h1>Order Requests</h1>
-        <p>{orderRequests}</p>
-        <div className="order-requests-container">
-          {orderRequests.map((request, index) => (
-            <MakeOrder key={index} orderRequest={request} />
-          ))}
-        </div>
+      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
+      <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+          { <WaiterSidebar />}
+      </Drawer>
+      {
+        orderRequestAccepted 
+          ? (
+            <div>
+              <h1>Order Request Table {acceptedOrderRequest.table_number} </h1>
+              <p>Created at: {acceptedOrderRequest.created_at}</p>
+              <Button onClick={callManager}>Call Manager</Button>
+              <Button onClick={handleCompletedOrderRequest} autoFocus>
+                Complete
+              </Button>
+            </div>
+          ) 
+          : (
+            <div>
+              <h1>Order Requests</h1>
+              <div className="order-requests-container">
+                {orderRequests.map((request, index) => (
+                  <MakeOrder key={index} 
+                  orderRequest={request}
+                  setOrderRequestAccepted={setOrderRequestAccepted}
+                  setAcceptedOrderRequest={setAcceptedOrderRequest} />
+                ))}
+              </div>
+            </div>
+          )
+      }
     </div>
   );
 }

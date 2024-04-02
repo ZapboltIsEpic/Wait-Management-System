@@ -56,8 +56,8 @@ def completedOrders(request):
 def markItemAsPreparing(request, orderId, itemId):
     if request.method == 'PUT':
         order_item = OrderItem.objects.get(order_id=orderId, pk=itemId)
-        # order_item.is_preparing = True
-        # order_item.save()
+        order_item.is_preparing = True
+        order_item.save()
 
         return JsonResponse({'message': 'Order item marked as preparing'}, status=status.HTTP_200_OK)
     

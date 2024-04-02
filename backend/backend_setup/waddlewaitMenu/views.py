@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.files.images import ImageFile
 
 from .models import MenuItem, Category
 from .serializers import CategorySerializer, MenuItemSerializer, MenuItemUpdateSerializer, MenuItemCondensedSerializer
@@ -20,7 +21,7 @@ def menu(request):
 
         # Serialize the queryset
         categories_serializer = CategorySerializer(categories, many = True)
-        menuItems_serializer = MenuItemSerializer(menuItems, many = True)
+        menuItems_serializer = MenuItemSerializer(menuItems, many = True, context={'request': request})
 
         data = {
             'categories': categories_serializer.data, 
@@ -36,7 +37,7 @@ def menuItemsByCategory(request, categoryName):
             category = Category.objects.get(name=categoryName)
 
             menuItems = MenuItem.objects.filter(category=category)
-            menuItems_serializer = MenuItemSerializer(menuItems, many = True)
+            menuItems_serializer = MenuItemSerializer(menuItems, many = True, context={'request': request})
 
             data = {
                 'category': categoryName, 
@@ -59,11 +60,10 @@ def menuItemsByCategory(request, categoryName):
         return Response(category_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
 
 @api_view(['GET'])
-def menuItem(request, categoryName, id):
+def menuItem(request, categoryName, pk):
     if request.method == 'GET':
-        menu_item = get_object_or_404(MenuItem, pk=id)
-        menu_item_serializer = MenuItemSerializer(menu_item)
-        # menu_item_serializer.data['image'] = request.build_absolute_uri(settings.MEDIA_URL + menu_item_serializer.data['image'])
+        menu_item = get_object_or_404(MenuItem, pk=pk)
+        menu_item_serializer = MenuItemSerializer(menu_item, context={'request': request})
         return JsonResponse(menu_item_serializer.data)
 
 @api_view(['POST'])
@@ -87,6 +87,28 @@ def addMenuItem(request, categoryName):
         
         return Response(menu_item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+@api_view(['POST'])
+def addMenuItemWithImage(request):
+    if request.method == 'POST':
+        #return {"sd": "what"}
+        image_file = request.FILES.get('image')
+
+        data = {
+            'name': request.data.get('name'),
+            'description': request.data.get('description'),
+            'price': request.data.get('price'),
+            'category': {'name' : request.data.get('category')},
+            'image': ImageFile(image_file) if image_file else None,
+        }
+
+        menu_item_serializer = MenuItemSerializer(data=data)
+
+        if menu_item_serializer.is_valid():
+            menu_item_serializer.save()
+            return Response(menu_item_serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(menu_item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['PUT', 'DELETE'])
 def modifyMenuItem(request, pk):
     

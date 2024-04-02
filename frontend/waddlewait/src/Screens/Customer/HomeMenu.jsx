@@ -28,7 +28,8 @@ import {
   TextField,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  IconButton
 } from '@mui/material';
 import {
   TabPanel,
@@ -61,8 +62,6 @@ function Item({ item, cart, setCart }) {
   const handlePopUpItem = () => {
     setShowPopUpItem(true)
   }
-
-  console.log(item.image)
 
   return (
     <Card sx={{ width: 350, height: 300 }}>
@@ -126,8 +125,7 @@ function Item({ item, cart, setCart }) {
           <Grid onClick={handlePopUpItem}>
             <CardMedia
               sx={{ height: 250 }}
-              // image={item.image}
-              image='http://127.0.0.1:8000/media/menu_images/app1_tomatosoup.jpg'
+              image={item.image}
               title={item.name}
               />
             <CardContent sx={{ height: 250 }}>
@@ -192,6 +190,28 @@ function Items({ items, cateId, cart, setCart }) {
 }
 
 function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNum }) {
+  // const [disableDelete, setDisableDelete] = React.useState(false)
+
+  // React.useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     try {
+  //       const response = await axios.get(`http://127.0.0.1:8000/customer/order/${tableNum}`);
+  //       const data = response.data;
+  //       console.log(cart)
+  //       console.log(data)
+  //       if (data === cart) {
+  //         setDisableDelete(true);
+  //       } else {
+  //         setDisableDelete(false);
+  //       }
+  //     } catch (error) {
+  //       setDisableDelete(false);
+  //     }
+  //   };
+  // 
+  //   fetchOrders();
+  // }, []);
+
   const handleBill = () => {
     setShowCart(false)
     axios.post('http://127.0.0.1:8000/customer/bill', {
@@ -202,15 +222,15 @@ function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNu
 
   const handleOrder = () => {
     setShowCart(false)
-    // axios.post('http://127.0.0.1:8000/customer/order', {
-    //   table_number: tableNum,
-    //   items: cart
-    // });
+    axios.post('http://127.0.0.1:8000/customer/order', {
+      table_number: tableNum,
+      items: cart
+    });
     setOrder(true)
   }
 
   const handleDeleteItem = (itemIndex) => {
-    var newCart = cart
+    var newCart = [...cart]
     newCart.splice(itemIndex,1)
     setCart(newCart)
   }
@@ -243,7 +263,16 @@ function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNu
                   <TableCell>{item.name}</TableCell>
                   <TableCell align="right">${item.price}</TableCell>
                   <TableCell align="right">
-                    <DeleteOutline onClick={() => handleDeleteItem(itemIndex)} />
+
+                    {/* {disableDelete ? (
+                      <IconButton disabled>
+                        <DeleteOutline/>
+                      </IconButton>
+                      ):(
+                      <DeleteOutline onClick={() => handleDeleteItem(itemIndex)}/>
+                    )} */}
+                    
+                    <DeleteOutline onClick={() => handleDeleteItem(itemIndex)}/>
                   </TableCell>
                 </TableRow>
               ))}
@@ -329,7 +358,6 @@ function HomeMenu() {
         const data = response.data;
         setCategories(data['categories'])
         setItems(data['menuItems'])
-        console.log(data['menuItems'])
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -501,7 +529,7 @@ function HomeMenu() {
               endIcon={<ShoppingCart />}
               onClick={handleOpenCart}
               >
-              Orders 
+              Cart
             </Button>
 
             <Cart 
