@@ -27,5 +27,20 @@ class MenuItemSerializer(serializers.ModelSerializer):
         menu_item = MenuItem.objects.create(category=category, **validated_data)
         return menu_item
     
+    def get_image(self, obj):
+        if obj.image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(obj.image.url)
+
+class MenuItemUpdateSerializer(serializers.ModelSerializer): # new serializer class
+    class Meta:
+        model = MenuItem
+        fields = ['name', 'description', 'price', "image", "category"] # define required fields
+
+class MenuItemCondensedSerializer(serializers.ModelSerializer): # new serializer class
+    class Meta:
+        model = MenuItem
+        fields = ['id','name'] # define required fields
+
 
         

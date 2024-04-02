@@ -9,9 +9,3 @@ class Migration(migrations.Migration):
         ('orders', '0005_rename_table_order_table_number_and_more'),
     ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='order',
-            name='items',
-        ),
-    ]
