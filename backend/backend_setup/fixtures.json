@@ -1,5 +1,4 @@
-[
-{
+[{
   "model": "admin.logentry",
   "pk": 1,
   "fields": {
@@ -1517,4 +1516,5 @@
     "is_ready": false
   }
 }
+
 ]

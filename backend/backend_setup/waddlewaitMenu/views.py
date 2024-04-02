@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.files.images import ImageFile
 
 from .models import MenuItem, Category
 from .serializers import CategorySerializer, MenuItemSerializer, MenuItemUpdateSerializer, MenuItemCondensedSerializer
@@ -86,6 +87,28 @@ def addMenuItem(request, categoryName):
         
         return Response(menu_item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+@api_view(['POST'])
+def addMenuItemWithImage(request):
+    if request.method == 'POST':
+        #return {"sd": "what"}
+        image_file = request.FILES.get('image')
+
+        data = {
+            'name': request.data.get('name'),
+            'description': request.data.get('description'),
+            'price': request.data.get('price'),
+            'category': {'name' : request.data.get('category')},
+            'image': ImageFile(image_file) if image_file else None,
+        }
+
+        menu_item_serializer = MenuItemSerializer(data=data)
+
+        if menu_item_serializer.is_valid():
+            menu_item_serializer.save()
+            return Response(menu_item_serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(menu_item_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['PUT', 'DELETE'])
 def modifyMenuItem(request, pk):
     
