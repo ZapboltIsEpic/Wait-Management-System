@@ -9,24 +9,25 @@ import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import './kitchen.css'
 
-function MakeOrder() {
+function MakeOrder({order}) {
+  let orderNumber = "Order number " + order.id
+  let tableNumber = "Table no " + order.table
+  let tableItems = order.items
 
   return (
-    <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
+    <Card className="order-card" sx={{ minWidth: 400, maxHeight: 400, maxWidth: 400}}>
       <CardHeader
-        title="Order num"
-        subheader="Table no"
+        title={orderNumber}
+        subheader={tableNumber}
       />
       <CardContent className="order-card-contents">
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Order details
-        </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Salmon, Tuna, Sashimi
-        </Typography>
-        <Typography color="text.secondary">
-          Notes
-        </Typography>
+        <div>
+          {tableItems.map((tableItem, key) => (
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', margin: '10px 0'}} key={key}>
+              <p> {tableItem.quantity} orders of Item {tableItem.item}</p>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   )
@@ -46,15 +47,15 @@ function KitchenOrderRequestsCompleted() {
 		setOpen(isOpen);
 	};
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:8000/api/kitchen/order-requests')
-  //     .then(response => {
-  //       setOrderRequests(response.data.table_number);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios.get('http://localhost:8000/kitchenstaff/completed')
+      .then(response => {
+        setOrderRequests(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div style={{width: '100vw', height: '100vh'}}>
@@ -67,13 +68,9 @@ function KitchenOrderRequestsCompleted() {
       </div>
       <h1>Completed Order Requests</h1>
       <div className="kitchen-orders-container">
-        {MakeOrder()}
-        {MakeOrder()}
-        {MakeOrder()}
-        {MakeOrder()}
-        {MakeOrder()}
-        {MakeOrder()}
-        {MakeOrder()}
+        {orderRequests.map((order, index) => (
+          <MakeOrder key={index} order={order}/>
+        ))}
       </div>
     </div>
   );
