@@ -22,7 +22,7 @@ function MakeOrder({ orderRequest }) {
 
   const handleAcceptRequest = () => {
     axios.put('http://localhost:8000/orders/delivernotifications/accepted', {
-      "table": orderRequest.table, 
+      "table_number": orderRequest.table_number, 
       "items": orderRequest.items, 
       "ready_to_serve": orderRequest.ready_to_serve, 
       "is_complete": orderRequest.is_complete, 
@@ -48,7 +48,7 @@ function MakeOrder({ orderRequest }) {
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Table no" + orderRequest.table}
+        title={"Table no " + orderRequest.table_number}
       />
       <CardContent className="order-card-contents">
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -58,7 +58,7 @@ function MakeOrder({ orderRequest }) {
           {orderRequest.items}
         </Typography>
         <Typography color="text.secondary">
-          Notes
+          Time Created: {orderRequest.created_at}
         </Typography>
         <FormControl fullWidth>
           <Button 
@@ -94,12 +94,10 @@ function WaiterOrderRequests() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8000/orders/requests')
+    axios.get('http://localhost:8000/orders/deliverrequests')
       .then(response => {
         setOrderRequests(response.data);
-        response.data.forEach(item => {
-          console.log(item.table, item.items, item.ready_to_serve, item.is_complete, item.wait_staff_assigned, item.deliver, item.bill);
-        });
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -143,7 +141,6 @@ function WaiterOrderRequests() {
             { <WaiterSidebar />}
         </Drawer>
         <h1>Order Requests</h1>
-        <p>{orderRequests}</p>
         <div className="order-requests-container">
           {orderRequests.map((request, index) => (
             <MakeOrder key={index} orderRequest={request} />
