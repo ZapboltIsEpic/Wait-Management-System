@@ -27,8 +27,7 @@ function App() {
         <Route path="/staff/create-account" element={<CreateStaffAccount/>} />
 
         {/* Customer Routes */}
-        <Route path="/customer/table-selection" element={<CustomerTableSelection/>} />
-        <Route path="/customer/home-menu" element={<CustomerHomeMenu/>} />
+        <Route path="/customer" element={<CustomerHomeMenu/>} />
 
         {/* Kitchen Routes */}
         <Route path="/kitchen/main" element={<KitchenMain/>} />
