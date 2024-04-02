@@ -3,8 +3,9 @@ from django.http import JsonResponse
 from django.db.models import Sum
 
 from collections import defaultdict, Counter
-from orders.models import Order
+from orders.models import Order, BillRequest
 from waddlewait_app.models import Table
+from assistance.models import Assistance
 from orders.serializer import OrderSerializer, BillRequestSerializer, OrderItemSerializer
 from assistance.serializer import AssistanceSerializer
 
@@ -81,19 +82,24 @@ def viewCustomerOrder(request, tableNumber):
 def requestCustomerAssistance(request):
     if request.method == 'POST':
 
-        request_data = request.data
-        table_number = request_data.get('tableNumber')
-
+        table_number = request.data.get('table_number')
         if not table_number:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        existingAssistance = Assistance.objects.filter(tableNumber=table_number, tableStatus=False).exists()
+        if existingAssistance:
+            return JsonResponse({'message': 'Assistance request for table already sent'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        req_data = {
+            'tableNumber': table_number
+        }
 
-        assistance_serializer = AssistanceSerializer(data=request_data)
+        assistance_serializer = AssistanceSerializer(data=req_data)
         if assistance_serializer.is_valid():
             assistance_serializer.save()
             return JsonResponse({ "message": "Assistance requested successfully"}, status=status.HTTP_201_CREATED)
 
-        return JsonResponse({'message': 'Table number not found',
-                             'error': assistance_serializer.errors}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
     
 @api_view(['POST'])
 def requestCustomerBill(request):
@@ -104,6 +110,10 @@ def requestCustomerBill(request):
 
         if not table_number:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
+
+        existingBillRequest = BillRequest.objects.filter(table_number=table_number, request_status=False).exists()
+        if existingBillRequest:
+            return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_400_BAD_REQUEST)
 
         orders = Order.objects.filter(table=table_number)
 
@@ -122,5 +132,4 @@ def requestCustomerBill(request):
            return JsonResponse({'total_amount': total_amount, 
                                 'message': "Bill requested successfully"}, status=status.HTTP_201_CREATED)
 
-        return JsonResponse({'message': 'Table number not found',
-                             'errors': bill_serializer.errors}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)

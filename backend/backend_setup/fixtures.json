@@ -1,5 +1,4 @@
-[
-{
+[{
   "model": "admin.logentry",
   "pk": 1,
   "fields": {
@@ -1157,28 +1156,32 @@
   "model": "waddlewaitMenu.category",
   "pk": 1,
   "fields": {
-    "name": "Appetizers"
+    "name": "Appetizers",
+    "display_order": 99999
   }
 },
 {
   "model": "waddlewaitMenu.category",
   "pk": 2,
   "fields": {
-    "name": "Mains"
+    "name": "Mains",
+    "display_order": 99999
   }
 },
 {
   "model": "waddlewaitMenu.category",
   "pk": 3,
   "fields": {
-    "name": "Desserts"
+    "name": "Desserts",
+    "display_order": 99999
   }
 },
 {
   "model": "waddlewaitMenu.category",
   "pk": 4,
   "fields": {
-    "name": "Drinks"
+    "name": "Drinks",
+    "display_order": 99999
   }
 },
 {
@@ -1189,7 +1192,8 @@
     "description": "delicious tomato soup",
     "price": "5.49",
     "image": "menu_images/app1_tomatosoup.jpg",
-    "category": 1
+    "category": 1,
+    "display_order": 99999
   }
 },
 {
@@ -1200,7 +1204,8 @@
     "description": "healthy serving of chicken and salad greens",
     "price": "4.49",
     "image": "menu_images/app2_chickensalad.jpg",
-    "category": 1
+    "category": 1,
+    "display_order": 99999
   }
 },
 {
@@ -1211,7 +1216,8 @@
     "description": "roasted corn on a skillet",
     "price": "4.99",
     "image": "menu_images/app3_crispycorn.jpg",
-    "category": 1
+    "category": 1,
+    "display_order": 99999
   }
 },
 {
@@ -1222,7 +1228,8 @@
     "description": "barramundi fish grilled over nice heat",
     "price": "12.99",
     "image": "menu_images/mains1_grilledfish.jpg",
-    "category": 2
+    "category": 2,
+    "display_order": 99999
   }
 },
 {
@@ -1233,7 +1240,8 @@
     "description": "some rice and some chick",
     "price": "13.49",
     "image": "menu_images/mains2_chickenandrice.jpg",
-    "category": 2
+    "category": 2,
+    "display_order": 99999
   }
 },
 {
@@ -1244,7 +1252,8 @@
     "description": "leftover turkey and ham type of vibe",
     "price": "11.99",
     "image": "menu_images/mains3_turkeyandhampie.jpg",
-    "category": 2
+    "category": 2,
+    "display_order": 99999
   }
 },
 {
@@ -1255,7 +1264,8 @@
     "description": "for the vegans",
     "price": "15.49",
     "image": "menu_images/mains4_vegetablepasta.jpg",
-    "category": 2
+    "category": 2,
+    "display_order": 99999
   }
 },
 {
@@ -1266,7 +1276,8 @@
     "description": "fruit mixed sweet evaporated milk",
     "price": "8.49",
     "image": "menu_images/dessert1_fruitcream.jpg",
-    "category": 3
+    "category": 3,
+    "display_order": 99999
   }
 },
 {
@@ -1277,7 +1288,8 @@
     "description": "napeleon flavours of hardened milk",
     "price": "6.99",
     "image": "menu_images/dessert2_icecream.jpg",
-    "category": 3
+    "category": 3,
+    "display_order": 99999
   }
 },
 {
@@ -1288,7 +1300,8 @@
     "description": "the best combo made by man",
     "price": "9.99",
     "image": "menu_images/dessert3_oreocheesecake.jpg",
-    "category": 3
+    "category": 3,
+    "display_order": 99999
   }
 },
 {
@@ -1299,7 +1312,8 @@
     "description": "apple and flaky crust",
     "price": "7.49",
     "image": "menu_images/dessert4_applepie.jpg",
-    "category": 3
+    "category": 3,
+    "display_order": 99999
   }
 },
 {
@@ -1310,7 +1324,8 @@
     "description": "a semi fancier water than tap",
     "price": "4.49",
     "image": "menu_images/drinks1_mineralwater.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1321,7 +1336,8 @@
     "description": "sweetened water by sugar fruit",
     "price": "6.99",
     "image": "menu_images/drinks2_fruitjuice.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1332,7 +1348,8 @@
     "description": "roasted perfection for the sleep deprived",
     "price": "7.49",
     "image": "menu_images/drinks3_coffee.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1343,7 +1360,8 @@
     "description": "leaf juice",
     "price": "6.49",
     "image": "menu_images/drinks4_tea.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1354,7 +1372,8 @@
     "description": "for those looking for a fun time",
     "price": "3.49",
     "image": "menu_images/drinks5_wine.jpg",
-    "category": 4
+    "category": 4,
+    "display_order": 99999
   }
 },
 {
@@ -1363,11 +1382,50 @@
   "fields": {
     "created_at": "2024-03-30T12:00:00Z",
     "table": 1,
-    "ready_to_serve": true,
-    "is_complete": false,
-    "wait_staff_assigned": "Bob",
-    "deliver": true,
+    "ready_to_serve": false,
+    "is_complete": true,
+    "wait_staff_assigned": "",
+    "deliver": false,
     "bill": "99.00"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 2,
+  "fields": {
+    "created_at": "2024-04-01T11:13:00.597Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "99.60"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 14,
+  "fields": {
+    "created_at": "2024-04-01T12:36:04.309Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "14.47"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 15,
+  "fields": {
+    "created_at": "2024-04-01T12:37:34.457Z",
+    "table": 1,
+    "ready_to_serve": false,
+    "is_complete": false,
+    "wait_staff_assigned": "",
+    "deliver": false,
+    "bill": "14.47"
   }
 },
 {
@@ -1377,7 +1435,7 @@
     "order": 1,
     "item": 1,
     "quantity": 2,
-    "is_preparing": false,
+    "is_preparing": true,
     "is_ready": true
   }
 },
@@ -1391,4 +1449,72 @@
     "is_preparing": true,
     "is_ready": true
   }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 3,
+  "fields": {
+    "order": 2,
+    "item": 1,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 4,
+  "fields": {
+    "order": 2,
+    "item": 2,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 7,
+  "fields": {
+    "order": 14,
+    "item": 1,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 8,
+  "fields": {
+    "order": 14,
+    "item": 16,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 9,
+  "fields": {
+    "order": 15,
+    "item": 1,
+    "quantity": 2,
+    "is_preparing": false,
+    "is_ready": false
+  }
+},
+{
+  "model": "orders.orderitem",
+  "pk": 10,
+  "fields": {
+    "order": 15,
+    "item": 16,
+    "quantity": 1,
+    "is_preparing": false,
+    "is_ready": false
+  }
 }
+
+]
