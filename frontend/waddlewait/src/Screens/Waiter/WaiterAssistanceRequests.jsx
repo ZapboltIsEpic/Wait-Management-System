@@ -14,82 +14,88 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
-function MakeOrder() {
-  const [status, setStatus] = useState("Not Started");
+function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAcceptedAssistanceRequest }) {
+  const handleAcceptRequest = () => {
+    axios.put('http://localhost:8000/assistance/notifications/accepted', {
+      "tableNumber": assistanceRequest.tableNumber, 
+      "staffName": assistanceRequest.staffName,
+      "tableStatus": assistanceRequest.tableStatus
+    })
+    .then(response => {
+      console.log(response.json);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    setAssistanceRequestAccepted(true);
+    setAcceptedAssistanceRequest(assistanceRequest);
+  }
 
-  const handleStatus = (event) => {
-    setStatus(event.target.value);
-  };
-
+  // or orderRequest.wait_staff_assigned == is not me
+  if (assistanceRequest.tableStatus) {
+    return null;
+  }
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title="Order num"
-        subheader="Table no"
+        title={"Table no " + assistanceRequest.tableNumber}
       />
       <CardContent className="order-card-contents">
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Order details
-        </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Salmon, Tuna, Sashimi
-        </Typography>
         <Typography color="text.secondary">
-          Notes
+          Kitchen Staff: {assistanceRequest.staffName}
         </Typography>
         <FormControl fullWidth>
           <Button 
             variant="contained" 
             color="primary"
             onClick={() => {
-              axios.put('http://localhost:8000/assistance/notifications/accepted', {
-                "tableNumber": 1, 
-                "staffName": "Bob", 
-                "tableStatus": false, 
-              })
-              .then(response => {
-                  // Handle response
-              })
-              .catch(error => {
-                  // Handle error
-        });
+              handleAcceptRequest();
             }}
         >
-            Accept
+          Accept
         </Button>
         </FormControl>
-        {status === 'Ready' && (
-        <Button 
-          variant="contained" 
-          color="primary"
-          onClick={() => {
-            
-          }}
-        >
-          Close
-        </Button>
-      )}
       </CardContent>
     </Card>
   )
 }
 
 function WaiterAssistanceRequests() {
-  const [orderRequests, setOrderRequests] = useState([]);
-
-	const [open, setOpen] = React.useState(false);
+  const [acceptedAssistanceRequest, setAcceptedAssistanceRequest] = useState(null);
+  const [assistanceRequestAccepted, setAssistanceRequestAccepted] = useState(false);
+  const [assistanceRequests, setAssistanceRequests] = useState([]);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
 	const toggleDrawer = (isOpen) => () => {
-		setOpen(isOpen);
+		setOpenDrawer(isOpen);
 	};
+
+  const callManager = () => {
+    // call manager
+  };
+
+  const handleCompletedAssistanceRequest = () => {
+    axios.put('http://localhost:8000/assistance/notifications/completed', {
+      "tableNumber": acceptedAssistanceRequest.tableNumber, 
+      "staffName": acceptedAssistanceRequest.staffName,
+      "tableStatus": acceptedAssistanceRequest.tableStatus,
+    })
+    .then(response => {
+      console.log(response.json);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    setAssistanceRequestAccepted(false);
+    setAcceptedAssistanceRequest(null);
+    window.location.reload();
+  }
 
   useEffect(() => {
     axios.get('http://localhost:8000/assistance/requests')
       .then(response => {
-        response.data.forEach(item => {
-          console.log(item.tableNumber, item.staffName, item.tableStatus);
-        });
-        setOrderRequests(response.data.table_number);
+        setAssistanceRequests(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -99,20 +105,36 @@ function WaiterAssistanceRequests() {
   return (
     <div className="App">
         <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
+        <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
             { <WaiterSidebar />}
         </Drawer>
-        <h1>Assistance Requests</h1>
-        <p>{orderRequests}</p>
-        <div className="kitchen-orders-container">
-          {MakeOrder()}
-          {MakeOrder()}
-          {MakeOrder()}
-          {MakeOrder()}
-          {MakeOrder()}
-          {MakeOrder()}
-          {MakeOrder()}
-        </div>
+        {
+          assistanceRequestAccepted 
+            ? (
+              <div>
+                <h1>Assistance Request Table {acceptedAssistanceRequest.tableNumber} </h1>
+                <p>Staff Name: {acceptedAssistanceRequest.staffName}</p>
+                <Button onClick={callManager}>Call Manager</Button>
+                <Button onClick={handleCompletedAssistanceRequest} autoFocus>
+                  Complete
+                </Button>
+              </div>
+            ) 
+            : (
+              // This will be displayed if assistance_request_accepted is false
+              <div>
+                <h1>Assistance Requests</h1>
+                <div className="assistance-requests-container">
+                  {assistanceRequests.map((request, index) => (
+                    <MakeAssistance key={index} 
+                    assistanceRequest={request}
+                    setAssistanceRequestAccepted={setAssistanceRequestAccepted}
+                    setAcceptedAssistanceRequest={setAcceptedAssistanceRequest} />
+                  ))}
+                </div>
+              </div>
+            )
+        }
     </div>
   );
 }
