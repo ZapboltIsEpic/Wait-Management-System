@@ -1,0 +1,23 @@
+Week 1: 
+Setup Groups and read on project specifications
+
+Week 2:
+- Worked on wait staff user stories and requirements. 
+- Worked on wait staff storyboard
+- Worked on setting sprint dates
+- Worked on brainstorming initial goals for the sprints
+- Helped work with ryan to create the system architecture graphic.
+
+Week 3: 
+- Worked on fixing wait staff user stories and requirements
+- Worked on fixing wait staff storyboard
+
+Week 4:
+- Setup the backend and frontend on github to ensure that all groups were able to work on the project
+- Included setting up React, Django and PostgresQL.
+- Helped the backend team setup the backend on their end, explaining how it works.
+
+Week 5:
+- Finished creating the kitchen staff, wait staff and manager main pages 
+- Helped fix and ensure that the codebase was working with both backend and frontend
+- Fixed up any bugs or features including modifying frontend and backend code on tables before sprint was finished

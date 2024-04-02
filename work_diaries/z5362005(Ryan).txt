@@ -1,0 +1,39 @@
+Week 1: 
+Group was formed with members Celine, Me (Ryan), Jasmine and Yijun. We decided on a group project (waiting management) and set up our jira board. 
+We also set up meeting times and our form of communication (messenger + Discord, online meeting on Tuesday nights). 
+Spent majority of tutorial exchanging contacts and getting to know one another.
+
+Week 2:
+- Team meeting on what we need to do. We added in a new member, Matthew into our team.
+- Set up jira tickets
+- Worked on customer user stories and requirements. 
+- Worked on customer storyboard
+- Worked on setting sprint dates
+- Helped work with Yijun to create the system architecture graphic.
+- Ran meeting and took notes
+- Delegated work to everyone
+
+Week 3: 
+- Helped organised tasks and delegated them accordingly
+- Keeping up to date with everyone’s progress
+- Created  Jira stories for related sprints
+- Finalised the proposal document to send in
+
+Week 4:
+- Organised scrum board for sprint 2
+- Set up screens for each user type on frontend
+- Organised planning for setting up backend repository 
+- Creates Jira issues for frontend developers (Ryan, Yijun, Celine)
+- Created Login and Create account basic layout
+- Created ForgotPassword layout
+- Fixed main branch with merging 
+
+Week 5:
+- Ran demo
+- Took meeting notes/ran meeting
+- Gave feedback for retrospective A
+- Submitted demo vide and retrospective
+- Fixed bugs from demo
+
+Week 7:
+- Wrote up Jira issues (Front end Interface) for Frontend team
