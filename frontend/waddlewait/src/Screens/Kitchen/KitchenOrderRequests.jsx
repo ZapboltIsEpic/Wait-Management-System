@@ -20,7 +20,7 @@ function MakeOrder({order, getOrders, setOrders}) {
   let tableItems = order.items
 
   return (
-    <Card className="order-card" sx={{ minWidth: 400, maxHeight: 400, maxWidth: 400}}>
+    <Card className="order-card" sx={{ minWidth: 400, maxHeight: 500, maxWidth: 400}}>
       <CardHeader
         title={orderNumber}
         subheader={tableNumber}
@@ -28,7 +28,7 @@ function MakeOrder({order, getOrders, setOrders}) {
       <CardContent className="order-card-contents">
         <div>
           {tableItems.map((tableItem, key) => (
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '10px 0'}} key={key}>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '10px 0', overflowY: 'auto'}} key={key}>
               <p> {tableItem.quantity} orders of Item {tableItem.item}</p>
               <ItemStatus orderId={order.id} itemId={tableItem.id} itemPrepare={tableItem.is_preparing} itemReady={tableItem.is_ready}/>
             </div>
@@ -42,7 +42,8 @@ function MakeOrder({order, getOrders, setOrders}) {
             .catch(error => {
               console.log(error);
             });
-            let currentOrders = getOrders();
+            
+            let currentOrders = getOrders;
             let filteredOrders = currentOrders.filter(currentOrder => currentOrder.id !== order.id);
             setOrders(filteredOrders);
           }}
@@ -85,7 +86,7 @@ function ItemStatus({orderId, itemId, itemPrepare, itemReady}) {
   }, [status])
 
   return (
-    <FormControl>
+    <FormControl style={{margin: '10px'}}>
       <InputLabel id="demo-simple-select-label">Status</InputLabel>
       <Select
         labelId="demo-simple-select-label"
@@ -104,21 +105,22 @@ function ItemStatus({orderId, itemId, itemPrepare, itemReady}) {
 
 function KitchenOrderRequests() {
 
-  const [lastOrder, setLastOrder] = useState({})
   const [orderRequests, setOrderRequests] = useState([]);
   
 	const [open, setOpen] = React.useState(false);
   
   const navigate = useNavigate(); 
   const toggleSignOut = () => {
-		navigate("/staff/login");
+    navigate("/staff/login");
 	};
-
+  
 	const toggleDrawer = (isOpen) => () => {
-		setOpen(isOpen);
+    setOpen(isOpen);
 	};
-
+  
   const [newOrder, setNewOrder] = React.useState(false);
+  const [lastOrder, setLastOrder] = useState({})
+
   useEffect(() => {
     axios.get('http://localhost:8000/kitchenstaff/pending ')
       .then(response => {
@@ -127,42 +129,22 @@ function KitchenOrderRequests() {
       .catch(error => {
         console.log(error);
       });
-  }, []);
-
-
+    }, [lastOrder]);
+    
+    
 
   useEffect(() => {
     function checkNotifications() {
       axios.get('http://localhost:8000/kitchenstaff/new')
       .then(response => {
-        if (lastOrder == {}) {
-          console.log("hi")
-          setLastOrder(response.data)
-        } else {
-          if (lastOrder.table != null && (lastOrder.table != response.data.table || lastOrder.id != response.data.id)) {
-            setNewOrder(true)
-            setLastOrder(response.data)
-
-            // Recall orders
-
-            axios.get('http://localhost:8000/kitchenstaff/pending ')
-            .then(response => {
-              setOrderRequests(response.data);
-            })
-            .catch(error => {
-              console.log(error);
-            });
-          } else {
-            setNewOrder(false)
-          }
-        }
+        setLastOrder(response.data)
       })
       .catch(error => {
         console.log(error);
       });
     }
 
-    const notificationLoop = setInterval(checkNotifications, 2000);
+    const notificationLoop = setInterval(checkNotifications, 4000);
 
     // Cleanup function to stop the loop when the component unmounts
     return () => clearInterval(notificationLoop);
