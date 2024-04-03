@@ -99,6 +99,8 @@ function WaiterOrderRequests() {
       });
   }, []);
 
+  // implement alert by just checking ready_to_serve is true and not on page ig kinda hard actually
+
   const addAlert = () => {
       setAlerts({data: "New order request"});
       console.log(alerts);
