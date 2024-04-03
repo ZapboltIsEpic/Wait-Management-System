@@ -25,7 +25,7 @@ def createOrder(request):
         if not table_number or not items_data: ## or not items_data:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
-        total_bill = sum(item['price'] for item in items_data)
+        total_bill = sum(float(item['price']) for item in items_data)
 
         order_data = {
             'table': table_number,

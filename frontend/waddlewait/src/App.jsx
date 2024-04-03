@@ -2,7 +2,6 @@ import './App.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import StaffLogin from './Screens/Accounts/Login';
-import CustomerTableSelection from './Screens/Customer/TableSelection';
 import CustomerHomeMenu from './Screens/Customer/HomeMenu';
 import StaffForgotPassword from './Screens/Accounts/ForgotPasswordAccount';
 import Home from './Screens/Home';
@@ -27,8 +26,7 @@ function App() {
         <Route path="/staff/create-account" element={<CreateStaffAccount/>} />
 
         {/* Customer Routes */}
-        <Route path="/customer/table-selection" element={<CustomerTableSelection/>} />
-        <Route path="/customer/home-menu" element={<CustomerHomeMenu/>} />
+        <Route path="/customer" element={<CustomerHomeMenu/>} />
 
         {/* Kitchen Routes */}
         <Route path="/kitchen/main" element={<KitchenMain/>} />
