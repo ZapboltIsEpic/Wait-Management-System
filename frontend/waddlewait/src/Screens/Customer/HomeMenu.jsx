@@ -215,7 +215,7 @@ function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNu
   const handleBill = () => {
     setShowCart(false)
     axios.post('http://127.0.0.1:8000/customer/bill', {
-      table_number: tableNum,
+      table: tableNum,
     });
     setBill(true)
   }
@@ -223,7 +223,7 @@ function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNu
   const handleOrder = () => {
     setShowCart(false)
     axios.post('http://127.0.0.1:8000/customer/order', {
-      table_number: tableNum,
+      table: tableNum,
       items: cart
     });
     setOrder(true)
@@ -408,7 +408,7 @@ function HomeMenu() {
 
   const handleAssistance = () => {
     axios.post('http://127.0.0.1:8000/customer/assistance', {
-      table_number: 1
+      table: 1
     });
     setAssistance(true)
   }
