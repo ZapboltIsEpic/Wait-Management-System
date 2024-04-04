@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Sum
+from django.db import transaction
 
 from collections import defaultdict, Counter
-from orders.models import Order, BillRequest
+from orders.models import Order, OrderItem, BillRequest
 from waddlewait_app.models import Table
 from assistance.models import Assistance
 from orders.serializer import OrderSerializer, BillRequestSerializer, OrderItemSerializer
@@ -40,7 +41,6 @@ def createOrder(request):
             item_counts = Counter(item_data['id'] for item_data in items_data)
             
             for item_id in item_counts.keys():
-                # item_id, quantity = item_data.items()
                 order_item_data = {
                     'order': order_instance.id,
                     'item': item_id,
@@ -69,14 +69,26 @@ def viewCustomerOrder(request, tableNumber):
             orders_serializer = OrderSerializer(orders, many = True)
 
             data = {
-                'tableNumber': tableNumber,
+                'table_number': tableNumber,
                 'orders': orders_serializer.data,
             }
 
             return JsonResponse(data)
         except:
             return JsonResponse({'message': 'Table number does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        
+
+@api_view(['GET'])
+def viewPastOrderedItems(request, tableNumber):
+    if request.method == 'GET':
+        try:
+            table = Table.objects.get(table_number=tableNumber)
+            
+            orderItems= OrderItem.objects.filter(order__table=table)
+            orderItems_serializer = OrderItemSerializer(orderItems, many = True)
+
+            return Response(orderItems_serializer.data)  
+        except:
+            return JsonResponse({'message': 'Table number does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
 def requestCustomerAssistance(request):
@@ -128,7 +140,10 @@ def requestCustomerBill(request):
 
         bill_serializer = BillRequestSerializer(data=request_data)
         if bill_serializer.is_valid():
-           bill_serializer.save()
+           with transaction.atomic():
+                bill_serializer.save() 
+                orders.delete()  
+
            return JsonResponse({'total_amount': total_amount, 
                                 'message': "Bill requested successfully"}, status=status.HTTP_201_CREATED)
 
