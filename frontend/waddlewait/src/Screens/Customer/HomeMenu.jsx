@@ -408,7 +408,11 @@ function HomeMenu() {
 
   const handleAssistance = () => {
     axios.post('http://127.0.0.1:8000/customer/assistance', {
-      table: 1
+      "tableNumber": tableNum
+    })
+    .catch(error => {
+      console.log(error);
+      console.log("Assistance has already been called!")
     });
     setAssistance(true)
   }
