@@ -87,7 +87,7 @@ def requestCustomerAssistance(request):
         
         existingAssistance = Assistance.objects.filter(tableNumber=table_number, tableStatus=False).exists()
         if existingAssistance:
-            return JsonResponse({'message': 'Assistance request for table already sent'}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'message': 'Assistance request for table already sent'}, status=status.HTTP_200_OK)
         
         req_data = {
             'tableNumber': table_number
@@ -112,7 +112,7 @@ def requestCustomerBill(request):
 
         existingBillRequest = BillRequest.objects.filter(table_number=table_number, request_status=False).exists()
         if existingBillRequest:
-            return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_200_OK)
 
         orders = Order.objects.filter(table=table_number)
 
