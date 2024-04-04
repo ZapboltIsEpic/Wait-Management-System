@@ -20,14 +20,20 @@ class RequestNotificationView(APIView):
         else:
             # Return error response if validation fails
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        
+class RequestNotificationCheckView(APIView):
+    def get(self, request):
+        most_recent_assistance_request = Assistance.objects.latest('createdTime').createdTime
+        
+        return Response({'most_recent_assistance_request': most_recent_assistance_request})
+    
 class NotificationAcceptedView(APIView):
     def put(self, request):
-        tableNumberCheck  = request.data.get('tableNumber')
+        tableCheck = request.data.get('table')
         staffName = request.data.get('staffName')
         tableStatusCheck = False
         
-        assistanceRequest = Assistance.objects.filter(tableNumber=tableNumberCheck, tableStatus=tableStatusCheck)
+        assistanceRequest = Assistance.objects.filter(table=tableCheck, tableStatus=tableStatusCheck)
         
         if assistanceRequest.exists():
             for request in assistanceRequest:
@@ -41,10 +47,10 @@ class NotificationAcceptedView(APIView):
 
 class NotificationCompleteView(APIView):
     def put(self, request):
-        tableNumberCheck = request.data.get('tableNumber')
+        tableCheck = request.data.get('table')
         tableStatusCheck = False
         
-        assistanceRequest = Assistance.objects.filter(tableNumber=tableNumberCheck, tableStatus=tableStatusCheck)
+        assistanceRequest = Assistance.objects.filter(table=tableCheck, tableStatus=tableStatusCheck)
         
         if assistanceRequest.exists():
             for request in assistanceRequest:

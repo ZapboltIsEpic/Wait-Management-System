@@ -1,7 +1,8 @@
 from django.db import models
 
 class Assistance(models.Model):
-    tableNumber = models.IntegerField() 
+    createdTime = models.DateTimeField(auto_now_add=True)
+    table = models.IntegerField() 
     staffName = models.CharField(max_length=255, default="")
     tableStatus = models.BooleanField(default=False)
     
