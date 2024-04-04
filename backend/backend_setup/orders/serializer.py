@@ -13,6 +13,32 @@ class OrderItemSerializer(serializers.ModelSerializer):
                   'is_preparing',
                   'is_ready']
         
+class OrderItemSimplifiedSerializer(serializers.ModelSerializer):
+    item_name = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
+
+    class Meta:
+        model = OrderItem
+
+        fields = [
+            'order',
+            'item_name',
+            'quantity',
+            'status'
+        ]
+    
+    def get_item_name(self, obj):
+        return obj.item.name
+    
+    def get_status(self, obj):
+        if obj.is_ready:
+            return "Ready"
+        elif obj.is_preparing:
+            return "Preparing"
+        else:
+            return "Pending"
+    
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
