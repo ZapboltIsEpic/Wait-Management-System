@@ -189,7 +189,7 @@ function Items({ items, cateId, cart, setCart }) {
   )
 }
 
-function Cart({ cart, setCart, showCart, setShowCart, setOrder, tableNum }) {
+function Cart({ cart, setCart, setOrders, showCart, setShowCart, setOrder, tableNum }) {
   const handleOrder = () => {
     axios.post('http://127.0.0.1:8000/customer/order', {
       table: tableNum,
@@ -199,7 +199,20 @@ function Cart({ cart, setCart, showCart, setShowCart, setOrder, tableNum }) {
     setShowCart(false)
     setCart([])
   }
-
+  
+  React.useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
+        const data = response.data;
+        setOrders(data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchOrders();
+  }, []);
+  
   const handleDeleteItem = (itemIndex) => {
     var newCart = [...cart]
     newCart.splice(itemIndex,1)
@@ -244,9 +257,7 @@ function Cart({ cart, setCart, showCart, setShowCart, setOrder, tableNum }) {
       </DialogContent>
       <DialogActions>
         <Box sx={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'right', 
+          display: 'auto',
           width: '100%' 
         }}
         >
@@ -259,22 +270,7 @@ function Cart({ cart, setCart, showCart, setShowCart, setOrder, tableNum }) {
   );
 }
 
-function Orders (showOrders, setShowOrders, setBill, tableNum ) {
-  const [orders, setOrders] = React.useState([])
-
-  React.useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
-        const data = response.data;
-        setOrders(data)
-
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchOrders();
-  }, []);
+function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
 
   const handleBill = () => {
     axios.post('http://127.0.0.1:8000/customer/bill', {
@@ -285,7 +281,7 @@ function Orders (showOrders, setShowOrders, setBill, tableNum ) {
   }
 
   return (
-    <Dialog 
+    <Dialog
       open={showOrders} 
       onClose={() => setShowOrders(false)} 
       PaperProps={{
@@ -302,14 +298,14 @@ function Orders (showOrders, setShowOrders, setBill, tableNum ) {
             <TableHead>
               <TableRow>
                 <TableCell>Item Name</TableCell>
-                <TableCell align="right">Quantity</TableCell>
-                <TableCell align="right">Status</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {orders.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.item_name}</TableCell>
                   <TableCell>{item.quantity}</TableCell>
                   <TableCell>{item.status}</TableCell>
                 </TableRow>
@@ -320,16 +316,13 @@ function Orders (showOrders, setShowOrders, setBill, tableNum ) {
       </DialogContent>
       <DialogActions>
         <Box sx={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'right', 
+          display: 'auto',
           width: '100%' 
         }}
         >
           <Button onClick={handleBill} color='warning' variant="contained">
             Bill
           </Button>
-          
         </Box>
       </DialogActions>
     </Dialog>
@@ -357,6 +350,7 @@ function HomeMenu() {
   const [categories, setCategories] = React.useState([]);
   const [items, setItems] = React.useState([]);
   const [cart, setCart] = React.useState([]);
+  const [orders, setOrders] = React.useState([])
 
   const navigate = useNavigate();
 	const navigateTo = (link) => {
@@ -434,14 +428,6 @@ function HomeMenu() {
   };
 
   // Menu helpers
-  const handleOpenOrders = () => {
-    setShowOrders(true);
-  };
-
-  const handleOpenCart = () => {
-    setShowCart(true);
-  };
-  
   const handleChangeTab = (event, newCateId) => {
     setCateId(newCateId);
   };
@@ -497,7 +483,7 @@ function HomeMenu() {
               >
                 {currentTables.length > 0 ? (
                   currentTables.map((item, index) => (
-                    <MenuItem key={index} value={item.table}>{item.table}</MenuItem>
+                    <MenuItem key={index} value={item.table_number}>{item.table_number}</MenuItem>
                   ))
                 ) : (
                   <MenuItem value="">No tables available</MenuItem>
@@ -571,33 +557,34 @@ function HomeMenu() {
             <Button
               variant="contained"
               color='warning'
-              onClick={() => setCart(false)}
+              onClick={() => setShowOrders(true)}
               >
               Order
             </Button>
-
             <Button
               variant="contained"
               color='warning'
               endIcon={<ShoppingCart />}
-              onClick={() => setCart(true)}
+              onClick={() => setShowCart(true)}
               >
               Cart
             </Button>
+
             <Orders 
+              orders={orders}
               showOrders={showOrders} 
               setShowOrders={setShowOrders} 
               setBill={setBill} 
-              tableNum={tableNum}
+              tableNum={confirmTable}
             />
             <Cart 
-              showCart={showCart} 
-              setShowCart={setShowCart} 
-              setBill={setBill} 
-              setOrder={setOrder} 
-              tableNum={confirmTable}
               cart={cart}
               setCart={setCart}
+              setOrders={setOrders}
+              showCart={showCart} 
+              setShowCart={setShowCart} 
+              setOrder={setOrder} 
+              tableNum={confirmTable}
             />
 
             <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
