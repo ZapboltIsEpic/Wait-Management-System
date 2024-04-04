@@ -4,16 +4,6 @@ from .models import Order, OrderItem, BillRequest
 from waddlewait_app.serializers import TableSerializer
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OrderItem
-        fields = ['id', 
-                  'order', 
-                  'item', 
-                  'quantity', 
-                  'is_preparing',
-                  'is_ready']
-        
-class OrderItemSimplifiedSerializer(serializers.ModelSerializer):
     item_name = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
 
@@ -22,6 +12,7 @@ class OrderItemSimplifiedSerializer(serializers.ModelSerializer):
 
         fields = [
             'order',
+            'item',
             'item_name',
             'quantity',
             'status'

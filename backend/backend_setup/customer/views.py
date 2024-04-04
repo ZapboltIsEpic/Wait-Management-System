@@ -7,7 +7,7 @@ from collections import defaultdict, Counter
 from orders.models import Order, OrderItem, BillRequest
 from waddlewait_app.models import Table
 from assistance.models import Assistance
-from orders.serializer import OrderSerializer, BillRequestSerializer, OrderItemSerializer, OrderItemSimplifiedSerializer
+from orders.serializer import OrderSerializer, BillRequestSerializer, OrderItemSerializer
 from assistance.serializer import AssistanceSerializer
 
 from rest_framework.decorators import api_view
@@ -84,7 +84,7 @@ def viewPastOrderedItems(request, tableNumber):
             table = Table.objects.get(table_number=tableNumber)
             
             orderItems= OrderItem.objects.filter(order__table=table)
-            orderItems_serializer = OrderItemSimplifiedSerializer(orderItems, many = True)
+            orderItems_serializer = OrderItemSerializer(orderItems, many = True)
 
             return Response(orderItems_serializer.data)  
         except:

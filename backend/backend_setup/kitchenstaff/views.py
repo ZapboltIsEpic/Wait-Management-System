@@ -75,6 +75,7 @@ def completeOrder(request, orderId):
     if request.method == 'PUT':
         order = Order.objects.get(pk=orderId)
         order.is_complete = True
+        order.ready_to_serve = True
         order.save()
 
         return JsonResponse({'message': 'Order marked as completed'}, status=status.HTTP_200_OK)
