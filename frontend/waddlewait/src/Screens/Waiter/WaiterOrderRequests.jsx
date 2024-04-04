@@ -39,7 +39,6 @@ function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequ
     setAcceptedOrderRequest(orderRequest);
   }
 
-  // or orderRequest.wait_staff_assigned == is not me
   if (orderRequest.deliver || orderRequest.is_complete) {
     return null;
   }

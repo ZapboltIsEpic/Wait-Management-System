@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import './kitchen.css'
 
 function MakeOrder({order, getOrders, setOrders}) {
-
+  
   let orderNumber = "Order number " + order.id
   let tableNumber = "Table no " + order.table
   let tableItems = order.items
@@ -39,13 +39,33 @@ function MakeOrder({order, getOrders, setOrders}) {
           color="primary"
           onClick={() => {
             axios.put(`http://localhost:8000/kitchenstaff/complete/${order.id}`)
+            .then(() => {
+              let currentOrders = getOrders;
+              let filteredOrders = currentOrders.filter(currentOrder => currentOrder.id !== order.id);
+              setOrders(filteredOrders);
+            })
             .catch(error => {
               console.log(error);
             });
             
-            let currentOrders = getOrders;
-            let filteredOrders = currentOrders.filter(currentOrder => currentOrder.id !== order.id);
-            setOrders(filteredOrders);
+            // Send notification
+            axios.put('http://localhost:8000/orders/delivernotifications', {
+              "table": order.table, 
+              "ready_to_serve": true, 
+              "is_complete": false, 
+              "wait_staff_assigned": "yijun", 
+              "deliver": false, 
+              "bill": "45.00", 
+              "created_at": "today"
+            })
+            .then(response => {
+              console.log(response);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+            
+
           }}
         >
           Complete
@@ -120,11 +140,19 @@ function KitchenOrderRequests() {
   
   const [newOrder, setNewOrder] = React.useState(false);
   const [lastOrder, setLastOrder] = useState({})
+  const [checkLast, setCheckLast] = useState({})
 
   useEffect(() => {
     axios.get('http://localhost:8000/kitchenstaff/pending ')
       .then(response => {
         setOrderRequests(response.data);
+        
+        if (checkLast != lastOrder) {
+          if (checkLast.id + 1 == lastOrder.id) {
+            setNewOrder(true);
+          }
+        }
+        setCheckLast(lastOrder)
       })
       .catch(error => {
         console.log(error);
@@ -137,7 +165,7 @@ function KitchenOrderRequests() {
     function checkNotifications() {
       axios.get('http://localhost:8000/kitchenstaff/new')
       .then(response => {
-        setLastOrder(response.data)
+        setLastOrder(response.data) 
       })
       .catch(error => {
         console.log(error);
@@ -165,7 +193,11 @@ function KitchenOrderRequests() {
           <MakeOrder key={index} order={order} getOrders={orderRequests} setOrders={setOrderRequests}/>
         ))}
       </div>
-      <Snackbar open={newOrder} autoHideDuration={3000} onClose={() => setNewOrder(false)}>
+      <Snackbar open={newOrder} autoHideDuration={3000} 
+        onClose={() => {
+          setNewOrder(false)}
+        }
+      >
         <Alert
           onClose={() => setNewOrder(false)}
           severity="info"
