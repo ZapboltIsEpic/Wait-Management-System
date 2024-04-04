@@ -81,9 +81,8 @@ def viewCustomerOrder(request, tableNumber):
 @api_view(['POST'])
 def requestCustomerAssistance(request):
     if request.method == 'POST':
-
-        table_number = request.data.get('table_number')
-        if not table_number:
+        table_number = request.data.get('tableNumber')
+        if table_number is None:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
         existingAssistance = Assistance.objects.filter(tableNumber=table_number, tableStatus=False).exists()
