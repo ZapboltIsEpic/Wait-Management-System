@@ -31,7 +31,7 @@ class OrderItem(models.Model):
     
     item_made_time = models.DateTimeField(null=True)
     wait_staff_assigned_time = models.DateTimeField(null=True)
-    wait_staff_assigned = models.CharField(max_length=255, default="")
+    wait_staff_assigned = models.CharField(max_length=255, default="none")
     deliver = models.BooleanField(default=False)
 
 class BillRequest(models.Model):

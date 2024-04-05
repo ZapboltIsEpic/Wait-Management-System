@@ -13,30 +13,32 @@ class OrderDeliverRequestNotificationView(APIView):
     def put(self, request):
         orderCheck = request.data.get('order')
         itemCheck = request.data.get('item')
+        isReadCheck = request.data.get('is_ready')
 
-        orderDeliverRequest = OrderItem.objects.filter(order = orderCheck, item = itemCheck, item_made_time__isnull=True)
+        orderDeliverRequest = OrderItem.objects.filter(order = orderCheck, item = itemCheck, is_ready=isReadCheck)
         
         if orderDeliverRequest.exists():
-            updated_data = []
+            # updated_data = []
             for request in orderDeliverRequest:
+                request.is_ready=True
                 request.item_made_time = datetime.datetime.now()
                 request.save()
                 
-                # Convert necessary fields to built-in types
-                order = request.order
-                item = request.item
+                # # Convert necessary fields to built-in types
+                # order = request.order
+                # item = request.item
                 
-                # Create a dictionary with updated order data
-                updated_order_data = {
-                    'order': order,
-                    'item': item,
-                }
-                updated_data.append(updated_order_data)
+                # # Create a dictionary with updated order data
+                # updated_order_data = {
+                #     'order': order,
+                #     'item': item,
+                # }
+                # updated_data.append(updated_order_data)
                 
-            return Response(updated_data, status=status.HTTP_200_OK)
+            return Response("Order Deliver Notification Success", status=status.HTTP_200_OK)
         else:
             # Return error response if validation fails
-            return Response("Notification Error", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Order Deliver Notification Error", status=status.HTTP_400_BAD_REQUEST)
         
 class OrderDeliverRequestNotificationCheckView(APIView):
     def get(self, request):
@@ -49,30 +51,31 @@ class OrderDeliverNotificationAcceptedView(APIView):
         orderCheck = request.data.get('order')
         itemCheck = request.data.get('item')
         wait_staff_assigned = request.data.get('wait_staff_assigned')
+        
         orderDeliverRequest = OrderItem.objects.filter(order=orderCheck, item = itemCheck, wait_staff_assigned='none')
         
         if orderDeliverRequest.exists():
-            updated_data = []
+            # updated_data = []
             for request in orderDeliverRequest:
                 request.wait_staff_assigned = wait_staff_assigned
                 request.wait_staff_assigned_time = datetime.datetime.now()
                 request.save()
                 
-                # Convert necessary fields to built-in types
-                order = request.order
-                wait_staff_assigned = request.wait_staff_assigned
+                # # Convert necessary fields to built-in types
+                # order = request.order
+                # wait_staff_assigned = request.wait_staff_assigned
                 
-                updated_order_data = {
-                    'order': order,
-                    'wait_staff_assigned': wait_staff_assigned,
-                }
-                updated_data.append(updated_order_data)
+                # updated_order_data = {
+                #     'order': order,
+                #     'wait_staff_assigned': wait_staff_assigned,
+                # }
+                # updated_data.append(updated_order_data)
                 
             
-            return Response(updated_data, status=status.HTTP_200_OK)
+            return Response("Assigned Staff Successfully", status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that
-            return Response("No notifications found for the provided table number and status", status=status.HTTP_404_NOT_FOUND)
+            return Response("Assigned Staff Fail", status=status.HTTP_404_NOT_FOUND)
         
 class OrderDeliverNotificationAcceptedNotificationCheckView(APIView):
     def get(self, request):
@@ -84,34 +87,36 @@ class OrderDeliverNotificationCompleteView(APIView):
     def put(self, request):
         orderCheck = request.data.get('order')
         itemCheck = request.data.get('item')
-        orderDeliverRequest = OrderItem.objects.filter(order=orderCheck, item = itemCheck, deliver=False)
+        deliverCheck = request.data.get('deliver')
+        
+        orderDeliverRequest = OrderItem.objects.filter(order=orderCheck, item = itemCheck, deliver=deliverCheck)
         
         if orderDeliverRequest.exists():
-            updated_data = []
+            # updated_data = []
             for request in orderDeliverRequest:
                 # Update status or perform other actions as needed
                 request.deliver = True
                 request.save()
                 
                 # Convert necessary fields to built-in types
-                order = request.order
-                deliver = request.deliver
+                # order = request.order
+                # deliver = request.deliver
                 
-                updated_order_data = {
-                    'order': order,
-                    'deliver': deliver,
-                }
-                updated_data.append(updated_order_data)
+                # updated_order_data = {
+                #     'order': order,
+                #     'deliver': deliver,
+                # }
+                # updated_data.append(updated_order_data)
             
-            return Response(updated_data, status=status.HTTP_200_OK)
+            return Response("Order Item deliver successfully", status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that
-            return Response("No notifications found for the provided table number and status", status=status.HTTP_404_NOT_FOUND)
+            return Response("Order Item deliver fail", status=status.HTTP_404_NOT_FOUND)
 
 class OrdersDeliverGetAllNotificationsView(APIView):
     def get(self, request):
         # Retrieve all assistance requests with Deliver = False from the database
-        order = OrderItem.objects.filter(deliver=False, is_ready=True)
+        order = OrderItem.objects.filter(deliver=False, is_ready=True, wait_staff_assigned='none')
         
         orderSerializer = OrderItemSerializer(order, many=True)
         

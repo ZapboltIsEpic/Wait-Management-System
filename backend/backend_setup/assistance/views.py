@@ -1,3 +1,4 @@
+import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,7 +20,7 @@ class RequestNotificationView(APIView):
             return Response("Notification request received", status=status.HTTP_200_OK)
         else:
             # Return error response if validation fails
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response("Notification request fail", status=status.HTTP_400_BAD_REQUEST)
         
 class RequestNotificationCheckView(APIView):
     def get(self, request):
@@ -31,24 +32,30 @@ class NotificationAcceptedView(APIView):
     def put(self, request):
         tableCheck = request.data.get('table')
         staffName = request.data.get('staffName')
-        tableStatusCheck = False
+        tableStatusCheck = request.data.get('tableStatus')
         
         assistanceRequest = Assistance.objects.filter(table=tableCheck, tableStatus=tableStatusCheck)
         
         if assistanceRequest.exists():
             for request in assistanceRequest:
                 request.staffName = staffName
+                request.staffAcceptedTime = datetime.datetime.now()
                 request.save()
             
-            return Response("Notifications accepted", status=status.HTTP_200_OK)
+            return Response("Staff accepted request success", status=status.HTTP_200_OK)
         else:
-            # If no notifications are found, return a response indicating that
-            return Response("No notifications found for the provided table number and status", status=status.HTTP_404_NOT_FOUND)
+            return Response("Staff accepted request fail", status=status.HTTP_404_NOT_FOUND)
+        
+class NotificationAcceptedCheckView(APIView):
+    def get(self, request):
+        staff_accepted_time = Assistance.objects.latest('staffAcceptedTime').staffAcceptedTime
+        
+        return Response({'staff_accepted_time': staff_accepted_time})
 
 class NotificationCompleteView(APIView):
     def put(self, request):
         tableCheck = request.data.get('table')
-        tableStatusCheck = False
+        tableStatusCheck = request.data.get('tableStatus')
         
         assistanceRequest = Assistance.objects.filter(table=tableCheck, tableStatus=tableStatusCheck)
         
