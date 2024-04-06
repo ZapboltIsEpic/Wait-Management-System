@@ -11,7 +11,10 @@ class OrderItemSerializer(serializers.ModelSerializer):
                   'item', 
                   'quantity', 
                   'is_preparing',
-                  'is_ready']
+                  'is_ready',
+                  'wait_staff_assigned',
+                  'deliver'
+                  ]
         
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
