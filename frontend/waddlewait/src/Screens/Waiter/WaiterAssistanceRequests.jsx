@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, Drawer } from '@mui/material';
+import { Button, Drawer, Alert, Snackbar } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import { WaiterSidebar } from './layout/WaiterSidebar';
@@ -64,6 +64,11 @@ function WaiterAssistanceRequests() {
   const [acceptedAssistanceRequest, setAcceptedAssistanceRequest] = useState(null);
   const [assistanceRequestAccepted, setAssistanceRequestAccepted] = useState(false);
   const [assistanceRequests, setAssistanceRequests] = useState([]);
+
+  const [latestAssistanceRequest, setLatestAssistanceRequest] = useState({})
+  const [latestAccepetedAssistanceRequest, setLatestAccepetedAssistanceRequest] = useState({})
+  const [newNotification, setNewNotification] = React.useState(false);
+  const [notification, setNotification] = React.useState('');
   const [openDrawer, setOpenDrawer] = useState(false);
 
 	const toggleDrawer = (isOpen) => () => {
@@ -102,6 +107,43 @@ function WaiterAssistanceRequests() {
       });
   }, []);
 
+  useEffect(() => {
+    function checkNotifications() {
+      axios.get('http://localhost:8000/assistance/notificationscheck')
+      .then(response => {
+        console.log(response.data);
+        if (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request != response.data.most_recent_assistance_request) {
+          setNewNotification(true);
+          setNotification("New assistance request by table " + response.data.most_recent_assistance_request);
+        }
+        setLatestAssistanceRequest(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+      axios.get('http://localhost:8000/assistance/notifications/acceptedcheck')
+      .then(response => {
+        console.log(response.data);
+        if (latestAccepetedAssistanceRequest != {} && latestAccepetedAssistanceRequest.staff_accepted_time != response.data.staff_accepted_time) {
+          setNewNotification(true);
+          setNotification("Assistance request for table " + response.data.staff_accepted_time + " accepeted by " + response.data.staff_accepted_time);
+        }
+        setLatestAccepetedAssistanceRequest(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+
+
+
+    const notificationLoop = setInterval(checkNotifications, 4000);
+
+    // Cleanup function to stop the loop when the component unmounts
+    return () => clearInterval(notificationLoop);
+  }, [latestAssistanceRequest, latestAccepetedAssistanceRequest]);
+
   return (
     <div className="App">
         <Button onClick={toggleDrawer(true)}>Open drawer</Button>
@@ -135,6 +177,20 @@ function WaiterAssistanceRequests() {
               </div>
             )
         }
+        <Snackbar open={newNotification} autoHideDuration={3000} 
+          onClose={() => {
+            setNewNotification(false)}
+          }
+        >
+          <Alert
+            onClose={() => setNewNotification(false)}
+            severity="info"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            {notification}
+          </Alert>
+        </Snackbar>
     </div>
   );
 }
