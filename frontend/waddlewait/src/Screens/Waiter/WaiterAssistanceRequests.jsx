@@ -136,8 +136,6 @@ function WaiterAssistanceRequests() {
       });
     }
 
-
-
     const notificationLoop = setInterval(checkNotifications, 4000);
 
     // Cleanup function to stop the loop when the component unmounts
