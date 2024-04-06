@@ -24,9 +24,16 @@ class RequestNotificationView(APIView):
         
 class RequestNotificationCheckView(APIView):
     def get(self, request):
-        most_recent_assistance_request = Assistance.objects.latest('createdTime').createdTime
+        object = Assistance.objects.latest('createdTime')
         
-        return Response({'most_recent_assistance_request': most_recent_assistance_request})
+        # Retrieve the values of 'createdTime' and 'table' fields
+        created_time = object.createdTime
+        table_data = object.table
+        
+        return Response({
+                'most_recent_assistance_request': created_time,
+                'table_data': table_data
+                    })
     
 class NotificationAcceptedView(APIView):
     def put(self, request):
@@ -48,9 +55,13 @@ class NotificationAcceptedView(APIView):
         
 class NotificationAcceptedCheckView(APIView):
     def get(self, request):
-        staff_accepted_time = Assistance.objects.latest('staffAcceptedTime').staffAcceptedTime
+        object = Assistance.objects.latest('staffAcceptedTime')
         
-        return Response({'staff_accepted_time': staff_accepted_time})
+        staff_accepted_time = object.staffAcceptedTime
+        staff_accepted = object.staffName
+        table_data = object.table
+        
+        return Response({'staff_accepted_time': staff_accepted_time,'staff_accepted':staff_accepted, 'table_data': table_data})
 
 class NotificationCompleteView(APIView):
     def put(self, request):

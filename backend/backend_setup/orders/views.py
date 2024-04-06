@@ -42,9 +42,11 @@ class OrderDeliverRequestNotificationView(APIView):
         
 class OrderDeliverRequestNotificationCheckView(APIView):
     def get(self, request):
-        most_recent_item_made_time = OrderItem.objects.latest('item_made_time').item_made_time
+        object = OrderItem.objects.latest('item_made_time')
+        most_recent_item_made_time = object.item_made_time
+        table_data = object.order.table.table_number
         
-        return Response({'most_recent_item_made_time': most_recent_item_made_time})
+        return Response({'most_recent_item_made_time': most_recent_item_made_time, 'table': table_data})
 
 class OrderDeliverNotificationAcceptedView(APIView):
     def put(self, request):
@@ -79,9 +81,12 @@ class OrderDeliverNotificationAcceptedView(APIView):
         
 class OrderDeliverNotificationAcceptedNotificationCheckView(APIView):
     def get(self, request):
-        most_recent_staff_assigned = OrderItem.objects.latest('wait_staff_assigned_time').wait_staff_assigned_time
+        object = OrderItem.objects.latest('wait_staff_assigned_time')
+        most_recent_staff_assigned_time = object.wait_staff_assigned_time
+        most_recent_staff_assigned = object.wait_staff_assigned
+        table_data = object.order.table.table_number
         
-        return Response({'most_recent_wait_staff_assigned_time': most_recent_staff_assigned})
+        return Response({'most_recent_wait_staff_assigned_time': most_recent_staff_assigned_time,'most_recent_staff_assigned':most_recent_staff_assigned, 'table': table_data})
 
 class OrderDeliverNotificationCompleteView(APIView):
     def put(self, request):
