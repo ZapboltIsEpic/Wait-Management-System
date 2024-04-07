@@ -15,9 +15,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
 function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAcceptedAssistanceRequest }) {
+  // console.log({assistanceRequest})
+  // console.log(assistanceRequest.table)
   const handleAcceptRequest = () => {
+    // console.log(assistanceRequest.table)
     axios.put('http://localhost:8000/assistance/notifications/accepted', {
-      "tableNumber": assistanceRequest.tableNumber, 
+      "table": assistanceRequest.table, 
       "staffName": assistanceRequest.staffName,
       "tableStatus": assistanceRequest.tableStatus
     })
@@ -36,9 +39,9 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
     return null;
   }
   return (
-    <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
+    <Card className="order-card" sx={{ minWidth: 300, minHeight: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Table no " + assistanceRequest.tableNumber}
+        title={"Table no " + assistanceRequest.table}
       />
       <CardContent className="order-card-contents">
         <Typography color="text.secondary">
@@ -81,9 +84,9 @@ function WaiterAssistanceRequests() {
 
   const handleCompletedAssistanceRequest = () => {
     axios.put('http://localhost:8000/assistance/notifications/completed', {
-      "tableNumber": acceptedAssistanceRequest.tableNumber, 
+      "table": acceptedAssistanceRequest.table, 
       "staffName": acceptedAssistanceRequest.staffName,
-      "tableStatus": acceptedAssistanceRequest.tableStatus,
+      "tableStatus": false,
     })
     .then(response => {
       console.log(response.json);
@@ -112,7 +115,7 @@ function WaiterAssistanceRequests() {
       axios.get('http://localhost:8000/assistance/notificationscheck')
       .then(response => {
         console.log(response.data);
-        if (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request != response.data.most_recent_assistance_request) {
+        if (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request !== response.data.most_recent_assistance_request) {
           setNewNotification(true);
           setNotification("New assistance request by table " + response.data.most_recent_assistance_request);
         }
@@ -124,8 +127,9 @@ function WaiterAssistanceRequests() {
 
       axios.get('http://localhost:8000/assistance/notifications/acceptedcheck')
       .then(response => {
-        console.log(response.data);
-        if (latestAccepetedAssistanceRequest != {} && latestAccepetedAssistanceRequest.staff_accepted_time != response.data.staff_accepted_time) {
+        // console.log(response.data);
+        // console.log("Hi")
+        if (latestAccepetedAssistanceRequest != {} && latestAccepetedAssistanceRequest.staff_accepted_time !== response.data.staff_accepted_time) {
           setNewNotification(true);
           setNotification("Assistance request for table " + response.data.staff_accepted_time + " accepeted by " + response.data.staff_accepted_time);
         }
@@ -164,9 +168,9 @@ function WaiterAssistanceRequests() {
               // This will be displayed if assistance_request_accepted is false
               <div>
                 <h1>Assistance Requests</h1>
-                <div className="assistance-requests-container">
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
                   {assistanceRequests.map((request, index) => (
-                    <MakeAssistance key={index} 
+                    <MakeAssistance key={index}
                     assistanceRequest={request}
                     setAssistanceRequestAccepted={setAssistanceRequestAccepted}
                     setAcceptedAssistanceRequest={setAcceptedAssistanceRequest} />

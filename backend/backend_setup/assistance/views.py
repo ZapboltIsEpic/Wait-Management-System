@@ -1,4 +1,5 @@
 import datetime
+from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -40,13 +41,12 @@ class NotificationAcceptedView(APIView):
         tableCheck = request.data.get('table')
         staffName = request.data.get('staffName')
         tableStatusCheck = request.data.get('tableStatus')
-        
         assistanceRequest = Assistance.objects.filter(table=tableCheck, tableStatus=tableStatusCheck)
         
         if assistanceRequest.exists():
             for request in assistanceRequest:
                 request.staffName = staffName
-                request.staffAcceptedTime = datetime.datetime.now()
+                request.staffAcceptedTime = timezone.now()
                 request.save()
             
             return Response("Staff accepted request success", status=status.HTTP_200_OK)
@@ -67,15 +67,12 @@ class NotificationCompleteView(APIView):
     def put(self, request):
         tableCheck = request.data.get('table')
         tableStatusCheck = request.data.get('tableStatus')
-        
         assistanceRequest = Assistance.objects.filter(table=tableCheck, tableStatus=tableStatusCheck)
-        
         if assistanceRequest.exists():
             for request in assistanceRequest:
                 # Update status or perform other actions as needed
                 request.tableStatus = True
                 request.save()
-            
             return Response("Notifications accepted", status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that

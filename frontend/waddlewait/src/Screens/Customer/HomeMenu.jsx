@@ -405,10 +405,11 @@ function HomeMenu() {
   const handleChangeTab = (event, newCateId) => {
     setCateId(newCateId);
   };
-
+  
   const handleAssistance = () => {
+    // console.log(tableNum)
     axios.post('http://127.0.0.1:8000/customer/assistance', {
-      "tableNumber": tableNum
+      "table_number": tableNum
     })
     .catch(error => {
       console.log(error);
