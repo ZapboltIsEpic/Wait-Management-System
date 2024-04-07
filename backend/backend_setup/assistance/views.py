@@ -25,16 +25,19 @@ class RequestNotificationView(APIView):
         
 class RequestNotificationCheckView(APIView):
     def get(self, request):
-        object = Assistance.objects.latest('createdTime')
-        
-        # Retrieve the values of 'createdTime' and 'table' fields
-        created_time = object.createdTime
-        table_data = object.table
-        
-        return Response({
-                'most_recent_assistance_request': created_time,
-                'table_data': table_data
-                    })
+        try:
+            object = Assistance.objects.latest('createdTime')
+            
+            # Retrieve the values of 'createdTime' and 'table' fields
+            created_time = object.createdTime
+            table_data = object.table
+            
+            return Response({
+                    'most_recent_assistance_request': created_time,
+                    'table_data': table_data
+                        })
+        except Assistance.DoesNotExist:
+            return Response("No Assistance request found", status=status.HTTP_404_NOT_FOUND)
     
 class NotificationAcceptedView(APIView):
     def put(self, request):
@@ -55,13 +58,17 @@ class NotificationAcceptedView(APIView):
         
 class NotificationAcceptedCheckView(APIView):
     def get(self, request):
-        object = Assistance.objects.latest('staffAcceptedTime')
+        try:
+            object = Assistance.objects.latest('staffAcceptedTime')
+            
+            staff_accepted_time = object.staffAcceptedTime
+            staff_accepted = object.staffName
+            table_data = object.table
+            
+            return Response({'staff_accepted_time': staff_accepted_time,'staff_accepted':staff_accepted, 'table_data': table_data})
+        except Assistance.DoesNotExist:
+            return Response("No Assistance request found", status=status.HTTP_404_NOT_FOUND)
         
-        staff_accepted_time = object.staffAcceptedTime
-        staff_accepted = object.staffName
-        table_data = object.table
-        
-        return Response({'staff_accepted_time': staff_accepted_time,'staff_accepted':staff_accepted, 'table_data': table_data})
 
 class NotificationCompleteView(APIView):
     def put(self, request):
@@ -69,22 +76,27 @@ class NotificationCompleteView(APIView):
         tableStatusCheck = request.data.get('tableStatus')
         assistanceRequest = Assistance.objects.filter(table=tableCheck, tableStatus=tableStatusCheck)
         if assistanceRequest.exists():
-            for request in assistanceRequest:
-                # Update status or perform other actions as needed
-                request.tableStatus = True
-                request.save()
-            return Response("Notifications accepted", status=status.HTTP_200_OK)
+            # for request in assistanceRequest:
+            #     # Update status or perform other actions as needed
+            #     request.tableStatus = True
+            #     request.save()
+            assistanceRequest.delete()
+            
+            return Response("Notifications deleted", status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that
             return Response("No notifications found for the provided table number and status", status=status.HTTP_404_NOT_FOUND)
 
 class GetAllNotificationsView(APIView):
     def get(self, request):
-        # Retrieve all assistance requests with tableStatus=False from the database
-        assistance = Assistance.objects.filter(tableStatus=False)
-        
-        # Serialize the assistance data
-        assistanceSerializer = AssistanceSerializer(assistance, many=True)
-        
-        # Return the serialized data as a response
-        return Response(assistanceSerializer.data, status=status.HTTP_200_OK)
+        try:
+            # Retrieve all assistance requests with tableStatus=False from the database
+            assistance = Assistance.objects.filter(tableStatus=False)
+            
+            # Serialize the assistance data
+            assistanceSerializer = AssistanceSerializer(assistance, many=True)
+            
+            # Return the serialized data as a response
+            return Response(assistanceSerializer.data, status=status.HTTP_200_OK)
+        except Assistance.DoesNotExist:
+            return Response("No Assistance request found", status=status.HTTP_404_NOT_FOUND)
