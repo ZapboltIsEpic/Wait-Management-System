@@ -26,7 +26,7 @@ class RequestNotificationView(APIView):
 class RequestNotificationCheckView(APIView):
     def get(self, request):
         try:
-            object = Assistance.objects.latest('createdTime')
+            object = Assistance.objects.exclude(createdTime__isnull=True).latest('createdTime')
             
             # Retrieve the values of 'createdTime' and 'table' fields
             created_time = object.createdTime
@@ -59,7 +59,7 @@ class NotificationAcceptedView(APIView):
 class NotificationAcceptedCheckView(APIView):
     def get(self, request):
         try:
-            object = Assistance.objects.latest('staffAcceptedTime')
+            object = Assistance.objects.exclude(staffAcceptedTime__isnull=True).latest('staffAcceptedTime')
             
             staff_accepted_time = object.staffAcceptedTime
             staff_accepted = object.staffName
