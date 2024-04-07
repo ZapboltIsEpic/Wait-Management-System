@@ -43,7 +43,7 @@ class OrderDeliverRequestNotificationView(APIView):
 class OrderDeliverRequestNotificationCheckView(APIView):
     def get(self, request):
         try:
-            object = OrderItem.objects.latest('item_made_time')
+            object = OrderItem.objects.exclude(item_made_time__isnull=True).latest('item_made_time')
             most_recent_item_made_time = object.item_made_time
             table_data = object.order.table.table_number
             order_data = object.order.id
@@ -87,7 +87,7 @@ class OrderDeliverNotificationAcceptedNotificationCheckView(APIView):
     def get(self, request):
         try:
             # Attempt to retrieve the latest OrderItem
-            object = OrderItem.objects.latest('wait_staff_assigned_time')
+            object = OrderItem.objects.exclude(wait_staff_assigned_time__isnull=True).latest('wait_staff_assigned_time')
             most_recent_staff_assigned_time = object.wait_staff_assigned_time
             most_recent_staff_assigned = object.wait_staff_assigned
             table_data = object.order.table.table_number
