@@ -117,7 +117,7 @@ function WaiterAssistanceRequests() {
         console.log(response.data);
         if (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request !== response.data.most_recent_assistance_request) {
           setNewNotification(true);
-          setNotification("New assistance request by table " + response.data.most_recent_assistance_request);
+          setNotification("New assistance request by table " + response.data.table_data);
         }
         setLatestAssistanceRequest(response.data);
       })
@@ -127,8 +127,6 @@ function WaiterAssistanceRequests() {
 
       axios.get('http://localhost:8000/assistance/notifications/acceptedcheck')
       .then(response => {
-        // console.log(response.data);
-        // console.log("Hi")
         if (latestAccepetedAssistanceRequest != {} && latestAccepetedAssistanceRequest.staff_accepted_time !== response.data.staff_accepted_time) {
           setNewNotification(true);
           setNotification("Assistance request for table " + response.data.staff_accepted_time + " accepeted by " + response.data.staff_accepted_time);
