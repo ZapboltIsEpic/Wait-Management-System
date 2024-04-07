@@ -129,6 +129,7 @@ function WaiterAssistanceRequests() {
       .then(response => {
         if (latestAccepetedAssistanceRequest != {} && latestAccepetedAssistanceRequest.staff_accepted_time !== response.data.staff_accepted_time) {
           setNewNotification(true);
+          console.log(response.data)
           setNotification("Assistance request for table " + response.data.staff_accepted_time + " accepeted by " + response.data.staff_accepted_time);
         }
         setLatestAccepetedAssistanceRequest(response.data);
