@@ -71,12 +71,13 @@ class NotificationCompleteView(APIView):
         assistanceRequest = Assistance.objects.filter(table=tableCheck, tableStatus=tableStatusCheck)
         
         if assistanceRequest.exists():
-            for request in assistanceRequest:
-                # Update status or perform other actions as needed
-                request.tableStatus = True
-                request.save()
+            # for request in assistanceRequest:
+            #     # Update status or perform other actions as needed
+            #     request.tableStatus = True
+            #     request.save()
+            assistanceRequest.delete()
             
-            return Response("Notifications accepted", status=status.HTTP_200_OK)
+            return Response("Notifications deleted", status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that
             return Response("No notifications found for the provided table number and status", status=status.HTTP_404_NOT_FOUND)
