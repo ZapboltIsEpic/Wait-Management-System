@@ -42,12 +42,15 @@ class OrderDeliverRequestNotificationView(APIView):
         
 class OrderDeliverRequestNotificationCheckView(APIView):
     def get(self, request):
-        object = OrderItem.objects.latest('item_made_time')
-        most_recent_item_made_time = object.item_made_time
-        table_data = object.order.table.table_number
-        order_data = object.order.id
-        
-        return Response({'most_recent_item_made_time': most_recent_item_made_time, 'table': table_data, 'order': order_data})
+        try:
+            object = OrderItem.objects.latest('item_made_time')
+            most_recent_item_made_time = object.item_made_time
+            table_data = object.order.table.table_number
+            order_data = object.order.id
+            
+            return Response({'most_recent_item_made_time': most_recent_item_made_time, 'table': table_data, 'order': order_data})
+        except OrderItem.DoesNotExist:
+            return Response("No OrderItem found", status=status.HTTP_404_NOT_FOUND)
 
 class OrderDeliverNotificationAcceptedView(APIView):
     def put(self, request):
@@ -82,13 +85,23 @@ class OrderDeliverNotificationAcceptedView(APIView):
         
 class OrderDeliverNotificationAcceptedNotificationCheckView(APIView):
     def get(self, request):
-        object = OrderItem.objects.latest('wait_staff_assigned_time')
-        most_recent_staff_assigned_time = object.wait_staff_assigned_time
-        most_recent_staff_assigned = object.wait_staff_assigned
-        table_data = object.order.table.table_number
-        order_data = object.order.id
-        
-        return Response({'most_recent_wait_staff_assigned_time': most_recent_staff_assigned_time,'most_recent_staff_assigned':most_recent_staff_assigned, 'table': table_data, 'order': order_data})
+        try:
+            # Attempt to retrieve the latest OrderItem
+            object = OrderItem.objects.latest('wait_staff_assigned_time')
+            most_recent_staff_assigned_time = object.wait_staff_assigned_time
+            most_recent_staff_assigned = object.wait_staff_assigned
+            table_data = object.order.table.table_number
+            order_data = object.order.id
+            
+            return Response({
+                'most_recent_wait_staff_assigned_time': most_recent_staff_assigned_time,
+                'most_recent_staff_assigned': most_recent_staff_assigned, 
+                'table': table_data, 
+                'order': order_data
+            })
+        except OrderItem.DoesNotExist:
+            # Handle the case where no OrderItem is found
+            return Response("No OrderItem found", status=status.HTTP_404_NOT_FOUND)
 
 class OrderDeliverNotificationCompleteView(APIView):
     def put(self, request):
@@ -122,13 +135,16 @@ class OrderDeliverNotificationCompleteView(APIView):
 
 class OrdersDeliverGetAllNotificationsView(APIView):
     def get(self, request):
-        # Retrieve all assistance requests with Deliver = False from the database
-        order = OrderItem.objects.filter(deliver=False, is_ready=True, wait_staff_assigned='none')
-        
-        orderSerializer = OrderItemSerializer(order, many=True)
-        
-        # Return the serialized data as a response
-        return Response(orderSerializer.data, status=status.HTTP_200_OK)
+        try:
+            # Retrieve all assistance requests with Deliver = False from the database
+            order = OrderItem.objects.filter(deliver=False, is_ready=True, wait_staff_assigned='none')
+            
+            orderSerializer = OrderItemSerializer(order, many=True)
+            
+            # Return the serialized data as a response
+            return Response(orderSerializer.data, status=status.HTTP_200_OK)
+        except OrderItem.DoesNotExist:
+            return Response("No OrderItem found", status=status.HTTP_404_NOT_FOUND)
     
 class OrdersCheckoutBillView(APIView):
     def get(self, request, table):
