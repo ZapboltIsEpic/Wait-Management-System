@@ -130,29 +130,29 @@ function WaiterAssistanceRequests() {
         console.log(error);
       });
 
-      // axios.get('http://localhost:8000/assistance/notifications/acceptedcheck')
-      // .then(response => {
-      //   console.log(response.data)
-      //   if (latestAccepetedAssistanceRequest != {} && latestAccepetedAssistanceRequest.staff_accepted_time !== response.data.staff_accepted_time) {
-      //     console.log(latestAccepetedAssistanceRequest,  response.data)
-      //     setNewNotification(true);
-      //     setNotification("Assistance request for table " + response.data.table_data + " was accepted");
+      axios.get('http://localhost:8000/assistance/notifications/acceptedcheck')
+      .then(response => {
+        console.log(response.data)
+        if (latestAccepetedAssistanceRequest != {} && latestAccepetedAssistanceRequest.staff_accepted_time !== response.data.staff_accepted_time) {
+          console.log(latestAccepetedAssistanceRequest,  response.data)
+          setNewNotification(true);
+          setNotification("Assistance request for table " + response.data.table_data + " was accepted");
 
-      //     axios.get('http://localhost:8000/assistance/requests')
-      //     .then(response => {
-      //       // const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
-      //       setAssistanceRequests(response.data);
-      //       console.log(response.data, "hi");
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //     });
-      //   }
-      //   setLatestAccepetedAssistanceRequest(response.data);
-      // })
-      // .catch(error => {
-      //   console.log(error);
-      // });
+          axios.get('http://localhost:8000/assistance/requests')
+          .then(response => {
+            const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
+            setAssistanceRequests(filteredRequests);
+            console.log(response.data, "hi");
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        }
+        setLatestAccepetedAssistanceRequest(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     }
 
     const notificationLoop = setInterval(checkNotifications, 4000);
