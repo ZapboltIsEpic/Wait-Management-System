@@ -81,23 +81,20 @@ def viewCustomerOrder(request, tableNumber):
 @api_view(['POST'])
 def requestCustomerAssistance(request):
     if request.method == 'POST':
-        table_number = request.data.get('tableNumber')
+        table_number = request.data.get('table_number')
         if table_number is None:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        existingAssistance = Assistance.objects.filter(tableNumber=table_number, tableStatus=False).exists()
+        existingAssistance = Assistance.objects.filter(table=table_number, tableStatus=True).exists()
         if existingAssistance:
             return JsonResponse({'message': 'Assistance request for table already sent'}, status=status.HTTP_200_OK)
-        
         req_data = {
-            'tableNumber': table_number
+            'table': table_number
         }
 
         assistance_serializer = AssistanceSerializer(data=req_data)
         if assistance_serializer.is_valid():
             assistance_serializer.save()
             return JsonResponse({ "message": "Assistance requested successfully"}, status=status.HTTP_201_CREATED)
-
         return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
     
 @api_view(['POST'])
