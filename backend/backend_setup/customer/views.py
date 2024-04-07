@@ -84,7 +84,7 @@ def requestCustomerAssistance(request):
         table_number = request.data.get('table_number')
         if table_number is None:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
-        existingAssistance = Assistance.objects.filter(table=table_number, tableStatus=True).exists()
+        existingAssistance = Assistance.objects.filter(table=table_number, tableStatus=False).exists()
         if existingAssistance:
             return JsonResponse({'message': 'Assistance request for table already sent'}, status=status.HTTP_200_OK)
         req_data = {

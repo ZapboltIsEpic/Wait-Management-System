@@ -103,7 +103,6 @@ function WaiterAssistanceRequests() {
     axios.get('http://localhost:8000/assistance/requests')
       .then(response => {
         setAssistanceRequests(response.data);
-        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -114,10 +113,16 @@ function WaiterAssistanceRequests() {
     function checkNotifications() {
       axios.get('http://localhost:8000/assistance/notificationscheck')
       .then(response => {
-        console.log(response.data);
-        if (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request !== response.data.most_recent_assistance_request) {
+        if (Object.keys(latestAssistanceRequest).length === 0 || (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request !== response.data.most_recent_assistance_request)) {
           setNewNotification(true);
-          setNotification("New assistance request by table " + response.data.most_recent_assistance_request);
+          setNotification("New assistance request by table " + response.data.table_data);
+          axios.get('http://localhost:8000/assistance/requests')
+          .then(response => {
+            setAssistanceRequests(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
         }
         setLatestAssistanceRequest(response.data);
       })
@@ -127,11 +132,21 @@ function WaiterAssistanceRequests() {
 
       axios.get('http://localhost:8000/assistance/notifications/acceptedcheck')
       .then(response => {
-        // console.log(response.data);
-        // console.log("Hi")
+        console.log(response.data)
         if (latestAccepetedAssistanceRequest != {} && latestAccepetedAssistanceRequest.staff_accepted_time !== response.data.staff_accepted_time) {
+          console.log(latestAccepetedAssistanceRequest,  response.data)
           setNewNotification(true);
-          setNotification("Assistance request for table " + response.data.staff_accepted_time + " accepeted by " + response.data.staff_accepted_time);
+          setNotification("Assistance request for table " + response.data.table_data + " was accepted");
+
+          axios.get('http://localhost:8000/assistance/requests')
+          .then(response => {
+            const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
+            setAssistanceRequests(filteredRequests);
+            console.log(response.data, "hi");
+          })
+          .catch(error => {
+            console.log(error);
+          });
         }
         setLatestAccepetedAssistanceRequest(response.data);
       })
