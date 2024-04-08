@@ -39,11 +39,10 @@ function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequ
     return null;
   }
 
-  console.log(orderRequest)
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Order no " + orderRequest.order}
+        title={"Order no " + orderRequest.order_id}
       />
       <CardContent className="order-card-contents">
         <Typography color="text.secondary">
@@ -159,7 +158,7 @@ function WaiterOrderRequests() {
         setLatestAccepetedOrderRequest(response.data);
       })
       .catch(error => {
-        console.log(error);
+        console.log("Error", error.response.status, error.response.data);
       });
     }
 
