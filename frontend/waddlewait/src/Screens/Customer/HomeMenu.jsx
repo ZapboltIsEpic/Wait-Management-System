@@ -388,9 +388,9 @@ function HomeMenu() {
     if (tableNum && groupSize && groupSize > 0) {
       setConfirmTable(tableNum)
     } else if (tableNum === '' && groupSize <= 0) {
-      setErrorMessage("Please enter the group size and select the table number.")
+      setErrorMessage("Please enter your group size and select the table number.")
     } else if (groupSize <= 0) {
-      setErrorMessage("Please enter the group size.")
+      setErrorMessage("Please enter your group size.")
     } else if (tableNum === '') {
       setErrorMessage("Please select a Table Number.")
     }
@@ -422,76 +422,77 @@ function HomeMenu() {
 
   return (
     <>
-    {confirmTable === '' ? (
-      // Table Selection
-      <>
-        <h1>
-          Table Selection
-        </h1>
-        
-        <Grid container spacing={5} style={{ justifyContent: 'center' }}>
-          <Grid item>
-            <FormControl fullWidth>
-              <TextField
-                id="groupSizeField"
-                label="Group Size"
-                type="number"
-                inputProps={{
-                  min: 1
-                }}
-                value={groupSize}
-                onChange={changeGroupSize}
-                sx={{ width: 150 }}
-              />
-            </FormControl>
+      {confirmTable === '' ? (
+        // Table Selection
+        <div className="customer-screen">
+          <div className="customer-container">
+          <h1>
+            Table Selection
+          </h1>
+          
+          <p>
+            Please select your group size and a table number
+          </p>
+          <Grid container spacing={5} style={{ marginTop: '5px', marginBottom: '10px', justifyContent: 'center' }}>
+            <Grid item>
+              <FormControl fullWidth>
+                <TextField
+                  id="groupSizeField"
+                  label="Group Size"
+                  type="number"
+                  inputProps={{
+                    min: 1
+                  }}
+                  value={groupSize}
+                  onChange={changeGroupSize}
+                  sx={{ width: 150 }}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item>
+              <FormControl fullWidth>
+                <InputLabel id="groupSizeLabel">Table Number</InputLabel>
+                <Select 
+                  labelId="tableNumField"
+                  label="Table Number" 
+                  type="number"
+                  value={tableNum}
+                  onChange={changeTableNum}
+                  sx={{ width: 150 }}
+                >
+                  {currentTables.length > 0 ? (
+                    currentTables.map((item, index) => (
+                      <MenuItem key={index} value={item.table_number}>{item.table_number}</MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">No tables available</MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
 
-          <Grid item>
-            <FormControl fullWidth>
-              <InputLabel id="groupSizeLabel">Table Number</InputLabel>
-              <Select 
-                labelId="tableNumField"
-                label="Table Number" 
-                type="number"
-                value={tableNum}
-                onChange={changeTableNum}
-                sx={{ width: 150 }}
-              >
-                {currentTables.length > 0 ? (
-                  currentTables.map((item, index) => (
-                    <MenuItem key={index} value={item.table_number}>{item.table_number}</MenuItem>
-                  ))
-                ) : (
-                  <MenuItem value="">No tables available</MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+          <div className="table-button-container">
+            <Button variant="outlined" onClick={() => navigate('/')} className="custom-button" color='warning' >
+              Back
+            </Button>
+            <Button variant="contained" onClick={handleConfirm} className="custom-button" color='warning' >
+              Confirm
+            </Button>
 
-        <br />
+          </div>
 
-        <Button variant="contained" onClick={handleConfirm} className="custom-button" color='warning' >
-          Confirm
-        </Button>
-
-        <br /><br />
-
-        <Button variant="outlined" onClick={() => navigate('/')} className="custom-button" color='warning' >
-          Back
-        </Button>
-
-        <br /><br />
-
-        {showError && (
-          <>
-            <Alert severity="error" sx={{ width: '100%' }}>
-              {errorMessage}
-            </Alert>
-          </>
-        )}
-      </>
-    ):(
+          {showError && (
+            <>
+              <Alert severity="error" sx={{ width: '100%' }}>
+                {errorMessage}
+              </Alert>
+            </>
+          )}
+          </div>
+        </div>
+      ):(
       // Menu
       <>
         <h1>
