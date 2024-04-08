@@ -143,13 +143,34 @@ class OrdersDeliverGetAllNotificationsView(APIView):
             for order_item in order_items:
                 table_data = order_item.order.table.table_number
                 item_name = order_item.item.name
-                notification_data.append({'table_number': table_data, 'item_name': item_name})
+                
+                order_id = order_item.order.id
+                quantity_data = order_item.quantity
+                is_preparing_data = order_item.is_preparing
+                is_ready_data = order_item.is_ready
+                item_made_time_data = order_item.item_made_time
+                wait_staff_assigned_time_data = order_item.wait_staff_assigned_time
+                wait_staff_assigned_data = order_item.wait_staff_assigned
+                deliver_data = order_item.deliver
+                
+                notification_data.append({
+                                'order_id': order_id,
+                                'table_number': table_data,
+                                'item_name': item_name,
+                                'quantity': quantity_data,
+                                'is_preparing': is_preparing_data,
+                                'is_ready': is_ready_data,
+                                'item_made_time': item_made_time_data,
+                                'wait_staff_assigned_time': wait_staff_assigned_time_data,
+                                'wait_staff_assigned': wait_staff_assigned_data,
+                                'deliver': deliver_data
+                            })
             
             # orderSerializer = OrderItemSerializer(order, many=True)
             # Return the serialized data as a response
             # return Response(orderSerializer.data, status=status.HTTP_200_OK)
             
-            return Response({'table_number': table_data, 'item_name': item_name}, status=status.HTTP_200_OK)
+            return Response(notification_data, status=status.HTTP_200_OK)
         except OrderItem.DoesNotExist:
             return Response("No OrderItem found", status=status.HTTP_404_NOT_FOUND)
     
