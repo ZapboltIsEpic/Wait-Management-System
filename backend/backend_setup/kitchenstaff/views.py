@@ -54,10 +54,20 @@ def completedOrders(request):
 
 
 @api_view(['PUT'])
+def markItemAsNotStarted(request, orderId, ItemId):
+    if request.method == 'PUT':
+        order_item = OrderItem.objects.get(order_id=orderId, pk=itemId)
+        order_item.is_preparing = False
+        order_item.is_ready = False
+        order_item.item_made_time = None
+        order_item.save()
+
+@api_view(['PUT'])
 def markItemAsPreparing(request, orderId, itemId):
     if request.method == 'PUT':
         order_item = OrderItem.objects.get(order_id=orderId, pk=itemId)
         order_item.is_preparing = True
+        order_item.is_ready = False
         order_item.save()
 
         return JsonResponse({'message': 'Order item marked as preparing'}, status=status.HTTP_200_OK)
