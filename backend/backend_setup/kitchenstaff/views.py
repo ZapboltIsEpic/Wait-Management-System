@@ -62,6 +62,9 @@ def markItemAsNotStarted(request, orderId, itemId):
         order_item.item_made_time = None
         order_item.save()
 
+        return JsonResponse({'message': 'Order item marked as not started'}, status=status.HTTP_200_OK)
+
+
 @api_view(['PUT'])
 def markItemAsPreparing(request, orderId, itemId):
     if request.method == 'PUT':
