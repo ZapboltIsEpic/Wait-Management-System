@@ -113,7 +113,7 @@ function WaiterAssistanceRequests() {
     function checkNotifications() {
       axios.get('http://localhost:8000/assistance/notificationscheck')
       .then(response => {
-        if (Object.keys(latestAssistanceRequest).length === 0 || (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request !== response.data.most_recent_assistance_request)) {
+        if (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request !== response.data.most_recent_assistance_request) {
           setNewNotification(true);
           setNotification("New assistance request by table " + response.data.table_data);
           axios.get('http://localhost:8000/assistance/requests')
