@@ -38,6 +38,8 @@ function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequ
   if (orderRequest.deliver || !orderRequest.is_ready) {
     return null;
   }
+
+  console.log(orderRequest)
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
@@ -45,13 +47,13 @@ function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequ
       />
       <CardContent className="order-card-contents">
         <Typography color="text.secondary">
-          Item: {orderRequest.item}
+          Item: {orderRequest.item_name}
         </Typography>
         <Typography color="text.secondary">
           Quantity: {orderRequest.quantity}
         </Typography>
         <Typography color="text.secondary">
-          {"Table no " + orderRequest.table}
+          {"Table no " + orderRequest.table_number}
         </Typography>
         <FormControl fullWidth>
           <Button 
@@ -139,7 +141,7 @@ function WaiterOrderRequests() {
 
       axios.get('http://localhost:8000/orders/delivernotifications/accepted/notificationcheck')
       .then(response => {
-        console.log(response.data)
+        // console.log(response.data, "hi")
         if (latestAccepetedOrderRequest != {} && latestAccepetedOrderRequest.most_recent_wait_staff_assigned_time !== response.data.most_recent_wait_staff_assigned_time) {
           console.log(latestAccepetedOrderRequest, response.data)
           setNewNotification(true);
