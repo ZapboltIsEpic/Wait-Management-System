@@ -78,7 +78,7 @@ def completeOrder(request, orderId):
         order = Order.objects.get(pk=orderId)
         order.is_complete = True
         
-        orderItems = OrderItem.objects.filter(order=order, is_ready=False, item_name_time=None)
+        orderItems = OrderItem.objects.filter(order=order, is_ready=False, item_made_time=None)
         for orderItem in orderItems:
             orderItem.is_ready = True
             orderItem.item_made_time = datetime.now()
