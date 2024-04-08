@@ -189,7 +189,7 @@ function Items({ items, cateId, cart, setCart }) {
   )
 }
 
-function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNum }) {
+function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNum, setCartError}) {
   // const [disableDelete, setDisableDelete] = React.useState(false)
 
   // React.useEffect(() => {
@@ -221,6 +221,11 @@ function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNu
   }
 
   const handleOrder = () => {
+    if (cart.length === 0) {
+      setCartError(true);
+      setShowCart(false)
+      return;
+    }
     setShowCart(false)
     axios.post('http://127.0.0.1:8000/customer/order', {
       table_number: tableNum,
@@ -315,6 +320,7 @@ function HomeMenu() {
 
   // Menu variables
   const [assistance, setAssistance] = React.useState(false);
+  const [cartError, setCartError] = React.useState(false);
   const [showCart, setShowCart] = React.useState(false);
   const [bill, setBill] = React.useState(false)
   const [order, setOrder] = React.useState(false)
@@ -386,6 +392,11 @@ function HomeMenu() {
 
   const handleConfirm = () => {
     if (tableNum && groupSize && groupSize > 0) {
+      // When table is used, set post request
+      // axios.post('http://127.0.0.1:8000/tables', {
+      //   table_number: tableNum,
+      //   table_in_use: true
+      // });
       setConfirmTable(tableNum)
     } else if (tableNum === '' && groupSize <= 0) {
       setErrorMessage("Please enter your group size and select the table number.")
@@ -518,6 +529,16 @@ function HomeMenu() {
                 A waiter will be with you shortly!
               </Alert>
             </Snackbar>
+            <Snackbar open={cartError} autoHideDuration={3000} onClose={() => setCartError(false)}>
+              <Alert
+                onClose={() => setCartError(false)}
+                severity="error"
+                variant="filled"
+                sx={{ width: '100%' }}
+              >
+                Your cart is empty, add some items in before ordering!
+              </Alert>
+            </Snackbar>
 
             <div>
               <Button 
@@ -548,6 +569,7 @@ function HomeMenu() {
               tableNum={confirmTable}
               cart={cart}
               setCart={setCart}
+              setCartError={setCartError}
             />
 
             <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
