@@ -13,10 +13,15 @@ export const WaiterSidebar = () => {
         navigate("/waiter/assistance-requests"); 
     };
 
+    const handleSignOutClick = () => {
+        navigate("/"); 
+    };
+
     return (
         <div className="WaiterSidebar">
             <div><a onClick={handleOrderRequestsClick}>Order Requests</a></div>
             <div><a onClick={handleAssistanceRequestClick}>Assistance Requests</a></div>
+            <div><a onClick={handleSignOutClick}>Sign Out</a></div>
         </div>
     );
 };
