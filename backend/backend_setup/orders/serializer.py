@@ -22,10 +22,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['id',
                   'created_at',
                   'table',
-                  'ready_to_serve',
                   'is_complete',
-                  'wait_staff_assigned',
-                  'deliver',
                   'bill']
         read_only_fields = ['created_at']
 

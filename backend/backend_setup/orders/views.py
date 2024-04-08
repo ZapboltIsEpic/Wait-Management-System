@@ -137,12 +137,19 @@ class OrdersDeliverGetAllNotificationsView(APIView):
     def get(self, request):
         try:
             # Retrieve all assistance requests with Deliver = False from the database
-            order = OrderItem.objects.filter(deliver=False, is_ready=True, wait_staff_assigned='none')
+            order_items = OrderItem.objects.filter(deliver=False, is_ready=True, wait_staff_assigned='none')
             
-            orderSerializer = OrderItemSerializer(order, many=True)
+            notification_data = []
+            for order_item in order_items:
+                table_data = order_item.order.table.table_number
+                item_name = order_item.item.name
+                notification_data.append({'table_number': table_data, 'item_name': item_name})
             
+            # orderSerializer = OrderItemSerializer(order, many=True)
             # Return the serialized data as a response
-            return Response(orderSerializer.data, status=status.HTTP_200_OK)
+            # return Response(orderSerializer.data, status=status.HTTP_200_OK)
+            
+            return Response({'table_number': table_data, 'item_name': item_name}, status=status.HTTP_200_OK)
         except OrderItem.DoesNotExist:
             return Response("No OrderItem found", status=status.HTTP_404_NOT_FOUND)
     
