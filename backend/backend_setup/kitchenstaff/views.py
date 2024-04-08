@@ -54,7 +54,7 @@ def completedOrders(request):
 
 
 @api_view(['PUT'])
-def markItemAsNotStarted(request, orderId, ItemId):
+def markItemAsNotStarted(request, orderId, itemId):
     if request.method == 'PUT':
         order_item = OrderItem.objects.get(order_id=orderId, pk=itemId)
         order_item.is_preparing = False
