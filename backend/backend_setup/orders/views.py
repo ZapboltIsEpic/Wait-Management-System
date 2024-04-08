@@ -144,6 +144,7 @@ class OrdersDeliverGetAllNotificationsView(APIView):
                 table_data = order_item.order.table.table_number
                 item_name = order_item.item.name
                 
+                order_id = order_item.order.id
                 quantity_data = order_item.quantity
                 is_preparing_data = order_item.is_preparing
                 is_ready_data = order_item.is_ready
@@ -153,6 +154,7 @@ class OrdersDeliverGetAllNotificationsView(APIView):
                 deliver_data = order_item.deliver
                 
                 notification_data.append({
+                                'order_id': order_id,
                                 'table_number': table_data,
                                 'item_name': item_name,
                                 'quantity': quantity_data,
