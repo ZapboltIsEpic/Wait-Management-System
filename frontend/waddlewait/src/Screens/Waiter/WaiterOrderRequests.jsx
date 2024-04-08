@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, Drawer } from '@mui/material';
+import { Button, Drawer, Alert, Snackbar } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -20,14 +20,10 @@ import MenuItem from '@mui/material/MenuItem';
 function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequest}) {
   const handleAcceptRequest = () => {
     axios.put('http://localhost:8000/orders/delivernotifications/accepted', {
-      "table": orderRequest.table, 
-      "ready_to_serve": orderRequest.ready_to_serve, 
-      "is_complete": orderRequest.is_complete, 
+      "order": orderRequest.order, 
+      "item": orderRequest.item, 
       // should be the waiter's name
       "wait_staff_assigned": "yijun", 
-      "deliver": orderRequest.deliver, 
-      "bill": orderRequest.bill, 
-      "created_at": orderRequest.created_at,
     })
     .then(response => {
       console.log(response.json);
@@ -39,17 +35,23 @@ function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequ
     setAcceptedOrderRequest(orderRequest);
   }
 
-  if (orderRequest.deliver || orderRequest.is_complete) {
+  if (orderRequest.deliver || !orderRequest.is_ready) {
     return null;
   }
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Table no " + orderRequest.table}
+        title={"Order no " + orderRequest.order}
       />
       <CardContent className="order-card-contents">
         <Typography color="text.secondary">
-          Time Created: {orderRequest.created_at}
+          Item: {orderRequest.item}
+        </Typography>
+        <Typography color="text.secondary">
+          Quantity: {orderRequest.quantity}
+        </Typography>
+        <Typography color="text.secondary">
+          {"Table no " + orderRequest.table}
         </Typography>
         <FormControl fullWidth>
           <Button 
@@ -71,17 +73,16 @@ function WaiterOrderRequests() {
   const [acceptedOrderRequest, setAcceptedOrderRequest] = useState(null);
   const [orderRequestAccepted, setOrderRequestAccepted] = useState(false);
   const [orderRequests, setOrderRequests] = useState([]);
-  const [alerts, setAlerts] = useState([]);
 	const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [openAlert, setOpenAlert] = React.useState(false);
+
+  const [latestOrderRequest, setLatestOrderRequest] = useState({})
+  const [latestAccepetedOrderRequest, setLatestAccepetedOrderRequest] = useState({})
+  const [newNotification, setNewNotification] = React.useState(false);
+  const [notification, setNotification] = React.useState('');
 
 	const toggleDrawer = (isOpen) => () => {
 		setOpenDrawer(isOpen);
 	};
-
-  const handleClose = () => {
-      setOpenAlert(false);
-  };
 
   const callManager = () => {
     // call manager
@@ -98,25 +99,11 @@ function WaiterOrderRequests() {
       });
   }, []);
 
-  // implement alert by just checking ready_to_serve is true and not on page ig kinda hard actually
-
-  const addAlert = () => {
-      setAlerts({data: "New order request"});
-      console.log(alerts);
-      setOpenAlert(true);
-      console.log(alerts.length)
-  }
-
   const handleCompletedOrderRequest = () => {
     axios.put('http://localhost:8000/orders/delivernotifications/completed', {
-      "table": acceptedOrderRequest.table, 
-      "ready_to_serve": acceptedOrderRequest.ready_to_serve, 
-      "is_complete": acceptedOrderRequest.is_complete, 
-      // should be the waiter's name
-      "wait_staff_assigned": "yijun", 
+      "order": acceptedOrderRequest.order, 
+      "item": acceptedOrderRequest.item, 
       "deliver": acceptedOrderRequest.deliver, 
-      "bill": acceptedOrderRequest.bill, 
-      "created_at": acceptedOrderRequest.created_at,
     })
     .then(response => {
       console.log(response.json);
@@ -129,31 +116,59 @@ function WaiterOrderRequests() {
     window.location.reload();
   }
 
+  useEffect(() => {
+    function checkNotifications() {
+      axios.get('http://localhost:8000/orders/delivernotifications/notificationcheck')
+      .then(response => {
+        if (Object.keys(latestOrderRequest).length !== 0 && latestOrderRequest.most_recent_item_made_time !== response.data.most_recent_item_made_time) {
+          setNewNotification(true);
+          setNotification("New order request " + response.data.order + " by table " + response.data.table);
+          axios.get('http://localhost:8000/orders/deliverrequests')
+          .then(response => {
+            setOrderRequests(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        }
+        setLatestOrderRequest(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+      axios.get('http://localhost:8000/orders/delivernotifications/accepted/notificationcheck')
+      .then(response => {
+        console.log(response.data)
+        if (latestAccepetedOrderRequest != {} && latestAccepetedOrderRequest.most_recent_wait_staff_assigned_time !== response.data.most_recent_wait_staff_assigned_time) {
+          console.log(latestAccepetedOrderRequest, response.data)
+          setNewNotification(true);
+          setNotification("Order request " + response.data.order + " for table " + response.data.table + " was accepted");
+
+          axios.get('http://localhost:8000/orders/deliverrequests')
+          .then(response => {
+            const filteredRequests = response.data.filter(request => request.wait_staff_assigned === null);
+            setOrderRequests(filteredRequests);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        }
+        setLatestAccepetedOrderRequest(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+
+    const notificationLoop = setInterval(checkNotifications, 4000);
+
+    // Cleanup function to stop the loop when the component unmounts
+    return () => clearInterval(notificationLoop);
+  }, [latestOrderRequest, latestAccepetedOrderRequest]);
+
   return (
     <div className="App">
-        <Button onClick={addAlert}>Add alert manually before API implemented</Button>
-        <Dialog
-            open={openAlert}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-        <DialogTitle id="alert-dialog-title">
-          {"Order Request Alert"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {alerts.data}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Decline</Button>
-          <Button onClick={handleClose} autoFocus>
-            Accept
-          </Button>
-        </DialogActions>
-      </Dialog>
-
       <Button onClick={toggleDrawer(true)}>Open drawer</Button>
       <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
           { <WaiterSidebar />}
@@ -162,8 +177,9 @@ function WaiterOrderRequests() {
         orderRequestAccepted 
           ? (
             <div>
-              <h1>Order Request Table {acceptedOrderRequest.table_number} </h1>
-              <p>Created at: {acceptedOrderRequest.created_at}</p>
+              <h1>Order Request {acceptedOrderRequest.order} Table {acceptedOrderRequest.table} </h1>
+              <p>Item: {acceptedOrderRequest.item}</p>
+              <p>Quantity: {acceptedOrderRequest.quantity}</p>
               <Button onClick={callManager}>Call Manager</Button>
               <Button onClick={handleCompletedOrderRequest} autoFocus>
                 Complete
@@ -184,6 +200,20 @@ function WaiterOrderRequests() {
             </div>
           )
       }
+      <Snackbar open={newNotification} autoHideDuration={3000} 
+          onClose={() => {
+            setNewNotification(false)}
+          }
+        >
+          <Alert
+            onClose={() => setNewNotification(false)}
+            severity="info"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            {notification}
+          </Alert>
+        </Snackbar>
     </div>
   );
 }

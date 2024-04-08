@@ -106,14 +106,14 @@ function CreateStaffAccount() {
 									// Authentication goes here
 									// Check that fields cannot be empty
 									if (name === ""  || password === "" || username === "" || role === "") {
-										setErrorMessage("Register Failed: Please ensure all fields are filled");
+										setErrorMessage("Please ensure all fields are filled");
 										setErrorOpen(true);
 										return;
 									}
 									
 									// Passwords are same
 									if (password !== confirmPassword) {
-										setErrorMessage("Register Failed: Password/Confirm Password are not the same.")
+										setErrorMessage("Password/Confirm Password are not the same.")
 										setErrorOpen(true);
 										return;
 									}
@@ -170,14 +170,25 @@ function ErrorDialog ({open, setOpen, errorMessage}) {
 		onClose={() => {
 			setOpen(false)
 		}}
+		PaperProps={{
+			style: {
+				maxWidth: '400px',
+				width: '100%',
+				padding: '10px',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center'
+			},
+		}}
 	>
-		<DialogTitle>Error</DialogTitle>
+		<DialogTitle>Register Error</DialogTitle>
 		<p>{errorMessage}</p>
 		<Button
 			variant="outlined"
 			onClick={() => {
 				setOpen(false);
 			}}
+			style={{width: '50%'}}
 			color="warning"
 		>
 			Close
@@ -192,6 +203,16 @@ function SuccessDialog ({open, setOpen, navigateTo}) {
 			setOpen(false)
 			navigateTo('/staff/login');
 		}}
+		PaperProps={{
+			style: {
+				maxWidth: '400px',
+				width: '100%',
+				padding: '10px',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center'
+			},
+		}}
 	>
 		<DialogTitle>Success</DialogTitle>
 		<p>Your account has been registered</p>
@@ -200,7 +221,8 @@ function SuccessDialog ({open, setOpen, navigateTo}) {
 			onClick={() => {
 				setOpen(false);
 				navigateTo('/staff/login');
-			}}	
+			}}
+			style={{width: '50%'}}
 			color="warning"
 		>
 			Close
