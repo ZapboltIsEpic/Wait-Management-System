@@ -19,8 +19,11 @@ if [ ! -f "$fixturesFile" ]; then
 fi
 
 # Convert from UTF-16 to UTF-8
-iconv -f UTF-16 -t UTF-8 "$fixturesFile" > "${fixturesFile}.tmp" \
-  && mv "${fixturesFile}.tmp" "$fixturesFile" \
+# iconv -f UTF-16 -t UTF-8 "$fixturesFile" > "${fixturesFile}.tmp" \
+#   && mv "${fixturesFile}.tmp" "$fixturesFile" \
+
+echo "Clearing database"
+python manage.py flush || { echo "Clearing database via flush failed"; exit 1; }
 
 # Migration
 echo "Running migrations..."
