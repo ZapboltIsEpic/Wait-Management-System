@@ -21,7 +21,8 @@ def createOrder(request):
         request_data = request.data # Form data sent in POST request
         table_number = request_data.get('table_number')
         items_data = request_data.get('items')
-
+        
+        # print(items_data)
         if not table_number or not items_data: ## or not items_data:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -38,14 +39,14 @@ def createOrder(request):
             order_instance = order_serializer.save()  # Save the serializer
 
             item_counts = Counter(item_data['id'] for item_data in items_data)
-            
-            for item_id in item_counts.keys():
-                # item_id, quantity = item_data.items()
+            for item_data in items_data:
+                key = item_data['id']
                 order_item_data = {
                     'order': order_instance.id,
-                    'item': item_id,
-                    'quantity': item_counts[item_id]
+                    'item': key,
+                    'quantity': item_counts[key]
                 }
+                print(order_item_data)
 
                 order_item_serializer = OrderItemSerializer(data=order_item_data)
 
@@ -100,32 +101,32 @@ def requestCustomerAssistance(request):
 @api_view(['POST'])
 def requestCustomerBill(request):
     if request.method == 'POST':
-
         request_data = request.data
         table_number = request_data.get('table_number')
-
+        
         if not table_number:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
-
-        existingBillRequest = BillRequest.objects.filter(table_number=table_number, request_status=False).exists()
+        existingBillRequest = BillRequest.objects.filter(table_id=table_number, request_status=False).exists()
+    
         if existingBillRequest:
             return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_200_OK)
-
-        orders = Order.objects.filter(table=table_number)
+        orders = Order.objects.filter(table_id=table_number)
 
         if not orders.exists():
             return JsonResponse({'message': 'No orders found for the table number'}, status=status.HTTP_404_NOT_FOUND)
-
         total_amount = orders.aggregate(total=Sum('bill'))['total']
         if total_amount is None:
             return JsonResponse({'message': 'No bill available for the table number'}, status=status.HTTP_404_NOT_FOUND)
 
         request_data['total_amount'] = total_amount
+        request_data['staff_name'] = "tempStaffName"
+        request_data['request_status'] = False
+        request_data['table_id'] = table_number
 
         bill_serializer = BillRequestSerializer(data=request_data)
-        if bill_serializer.is_valid():
-           bill_serializer.save()
-           return JsonResponse({'total_amount': total_amount, 
-                                'message': "Bill requested successfully"}, status=status.HTTP_201_CREATED)
 
+        if bill_serializer.is_valid():
+            bill_serializer.save()
+            return JsonResponse({'total_amount': total_amount, 
+                'message': "Bill requested successfully"}, status=status.HTTP_201_CREATED)
         return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)

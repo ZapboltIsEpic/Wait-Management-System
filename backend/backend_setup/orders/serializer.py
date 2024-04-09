@@ -8,7 +8,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         model = OrderItem
         fields = ['id', 
                   'order', 
-                  'item', 
+                  'item',
                   'quantity', 
                   'is_preparing',
                   'is_ready',
@@ -31,8 +31,8 @@ class BillRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BillRequest
         fields = ['id',
-                  'table_number',
+                  'table_id',
                   'total_amount',
                   'staff_name',
-                  'request_status'
+                  'request_status',
                   ]
