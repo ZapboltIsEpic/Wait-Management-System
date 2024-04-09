@@ -35,6 +35,6 @@ class OrderItem(models.Model):
 
 class BillRequest(models.Model):
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    staff_name = models.CharField(max_length=255, default="")
+    staff_name = models.CharField(max_length=255, default="tempStaffName")
     request_status = models.BooleanField(default=False)
     table_id = models.IntegerField(default=1)
