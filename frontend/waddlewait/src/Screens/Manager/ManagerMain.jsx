@@ -8,10 +8,6 @@ function ManagerMain() {
 
 	const [open, setOpen] = React.useState(false);
 
-	const navigateTo = (link) => {
-		navigate(link);
-	}
-
 	const toggleDrawer = (isOpen) => () => {
 		setOpen(isOpen);
 	};

@@ -11,19 +11,17 @@ Wrote the background for proposal(including comparing with other existing syste
 Wrote the description of frontend, including React, CSS and Material UI.
 
 ### Week 4:
-Start coding. Working on customer(table selection, menu) and home page.
+Start coding. Working on customer(table selection, menu) and home page. Finished the table selection and home page.
 
 ### Week 5:
-
-
-
-### Week 6:
-
-
+Working on customer menu page. Done the design interface of the menu and buttons(e.g. assistance, order and bill) using own example. 
 
 ### Week 7:
-
-
+Connecting with the backend database. 
+    E.g. 
+        get menu from backend
+        post table number, bills, orders
+Added pop up dialog to the items.
 
 ### Week 8:
 

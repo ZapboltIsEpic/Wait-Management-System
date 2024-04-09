@@ -1,9 +1,12 @@
 import React from 'react';
 import './accounts.css'
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, InputLabel, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
+import axios from 'axios';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 function CreateStaffAccount() {
 	const navigate = useNavigate();
@@ -14,14 +17,21 @@ function CreateStaffAccount() {
 
 	// Use States
 	// Input fields
+	const [name, setName] = React.useState('');
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-	const [passkey, setPasskey] = React.useState('');
+    const [confirmPassword, setConfirmPassword] = React.useState('');
 
 	// Dialog
 	const [error, setErrorOpen] = React.useState(false);
 	const [success, setSuccessOpen] = React.useState(false);
+	const [errorMessage, setErrorMessage] = React.useState(false);
+
+	const [role, setRole] = React.useState('');
+
+	const roleChange = (event) => {
+		setRole(event.target.value);
+	};
 
 	return (
 		<div className="account-screen">
@@ -29,6 +39,14 @@ function CreateStaffAccount() {
 				<h1>
 					Register
 				</h1>
+				<div className="input-container">
+					<TextField
+						label="Name"
+						placeholder='Jane_Doe'
+						className="input-register"
+						onChange={(e) => setName(e.target.value)}
+					/>
+				</div>
 				<div className="input-container">
 					<TextField
 						label="Email"
@@ -53,14 +71,21 @@ function CreateStaffAccount() {
 						onChange={(e) => setConfirmPassword(e.target.value)}
 					/>
 				</div>
-				<div className="input-container">
-					<TextField
-						label="Authentication Passkey"
-						className="input-register"
-						type="password"
-						onChange={(e) => setPasskey(e.target.value)}
-					/>
-				</div>
+				<div className='input-role-container'>
+                    <FormControl className="input-role">
+                        <InputLabel>Role</InputLabel>
+                        <Select
+                            id="demo-simple-select"
+                            value={role}
+                            label="Role"
+                            onChange={roleChange}
+                        >
+                            <MenuItem value={"kitchen_staff"}>Kitchen Staff</MenuItem>
+                            <MenuItem value={"wait_staff"}>Wait Staff</MenuItem>
+                            <MenuItem value={"manager"}>Manager</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
 				<div className="create-options">
 					<div className="button-container">
 						<Button 
@@ -77,21 +102,52 @@ function CreateStaffAccount() {
 					<div className="button-container">
 						<Button 
 							variant="outlined"
-							onClick={() => {
+							onClick={async () => {
+									// Authentication goes here
+									// Check that fields cannot be empty
+									if (name === ""  || password === "" || username === "" || role === "") {
+										setErrorMessage("Please ensure all fields are filled");
+										setErrorOpen(true);
+										return;
+									}
+									
+									// Passwords are same
+									if (password !== confirmPassword) {
+										setErrorMessage("Password/Confirm Password are not the same.")
+										setErrorOpen(true);
+										return;
+									}
+									console.log("hi")
+									try {
+										const response = await axios.post('http://127.0.0.1:8000/authentication/register', {
+									   	name: name,
+											email: username,
+											password: password,
+											role: role
+										});
+
+										// Handle successful register
+										console.log('Register successful');
+										setSuccessOpen(true);
+									} catch (error) {
+										console.log(error)
+										if (error.response.status === 404) {
+									   		setErrorMessage("Login failed. Please check your name/username/password and try again.")
+											setErrorOpen(true);
+										}
+										if (error.response.status === 400) {
+											setErrorMessage("Login failed. Email already in use.")
+											setErrorOpen(true);
+										}
+										return;
+									}
+									
 								// Temporary basic authentication
-								// Check that fields cannot be empty
-								if (password === "" || username === "" || passkey === "") {
-									setErrorOpen(true);
-									return;
-								}
 
 								// Check Passwords are the same
-								if (password !== confirmPassword) {
-									setErrorOpen(true);
-									return;
-								}
 
-								console.log(username, passkey, password, confirmPassword)
+
+
 								setSuccessOpen(true);
 							}}
 							className="button"
@@ -99,7 +155,7 @@ function CreateStaffAccount() {
 						>
 							Create
 						</Button>
-						<ErrorDialog open={error} setOpen={setErrorOpen} />
+						<ErrorDialog open={error} setOpen={setErrorOpen} errorMessage={errorMessage}/>
 						<SuccessDialog open={success} setOpen={setSuccessOpen} navigateTo={navigateTo} />
 					</div>
 				</div>
@@ -108,20 +164,31 @@ function CreateStaffAccount() {
 	);
 }
 
-function ErrorDialog ({open, setOpen}) {
+function ErrorDialog ({open, setOpen, errorMessage}) {
 	return <Dialog
 		open={open}
 		onClose={() => {
 			setOpen(false)
 		}}
+		PaperProps={{
+			style: {
+				maxWidth: '400px',
+				width: '100%',
+				padding: '10px',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center'
+			},
+		}}
 	>
-		<DialogTitle>Error</DialogTitle>
-		<p>Please check your inputs and try again</p>
+		<DialogTitle>Register Error</DialogTitle>
+		<p>{errorMessage}</p>
 		<Button
 			variant="outlined"
 			onClick={() => {
 				setOpen(false);
 			}}
+			style={{width: '50%'}}
 			color="warning"
 		>
 			Close
@@ -136,6 +203,16 @@ function SuccessDialog ({open, setOpen, navigateTo}) {
 			setOpen(false)
 			navigateTo('/staff/login');
 		}}
+		PaperProps={{
+			style: {
+				maxWidth: '400px',
+				width: '100%',
+				padding: '10px',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center'
+			},
+		}}
 	>
 		<DialogTitle>Success</DialogTitle>
 		<p>Your account has been registered</p>
@@ -144,7 +221,8 @@ function SuccessDialog ({open, setOpen, navigateTo}) {
 			onClick={() => {
 				setOpen(false);
 				navigateTo('/staff/login');
-			}}	
+			}}
+			style={{width: '50%'}}
 			color="warning"
 		>
 			Close
