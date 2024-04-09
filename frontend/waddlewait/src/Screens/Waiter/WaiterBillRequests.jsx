@@ -54,15 +54,14 @@ function WaiterBillRequests() {
     };
 
     useEffect(() => {
-        // SHOULD BE ALL BILLS OR SMTH
-        axios.get('http://localhost:8000/orders/checkout/1')
-            .then(response => {
-                console.log(response.data)
-                setBillRequests(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+      // SHOULD BE ALL BILLS OR SMTH
+      axios.get('http://localhost:8000/orders/checkout/3')
+        .then(response => {
+          setBillRequests(response.data.orders);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }, []);
 
   return (
@@ -74,10 +73,17 @@ function WaiterBillRequests() {
         <div>
             <h1>Bill Requests</h1>
             <div className="order-requests-container">
-            {billRequests.map((request, index) => (
+            {/* {billRequests.map((request, index) => (
                 <MakeBill key={index} 
                 billRequest={request}
                 />
+            ))} */}
+            {billRequests.map((request, index) => (
+                <div key={index}>
+                  <p>Quantity:{request.quantity}</p>
+                  <p>Name:{request.name}</p>
+                  <p>Description:{request.description}</p>
+                </div>
             ))}
             </div>
         </div>

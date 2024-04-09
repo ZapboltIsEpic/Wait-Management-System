@@ -1428,16 +1428,6 @@
   }
 },
 {
-  "model": "orders.billrequest",
-  "pk": 1,
-  "fields": {
-    "table": 1,
-    "total_amount": "99.00",
-    "staff_name": "Bob",
-    "request_status": false
-  }
-},
-{
   "model": "assistance.assistance",
   "pk": 1,
   "fields": {

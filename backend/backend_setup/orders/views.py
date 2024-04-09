@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import OrderItem, Order, BillRequest
+from waddlewaitMenu.models import MenuItem, Category
 import json
 
 # Import the serializer
@@ -178,15 +179,32 @@ class OrdersCheckoutBillView(APIView):
     def get(self, request, table):
         # Retrieve the order instance
         try:
-            billRequest = BillRequest.objects.get(table=table, request_status=False)
+            billRequest = BillRequest.objects.get(table_id=table, request_status=False)
         except Order.DoesNotExist:
             return Response({"error": "Bill request not found"}, status=status.HTTP_404_NOT_FOUND)
         
         # Get the bill from the order
         bill = billRequest.total_amount
+        table_id = billRequest.table_id
+
+        orderIds = Order.objects.filter(table_id=table_id)
+        orders = []
+        for orderId in orderIds:
+            orderItems = OrderItem.objects.filter(order_id = orderId, is_ready=True)
+            for orderItem in orderItems:
+                orders.append({"quantity": orderItem.quantity, "item_id": orderItem.item_id})
+        
+        for order in orders:
+            item_id = order['item_id']
+            item_data = MenuItem.objects.get(id = item_id)
+            category_data = Category.objects.get(id = item_data.category_id)
+            order['name'] = item_data.name
+            order['description'] = item_data.description
+            order['price'] = item_data.price
+            order['category_name'] = category_data.name
 
         # Return the bill as a response
-        return Response({"bill": bill}, status=status.HTTP_200_OK)
+        return Response({"orders": orders, "bill": bill}, status=status.HTTP_200_OK)
         
     
     

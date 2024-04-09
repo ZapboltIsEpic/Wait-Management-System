@@ -24,7 +24,6 @@ class OrderItem(models.Model):
 
     # Reference to the MenuItem model
     item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-
     quantity = models.IntegerField(default=1)
     is_preparing = models.BooleanField(default=False)
     is_ready = models.BooleanField(default=False)
@@ -35,7 +34,7 @@ class OrderItem(models.Model):
     deliver = models.BooleanField(default=False)
 
 class BillRequest(models.Model):
-    table = models.ForeignKey(Order, on_delete=models.CASCADE)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     staff_name = models.CharField(max_length=255, default="")
     request_status = models.BooleanField(default=False)
+    table_id = models.IntegerField(default=1)
