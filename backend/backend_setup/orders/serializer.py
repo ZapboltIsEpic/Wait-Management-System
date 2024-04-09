@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from waddlewait_app.models import Table
+from waddlewaitMenu.models import MenuItem
 from .models import Order, OrderItem, BillRequest
 from waddlewait_app.serializers import TableSerializer
 '''
@@ -20,6 +21,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderItemSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
+    # price = serializers.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         model = OrderItem
@@ -43,6 +45,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             return "Preparing"
         else:
             return "Pending"
+        
         
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

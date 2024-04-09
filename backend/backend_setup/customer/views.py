@@ -54,7 +54,8 @@ def createOrder(request):
                 if order_item_serializer.is_valid():
                     order_item_serializer.save()
                 else:
-                    return JsonResponse({'message': 'Invalid item data'}, status=status.HTTP_400_BAD_REQUEST)
+                    return JsonResponse({'message': 'Invalid item data',
+                                         'error': order_item_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
             return JsonResponse({"message": "Items added to order successfully",
                                  'total_amount': total_bill}, status=status.HTTP_201_CREATED)
@@ -67,7 +68,7 @@ def viewPastOrderedItems(request, table):
         try:            
             orderItems= OrderItem.objects.filter(order__table=table)
             orderItems_serializer = OrderItemSerializer(orderItems, many = True)
-
+            '''
             allItems = []
 
             for item in orderItems_serializer.data:
@@ -83,8 +84,8 @@ def viewPastOrderedItems(request, table):
                         'quantity': item['quantity'],
                         'price': menu_item.price
                     })
-                        
-            return Response(allItems, status=status.HTTP_200_OK)  
+            '''
+            return Response(orderItems_serializer.data, status=status.HTTP_200_OK)  
         except Exception as e:
             return JsonResponse({'message': 'Table number does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -127,16 +128,16 @@ def requestCustomerAssistance(request):
 def requestCustomerBill(request):
     if request.method == 'POST':
         request_data = request.data
-        table = request_data.get('table')
+        table_id = request_data.get('table')
         
-        if not table:
+        if not table_id:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
-        existingBillRequest = BillRequest.objects.filter(table=table, request_status=False).exists()
+        existingBillRequest = BillRequest.objects.filter(table_id=table_id, request_status=False).exists()
     
         if existingBillRequest:
             return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_200_OK)
         
-        orders = Order.objects.filter(table=table)
+        orders = Order.objects.filter(table=table_id)
 
         if not orders.exists():
             return JsonResponse({'message': 'No orders found for the table number'}, status=status.HTTP_404_NOT_FOUND)
@@ -145,7 +146,7 @@ def requestCustomerBill(request):
             return JsonResponse({'message': 'No bill available for the table number'}, status=status.HTTP_404_NOT_FOUND)
 
         request_data = {
-            'table_id' : table,
+            'table_id' : table_id,
             'total_amount' : total_amount,
         }
 
