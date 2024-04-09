@@ -21,12 +21,17 @@ export const ManagerSidebar = () => {
         navigate('/manager/manageorder'); 
     };
 
+    const handleManageSignOut = () => {
+        navigate('/staff/login'); 
+    };
+
     return (
         <div className="ManagerSidebar">
             <div><a onClick={handleDashboardClick}>Dashboard</a></div>
             <div><a onClick={handleCategoriesClick}>Categories</a></div>
             <div><a onClick={handleMenuClick}>Menu</a></div>
             <div><a onClick={handleManageOrderClick}>ManageOrder</a></div>
+            <div><a onClick={handleManageSignOut}>Sign out</a></div>
         </div>
     );
 };
