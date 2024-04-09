@@ -639,8 +639,6 @@ function HomeMenu() {
               setShowCart={setShowCart} 
               setOrder={setOrder} 
               tableNum={confirmTable}
-              cart={cart}
-              setCart={setCart}
               setCartError={setCartError}
             />
 
