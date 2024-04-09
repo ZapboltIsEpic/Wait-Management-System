@@ -9,29 +9,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-<<<<<<< HEAD
-
-        fields = [
-            'order',
-            'item',
-            'item_name',
-            'quantity',
-            'status'
-        ]
-    
-    def get_item_name(self, obj):
-        return obj.item.name
-    
-    def get_status(self, obj):
-        if obj.is_ready:
-            return "Ready"
-        elif obj.is_preparing:
-            return "Preparing"
-        else:
-            return "Pending"
-    
-
-=======
         fields = ['id', 
                   'order', 
                   'item',
@@ -42,7 +19,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
                   'deliver'
                   ]
         
->>>>>>> main
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
@@ -58,11 +34,7 @@ class BillRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BillRequest
         fields = ['id',
-<<<<<<< HEAD
-                  'table',
-=======
                   'table_id',
->>>>>>> main
                   'total_amount',
                   'staff_name',
                   'request_status',

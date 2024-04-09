@@ -6,11 +6,4 @@ from .models import Assistance
 class AssistanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assistance
-<<<<<<< HEAD
-        fields = ['id', 
-                  'table', 
-                  'staffName', 
-                  'tableStatus']
-=======
         fields = ['id', 'createdTime', 'table', 'staffAcceptedTime', 'staffName', 'tableStatus']
->>>>>>> main

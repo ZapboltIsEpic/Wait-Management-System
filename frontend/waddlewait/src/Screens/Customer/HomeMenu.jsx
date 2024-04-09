@@ -189,43 +189,8 @@ function Items({ items, cateId, cart, setCart }) {
   )
 }
 
-function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNum, setCartError}) {
-  // const [disableDelete, setDisableDelete] = React.useState(false)
-
-  // React.useEffect(() => {
-  //   const fetchOrders = async () => {
-  //     try {
-  //       const response = await axios.get(`http://127.0.0.1:8000/customer/order/${tableNum}`);
-  //       const data = response.data;
-  //       console.log(cart)
-  //       console.log(data)
-  //       if (data === cart) {
-  //         setDisableDelete(true);
-  //       } else {
-  //         setDisableDelete(false);
-  //       }
-  //     } catch (error) {
-  //       setDisableDelete(false);
-  //     }
-  //   };
-  // 
-  //   fetchOrders();
-  // }, []);
-
-  const handleBill = () => {
-    setShowCart(false)
-    axios.post('http://127.0.0.1:8000/customer/bill', {
-      table_number: tableNum,
-    });
-    setBill(true)
-  }
-
+function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrder, tableNum}) {
   const handleOrder = () => {
-    if (cart.length === 0) {
-      setCartError(true);
-      setShowCart(false)
-      return;
-    }
     setShowCart(false)
     axios.post('http://127.0.0.1:8000/customer/order', {
       table: tableNum,
@@ -234,20 +199,10 @@ function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNu
     setOrder(true)
     setShowCart(false)
     setCart([])
+
+    setOrders(orders.concat(cart))
   }
   
-  React.useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
-        const data = response.data;
-        setOrders(data)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchOrders();
-  }, []);
   
   const handleDeleteItem = (itemIndex) => {
     var newCart = [...cart]
@@ -297,9 +252,15 @@ function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNu
           width: '100%' 
         }}
         >
-          <Button onClick={handleOrder} color='warning' variant="contained">
-            Order
-          </Button>
+          { cart.length === 0 ? (
+            <Button disabled color='warning' variant="contained">
+              Order
+            </Button>
+          ):(
+            <Button onClick={handleOrder} color='warning' variant="contained">
+              Order
+            </Button>
+          )}
         </Box>
       </DialogActions>
     </Dialog>
@@ -307,7 +268,6 @@ function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNu
 }
 
 function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
-
   const handleBill = () => {
     axios.post('http://127.0.0.1:8000/customer/bill', {
       table: tableNum,
@@ -315,6 +275,8 @@ function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
     setBill(true)
     setShowOrders(false)
   }
+
+  console.log(orders)
 
   return (
     <Dialog
@@ -334,16 +296,18 @@ function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
             <TableHead>
               <TableRow>
                 <TableCell>Item Name</TableCell>
-                <TableCell>Quantity</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>Price</TableCell>
+                {/* <TableCell>Quantity</TableCell> */}
+                {/* <TableCell>Status</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
               {orders.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.item_name}</TableCell>
-                  <TableCell>{item.quantity}</TableCell>
-                  <TableCell>{item.status}</TableCell>
+                  <TableCell>{item["name"]}</TableCell>
+                  <TableCell>{item["price"]}</TableCell>
+                  {/* <TableCell>{item.quantity}</TableCell> */}
+                  {/* <TableCell>{item.status}</TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
@@ -356,9 +320,15 @@ function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
           width: '100%' 
         }}
         >
-          <Button onClick={handleBill} color='warning' variant="contained">
-            Bill
-          </Button>
+          { orders.length === 0 ? (
+            <Button disabled color='warning' variant="contained">
+              Bill
+            </Button>
+          ):(
+            <Button onClick={handleBill} color='warning' variant="contained">
+              Bill
+            </Button>
+          )}
         </Box>
       </DialogActions>
     </Dialog>
@@ -379,7 +349,6 @@ function HomeMenu() {
 
   // Menu variables
   const [assistance, setAssistance] = React.useState(false);
-  const [cartError, setCartError] = React.useState(false);
   const [showOrders, setShowOrders] = React.useState(false)
   const [showCart, setShowCart] = React.useState(false);
   const [bill, setBill] = React.useState(false)
@@ -454,9 +423,8 @@ function HomeMenu() {
   const handleConfirm = () => {
     if (tableNum && groupSize && groupSize > 0) {
       // When table is used, set post request
-      // axios.post('http://127.0.0.1:8000/tables', {
-      //   table_number: tableNum,
-      //   table_in_use: true
+      // axios.put('http://127.0.0.1:8000/table/reserve', {
+      //   table: tableNum,
       // });
       setConfirmTable(tableNum)
     } else if (tableNum === '' && groupSize <= 0) {
@@ -475,7 +443,6 @@ function HomeMenu() {
   };
   
   const handleAssistance = () => {
-    // console.log(tableNum)
     axios.post('http://127.0.0.1:8000/customer/assistance', {
       "table_number": tableNum
     })
@@ -585,16 +552,6 @@ function HomeMenu() {
                 A waiter will be with you shortly!
               </Alert>
             </Snackbar>
-            <Snackbar open={cartError} autoHideDuration={3000} onClose={() => setCartError(false)}>
-              <Alert
-                onClose={() => setCartError(false)}
-                severity="error"
-                variant="filled"
-                sx={{ width: '100%' }}
-              >
-                Your cart is empty, add some items in before ordering!
-              </Alert>
-            </Snackbar>
 
             <div>
               <Button 
@@ -634,12 +591,12 @@ function HomeMenu() {
             <Cart 
               cart={cart}
               setCart={setCart}
+              orders={orders}
               setOrders={setOrders}
               showCart={showCart} 
               setShowCart={setShowCart} 
               setOrder={setOrder} 
               tableNum={confirmTable}
-              setCartError={setCartError}
             />
 
             <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>

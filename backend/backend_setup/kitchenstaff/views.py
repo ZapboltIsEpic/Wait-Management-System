@@ -90,9 +90,6 @@ def completeOrder(request, orderId):
     if request.method == 'PUT':
         order = Order.objects.get(pk=orderId)
         order.is_complete = True
-<<<<<<< HEAD
-        order.ready_to_serve = True
-=======
         
         orderItems = OrderItem.objects.filter(order=order, is_ready=False, item_made_time=None)
         for orderItem in orderItems:
@@ -100,7 +97,6 @@ def completeOrder(request, orderId):
             orderItem.item_made_time = datetime.now()
             orderItem.save()
 
->>>>>>> main
         order.save()
 
         return JsonResponse({'message': 'Order marked as completed'}, status=status.HTTP_200_OK)

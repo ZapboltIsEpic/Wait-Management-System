@@ -34,10 +34,6 @@ class OrderItem(models.Model):
     deliver = models.BooleanField(default=False)
 
 class BillRequest(models.Model):
-<<<<<<< HEAD
-    table = models.ForeignKey(Order, on_delete=models.CASCADE)
-=======
->>>>>>> main
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     staff_name = models.CharField(max_length=255, default="")
     request_status = models.BooleanField(default=False)
