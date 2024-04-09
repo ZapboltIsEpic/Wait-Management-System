@@ -53,6 +53,11 @@ function WaiterBillRequests() {
         setOpenDrawer(isOpen);
     };
 
+    // API which is called every few seconds
+    // Check if a bill request exists
+
+    // Call this one when u find something
+    // Find a new bill requests
     useEffect(() => {
       // SHOULD BE ALL BILLS OR SMTH
       axios.get('http://localhost:8000/orders/checkout/3')
