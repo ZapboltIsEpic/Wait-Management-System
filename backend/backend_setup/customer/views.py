@@ -20,17 +20,17 @@ from rest_framework import status
 def createOrder(request):
     if request.method == 'POST':
         request_data = request.data # Form data sent in POST request
-        table_number = request_data.get('table_number')
+        table = request_data.get('table')
         items_data = request_data.get('items')
         
         # print(items_data)
-        if not table_number or not items_data: ## or not items_data:
+        if not table or not items_data: ## or not items_data:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
         total_bill = sum(float(item['price']) for item in items_data)
 
         order_data = {
-            'table': table_number,
+            'table': table,
             'bill' : total_bill
         }
 
