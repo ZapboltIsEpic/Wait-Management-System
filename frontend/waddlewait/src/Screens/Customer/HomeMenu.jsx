@@ -276,8 +276,6 @@ function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
     setShowOrders(false)
   }
 
-  console.log(orders)
-
   return (
     <Dialog
       open={showOrders} 
@@ -423,10 +421,10 @@ function HomeMenu() {
   const handleConfirm = () => {
     if (tableNum && groupSize && groupSize > 0) {
       // When table is used, set post request
-      // axios.put('http://127.0.0.1:8000/table/reserve', {
-      //   table: tableNum,
-      // });
       setConfirmTable(tableNum)
+      axios.put('http://127.0.0.1:8000/table/reserve', {
+        table: tableNum,
+      });
     } else if (tableNum === '' && groupSize <= 0) {
       setErrorMessage("Please enter your group size and select the table number.")
     } else if (groupSize <= 0) {
