@@ -27,7 +27,6 @@ def menu(request):
             'categories': categories_serializer.data, 
             'menuItems': menuItems_serializer.data,
         }
-        
         return JsonResponse(data)
 
 @api_view(['GET','POST'])

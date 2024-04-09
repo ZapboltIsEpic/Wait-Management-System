@@ -47,24 +47,6 @@ function MakeOrder({order, getOrders, setOrders}) {
             .catch(error => {
               console.log(error);
             });
-            
-            // Send notification
-            axios.put('http://localhost:8000/orders/delivernotifications', {
-              "table": order.table, 
-              "ready_to_serve": true, 
-              "is_complete": false, 
-              "wait_staff_assigned": "yijun", 
-              "deliver": false, 
-              "bill": "45.00", 
-              "created_at": "today"
-            })
-            .then(response => {
-              console.log(response);
-            })
-            .catch(error => {
-              console.log(error);
-            });
-            
 
           }}
         >
@@ -99,6 +81,11 @@ function ItemStatus({orderId, itemId, itemPrepare, itemReady}) {
       });
     } else if (status === "Ready") {
       axios.put(`http://localhost:8000/kitchenstaff/ready/${orderId}/${itemId}`)
+      .catch(error => {
+        console.log(error);
+      });
+    } else if (status === "Not Started") {
+      axios.put(`http://localhost:8000/kitchenstaff/reset/${orderId}/${itemId}`)
       .catch(error => {
         console.log(error);
       });

@@ -12,10 +12,6 @@ function ManagerMain() {
 		setOpen(isOpen);
 	};
 
-	const toggleSignOut = () => {
-		navigate("/staff/login");
-	};
-
 	return (
 		<div className="App">
 			<Button onClick={toggleDrawer(true)}>Open drawer</Button>
@@ -25,7 +21,6 @@ function ManagerMain() {
 			<p>
 				This is the Manager Main Screen <code>src/App.js</code> and save to reload.
 			</p>
-			<Button onClick={toggleSignOut}>Sign Out</Button>
 		</div>
 	);
 }

@@ -189,8 +189,44 @@ function Items({ items, cateId, cart, setCart }) {
   )
 }
 
-function Cart({ cart, setCart, setOrders, showCart, setShowCart, setOrder, tableNum }) {
+function Cart({ cart, setCart, showCart, setShowCart, setBill, setOrder, tableNum, setCartError}) {
+  // const [disableDelete, setDisableDelete] = React.useState(false)
+
+  // React.useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     try {
+  //       const response = await axios.get(`http://127.0.0.1:8000/customer/order/${tableNum}`);
+  //       const data = response.data;
+  //       console.log(cart)
+  //       console.log(data)
+  //       if (data === cart) {
+  //         setDisableDelete(true);
+  //       } else {
+  //         setDisableDelete(false);
+  //       }
+  //     } catch (error) {
+  //       setDisableDelete(false);
+  //     }
+  //   };
+  // 
+  //   fetchOrders();
+  // }, []);
+
+  const handleBill = () => {
+    setShowCart(false)
+    axios.post('http://127.0.0.1:8000/customer/bill', {
+      table_number: tableNum,
+    });
+    setBill(true)
+  }
+
   const handleOrder = () => {
+    if (cart.length === 0) {
+      setCartError(true);
+      setShowCart(false)
+      return;
+    }
+    setShowCart(false)
     axios.post('http://127.0.0.1:8000/customer/order', {
       table: tableNum,
       items: cart
@@ -343,6 +379,7 @@ function HomeMenu() {
 
   // Menu variables
   const [assistance, setAssistance] = React.useState(false);
+  const [cartError, setCartError] = React.useState(false);
   const [showOrders, setShowOrders] = React.useState(false)
   const [showCart, setShowCart] = React.useState(false);
   const [bill, setBill] = React.useState(false)
@@ -416,11 +453,16 @@ function HomeMenu() {
 
   const handleConfirm = () => {
     if (tableNum && groupSize && groupSize > 0) {
+      // When table is used, set post request
+      // axios.post('http://127.0.0.1:8000/tables', {
+      //   table_number: tableNum,
+      //   table_in_use: true
+      // });
       setConfirmTable(tableNum)
     } else if (tableNum === '' && groupSize <= 0) {
-      setErrorMessage("Please enter the group size and select the table number.")
+      setErrorMessage("Please enter your group size and select the table number.")
     } else if (groupSize <= 0) {
-      setErrorMessage("Please enter the group size.")
+      setErrorMessage("Please enter your group size.")
     } else if (tableNum === '') {
       setErrorMessage("Please select a Table Number.")
     }
@@ -431,10 +473,11 @@ function HomeMenu() {
   const handleChangeTab = (event, newCateId) => {
     setCateId(newCateId);
   };
-
+  
   const handleAssistance = () => {
+    // console.log(tableNum)
     axios.post('http://127.0.0.1:8000/customer/assistance', {
-      "tableNumber": tableNum
+      "table_number": tableNum
     })
     .catch(error => {
       console.log(error);
@@ -446,76 +489,77 @@ function HomeMenu() {
 
   return (
     <>
-    {confirmTable === '' ? (
-      // Table Selection
-      <>
-        <h1>
-          Table Selection
-        </h1>
-        
-        <Grid container spacing={5} style={{ justifyContent: 'center' }}>
-          <Grid item>
-            <FormControl fullWidth>
-              <TextField
-                id="groupSizeField"
-                label="Group Size"
-                type="number"
-                inputProps={{
-                  min: 1
-                }}
-                value={groupSize}
-                onChange={changeGroupSize}
-                sx={{ width: 150 }}
-              />
-            </FormControl>
+      {confirmTable === '' ? (
+        // Table Selection
+        <div className="customer-screen">
+          <div className="customer-container">
+          <h1>
+            Table Selection
+          </h1>
+          
+          <p>
+            Please select your group size and a table number
+          </p>
+          <Grid container spacing={5} style={{ marginTop: '5px', marginBottom: '10px', justifyContent: 'center' }}>
+            <Grid item>
+              <FormControl fullWidth>
+                <TextField
+                  id="groupSizeField"
+                  label="Group Size"
+                  type="number"
+                  inputProps={{
+                    min: 1
+                  }}
+                  value={groupSize}
+                  onChange={changeGroupSize}
+                  sx={{ width: 150 }}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item>
+              <FormControl fullWidth>
+                <InputLabel id="groupSizeLabel">Table Number</InputLabel>
+                <Select 
+                  labelId="tableNumField"
+                  label="Table Number" 
+                  type="number"
+                  value={tableNum}
+                  onChange={changeTableNum}
+                  sx={{ width: 150 }}
+                >
+                  {currentTables.length > 0 ? (
+                    currentTables.map((item, index) => (
+                      <MenuItem key={index} value={item.table_number}>{item.table_number}</MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">No tables available</MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
 
-          <Grid item>
-            <FormControl fullWidth>
-              <InputLabel id="groupSizeLabel">Table Number</InputLabel>
-              <Select 
-                labelId="tableNumField"
-                label="Table Number" 
-                type="number"
-                value={tableNum}
-                onChange={changeTableNum}
-                sx={{ width: 150 }}
-              >
-                {currentTables.length > 0 ? (
-                  currentTables.map((item, index) => (
-                    <MenuItem key={index} value={item.table_number}>{item.table_number}</MenuItem>
-                  ))
-                ) : (
-                  <MenuItem value="">No tables available</MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+          <div className="table-button-container">
+            <Button variant="outlined" onClick={() => navigate('/')} className="custom-button" color='warning' >
+              Back
+            </Button>
+            <Button variant="contained" onClick={handleConfirm} className="custom-button" color='warning' >
+              Confirm
+            </Button>
 
-        <br />
+          </div>
 
-        <Button variant="contained" onClick={handleConfirm} className="custom-button" color='warning' >
-          Confirm
-        </Button>
-
-        <br /><br />
-
-        <Button variant="outlined" onClick={() => navigate('/')} className="custom-button" color='warning' >
-          Back
-        </Button>
-
-        <br /><br />
-
-        {showError && (
-          <>
-            <Alert severity="error" sx={{ width: '100%' }}>
-              {errorMessage}
-            </Alert>
-          </>
-        )}
-      </>
-    ):(
+          {showError && (
+            <>
+              <Alert severity="error" sx={{ width: '100%' }}>
+                {errorMessage}
+              </Alert>
+            </>
+          )}
+          </div>
+        </div>
+      ):(
       // Menu
       <>
         <h1>
@@ -539,6 +583,16 @@ function HomeMenu() {
                 sx={{ width: '100%' }}
               >
                 A waiter will be with you shortly!
+              </Alert>
+            </Snackbar>
+            <Snackbar open={cartError} autoHideDuration={3000} onClose={() => setCartError(false)}>
+              <Alert
+                onClose={() => setCartError(false)}
+                severity="error"
+                variant="filled"
+                sx={{ width: '100%' }}
+              >
+                Your cart is empty, add some items in before ordering!
               </Alert>
             </Snackbar>
 
@@ -585,6 +639,9 @@ function HomeMenu() {
               setShowCart={setShowCart} 
               setOrder={setOrder} 
               tableNum={confirmTable}
+              cart={cart}
+              setCart={setCart}
+              setCartError={setCartError}
             />
 
             <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>

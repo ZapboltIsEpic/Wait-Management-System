@@ -9,6 +9,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
+<<<<<<< HEAD
 
         fields = [
             'order',
@@ -30,16 +31,25 @@ class OrderItemSerializer(serializers.ModelSerializer):
             return "Pending"
     
 
+=======
+        fields = ['id', 
+                  'order', 
+                  'item',
+                  'quantity', 
+                  'is_preparing',
+                  'is_ready',
+                  'wait_staff_assigned',
+                  'deliver'
+                  ]
+        
+>>>>>>> main
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id',
                   'created_at',
                   'table',
-                  'ready_to_serve',
                   'is_complete',
-                  'wait_staff_assigned',
-                  'deliver',
                   'bill']
         read_only_fields = ['created_at']
 
@@ -48,8 +58,12 @@ class BillRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BillRequest
         fields = ['id',
+<<<<<<< HEAD
                   'table',
+=======
+                  'table_id',
+>>>>>>> main
                   'total_amount',
                   'staff_name',
-                  'request_status'
+                  'request_status',
                   ]

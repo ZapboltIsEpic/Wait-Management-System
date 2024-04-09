@@ -21,3 +21,17 @@ Week 5:
 - Finished creating the kitchen staff, wait staff and manager main pages 
 - Helped fix and ensure that the codebase was working with both backend and frontend
 - Fixed up any bugs or features including modifying frontend and backend code on tables before sprint was finished
+
+Week 6:
+- Worked on assistance and order requests for waitstaff and created the general page and functionality whilst waiting on API
+
+Week 7:
+- Implemented API for assistance and order requests for waitstaff frontend 
+
+Week 8: 
+- Fixed up any bugs or features including modifying frontend and backend code on tables before sprint was finished
+
+Week 9: 
+- Completed the notification frontend for assistance and order requests for waitstaff
+- added bill to waitstaff
+

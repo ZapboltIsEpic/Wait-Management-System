@@ -22,8 +22,14 @@ def createOrder(request):
         request_data = request.data # Form data sent in POST request
         table = request_data.get('table')
         items_data = request_data.get('items')
+<<<<<<< HEAD
 
         if not table or not items_data: ## or not items_data:
+=======
+        
+        # print(items_data)
+        if not table_number or not items_data: ## or not items_data:
+>>>>>>> main
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
         total_bill = sum(float(item['price']) for item in items_data)
@@ -35,13 +41,19 @@ def createOrder(request):
             order_instance = order_serializer.save()  # Save the serializer
 
             item_counts = Counter(item_data['id'] for item_data in items_data)
+<<<<<<< HEAD
             
             for item_id in item_counts.keys():
+=======
+            for item_data in items_data:
+                key = item_data['id']
+>>>>>>> main
                 order_item_data = {
                     'order': order_instance.id,
-                    'item': item_id,
-                    'quantity': item_counts[item_id]
+                    'item': key,
+                    'quantity': item_counts[key]
                 }
+                print(order_item_data)
 
                 order_item_serializer = OrderItemSerializer(data=order_item_data)
 
@@ -89,6 +101,7 @@ def viewPastOrderedItems(request, table):
 @api_view(['POST'])
 def requestCustomerAssistance(request):
     if request.method == 'POST':
+<<<<<<< HEAD
 
         table = request.data.get('table')
         if not table:
@@ -97,19 +110,29 @@ def requestCustomerAssistance(request):
         existingAssistance = Assistance.objects.filter(table=table, tableStatus=False).exists()
         if existingAssistance:
             return JsonResponse({'message': 'Assistance request for table already sent'}, status=status.HTTP_200_OK)
+=======
+        table_number = request.data.get('table_number')
+        if table_number is None:
+            return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
+        existingAssistance = Assistance.objects.filter(table=table_number, tableStatus=False).exists()
+        if existingAssistance:
+            return JsonResponse({'message': 'Assistance request for table already sent'}, status=status.HTTP_200_OK)
+        req_data = {
+            'table': table_number
+        }
+>>>>>>> main
 
         assistance_serializer = AssistanceSerializer(data=request.data)
         if assistance_serializer.is_valid():
             assistance_serializer.save()
             return JsonResponse({ "message": "Assistance requested successfully"}, status=status.HTTP_201_CREATED)
-
         return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
     
 @api_view(['POST'])
 def requestCustomerBill(request):
     if request.method == 'POST':
-
         request_data = request.data
+<<<<<<< HEAD
         table = request_data.get('table')
 
         if not table:
@@ -120,17 +143,31 @@ def requestCustomerBill(request):
             return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_200_OK)
 
         orders = Order.objects.filter(table=table)
+=======
+        table_number = request_data.get('table_number')
+        
+        if not table_number:
+            return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
+        existingBillRequest = BillRequest.objects.filter(table_id=table_number, request_status=False).exists()
+    
+        if existingBillRequest:
+            return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_200_OK)
+        orders = Order.objects.filter(table_id=table_number)
+>>>>>>> main
 
         if not orders.exists():
             return JsonResponse({'message': 'No orders found for the table number'}, status=status.HTTP_404_NOT_FOUND)
-
         total_amount = orders.aggregate(total=Sum('bill'))['total']
         if total_amount is None:
             return JsonResponse({'message': 'No bill available for the table number'}, status=status.HTTP_404_NOT_FOUND)
 
         request_data['total_amount'] = total_amount
+        request_data['staff_name'] = "tempStaffName"
+        request_data['request_status'] = False
+        request_data['table_id'] = table_number
 
         bill_serializer = BillRequestSerializer(data=request_data)
+<<<<<<< HEAD
         if bill_serializer.is_valid():
            with transaction.atomic():
                 bill_serializer.save() 
@@ -138,5 +175,11 @@ def requestCustomerBill(request):
 
            return JsonResponse({'total_amount': total_amount, 
                                 'message': "Bill requested successfully"}, status=status.HTTP_201_CREATED)
+=======
+>>>>>>> main
 
+        if bill_serializer.is_valid():
+            bill_serializer.save()
+            return JsonResponse({'total_amount': total_amount, 
+                'message': "Bill requested successfully"}, status=status.HTTP_201_CREATED)
         return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
