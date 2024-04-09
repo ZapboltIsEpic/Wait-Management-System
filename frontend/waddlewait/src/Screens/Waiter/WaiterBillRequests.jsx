@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, Drawer, Alert, Snackbar } from '@mui/material';
+import { Button, Drawer, Alert, Snackbar, CardMedia } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -57,6 +57,7 @@ function WaiterBillRequests() {
       // SHOULD BE ALL BILLS OR SMTH
       axios.get('http://localhost:8000/orders/checkout/3')
         .then(response => {
+          console.log(response.data)
           setBillRequests(response.data.orders);
         })
         .catch(error => {
@@ -83,6 +84,11 @@ function WaiterBillRequests() {
                   <p>Quantity:{request.quantity}</p>
                   <p>Name:{request.name}</p>
                   <p>Description:{request.description}</p>
+                  <CardMedia
+                    sx={{ height: 140 }}
+                    image={request.image}
+                    title={request.name}
+                  />
                 </div>
             ))}
             </div>

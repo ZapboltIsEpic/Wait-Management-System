@@ -5,6 +5,7 @@ from rest_framework import status
 
 from .models import OrderItem, Order, BillRequest
 from waddlewaitMenu.models import MenuItem, Category
+from waddlewaitMenu.serializers import MenuItemSerializer
 import json
 
 # Import the serializer
@@ -197,13 +198,18 @@ class OrdersCheckoutBillView(APIView):
         for order in orders:
             item_id = order['item_id']
             item_data = MenuItem.objects.get(id = item_id)
+            
+            menuItems_serializer = MenuItemSerializer(item_data, context={'request': request})
+
             category_data = Category.objects.get(id = item_data.category_id)
             order['name'] = item_data.name
+            order['image'] = menuItems_serializer.data['image']
             order['description'] = item_data.description
             order['price'] = item_data.price
             order['category_name'] = category_data.name
-
+        
         # Return the bill as a response
+        # return Response({"bill": bill}, status=status.HTTP_200_OK)
         return Response({"orders": orders, "bill": bill}, status=status.HTTP_200_OK)
         
     
