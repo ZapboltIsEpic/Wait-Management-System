@@ -1214,7 +1214,7 @@
     "pk": 1,
     "fields": {
       "name": "Tomato Soup",
-      "description": "delicious tomato soup",
+      "description": "Rich and comforting tomato blend",
       "price": "5.49",
       "image": "menu_images/app1_tomatosoup.jpg",
       "category": 1,
@@ -1226,7 +1226,7 @@
     "pk": 2,
     "fields": {
       "name": "Chicken Salad",
-      "description": "healthy serving of chicken and salad greens",
+      "description": "Fresh greens topped with seasoned chicken",
       "price": "4.49",
       "image": "menu_images/app2_chickensalad.jpg",
       "category": 1,
@@ -1238,7 +1238,7 @@
     "pk": 3,
     "fields": {
       "name": "Crispy Corn",
-      "description": "roasted corn on a skillet",
+      "description": "Corn kernels fried to crispy perfection",
       "price": "4.99",
       "image": "menu_images/app3_crispycorn.jpg",
       "category": 1,
@@ -1250,7 +1250,7 @@
     "pk": 4,
     "fields": {
       "name": "Grilled Fish",
-      "description": "barramundi fish grilled over nice heat",
+      "description": "Tender fish grilled to succulent perfection",
       "price": "12.99",
       "image": "menu_images/mains1_grilledfish.jpg",
       "category": 2,
@@ -1261,8 +1261,8 @@
     "model": "waddlewaitMenu.menuitem",
     "pk": 5,
     "fields": {
-      "name": "Chicken and Rice",
-      "description": "some rice and some chick",
+      "name": "Grilled chicken with rice",
+      "description": "Juicy grilled chicken served over rice",
       "price": "13.49",
       "image": "menu_images/mains2_chickenandrice.jpg",
       "category": 2,
@@ -1274,7 +1274,7 @@
     "pk": 6,
     "fields": {
       "name": "Turkey and Ham Pie",
-      "description": "leftover turkey and ham type of vibe",
+      "description": "Savory pie filled with turkey and ham",
       "price": "11.99",
       "image": "menu_images/mains3_turkeyandhampie.jpg",
       "category": 2,
@@ -1286,7 +1286,7 @@
     "pk": 7,
     "fields": {
       "name": "Vegetable Pasta",
-      "description": "for the vegans",
+      "description": "Flavorful pasta with assorted veggies",
       "price": "15.49",
       "image": "menu_images/mains4_vegetablepasta.jpg",
       "category": 2,
@@ -1298,7 +1298,7 @@
     "pk": 8,
     "fields": {
       "name": "Fruit Cream",
-      "description": "fruit mixed sweet evaporated milk",
+      "description": "Creamy dessert infused with fresh fruit",
       "price": "8.49",
       "image": "menu_images/dessert1_fruitcream.jpg",
       "category": 3,
@@ -1310,7 +1310,7 @@
     "pk": 9,
     "fields": {
       "name": "Ice Cream",
-      "description": "napeleon flavours of hardened milk",
+      "description": "Classic creamy frozen treat",
       "price": "6.99",
       "image": "menu_images/dessert2_icecream.jpg",
       "category": 3,
@@ -1322,7 +1322,7 @@
     "pk": 10,
     "fields": {
       "name": "Oreo Cheesecake",
-      "description": "the best combo made by man",
+      "description": "Indulgent cheesecake topped with Oreo crumbles",
       "price": "9.99",
       "image": "menu_images/dessert3_oreocheesecake.jpg",
       "category": 3,
@@ -1333,8 +1333,8 @@
     "model": "waddlewaitMenu.menuitem",
     "pk": 11,
     "fields": {
-      "name": "Apple Pie",
-      "description": "apple and flaky crust",
+      "name": "Apple Crumble Pie",
+      "description": "Warm apple filling under a crispy topping",
       "price": "7.49",
       "image": "menu_images/dessert4_applepie.jpg",
       "category": 3,
@@ -1346,7 +1346,7 @@
     "pk": 12,
     "fields": {
       "name": "Mineral Water",
-      "description": "a semi fancier water than tap",
+      "description": "Pure and refreshing hydration",
       "price": "4.49",
       "image": "menu_images/drinks1_mineralwater.jpg",
       "category": 4,
@@ -1358,7 +1358,7 @@
     "pk": 13,
     "fields": {
       "name": "Fruit Juice",
-      "description": "sweetened water by sugar fruit",
+      "description": "Freshly squeezed citrus goodness",
       "price": "6.99",
       "image": "menu_images/drinks2_fruitjuice.jpg",
       "category": 4,
@@ -1370,7 +1370,7 @@
     "pk": 14,
     "fields": {
       "name": "Coffee",
-      "description": "roasted perfection for the sleep deprived",
+      "description": "Aromatic and invigorating morning brew",
       "price": "7.49",
       "image": "menu_images/drinks3_coffee.jpg",
       "category": 4,
@@ -1382,7 +1382,7 @@
     "pk": 15,
     "fields": {
       "name": "Tea",
-      "description": "leaf juice",
+      "description": "Bold and steeped to perfection",
       "price": "6.49",
       "image": "menu_images/drinks4_tea.jpg",
       "category": 4,
@@ -1393,8 +1393,8 @@
     "model": "waddlewaitMenu.menuitem",
     "pk": 16,
     "fields": {
-      "name": "Wine",
-      "description": "for those looking for a fun time",
+      "name": "Red Wine",
+      "description": "Rich and full-bodied fermented grapes",
       "price": "3.49",
       "image": "menu_images/drinks5_wine.jpg",
       "category": 4,
