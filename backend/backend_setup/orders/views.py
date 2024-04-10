@@ -7,7 +7,7 @@ from .models import OrderItem, Order, BillRequest
 import json
 
 # Import the serializer
-from .serializer import OrderSerializer, OrderItemSerializer
+from .serializer import OrderSerializer, OrderItemSerializer, BillRequestSerializer
 
 class OrderDeliverRequestNotificationView(APIView):
     def put(self, request):
@@ -23,17 +23,6 @@ class OrderDeliverRequestNotificationView(APIView):
                 request.is_ready=True
                 request.item_made_time = datetime.datetime.now()
                 request.save()
-                
-                # # Convert necessary fields to built-in types
-                # order = request.order
-                # item = request.item
-                
-                # # Create a dictionary with updated order data
-                # updated_order_data = {
-                #     'order': order,
-                #     'item': item,
-                # }
-                # updated_data.append(updated_order_data)
                 
             return Response("Order Deliver Notification Success", status=status.HTTP_200_OK)
         else:
@@ -67,17 +56,6 @@ class OrderDeliverNotificationAcceptedView(APIView):
                 request.wait_staff_assigned_time = datetime.datetime.now()
                 request.save()
                 
-                # # Convert necessary fields to built-in types
-                # order = request.order
-                # wait_staff_assigned = request.wait_staff_assigned
-                
-                # updated_order_data = {
-                #     'order': order,
-                #     'wait_staff_assigned': wait_staff_assigned,
-                # }
-                # updated_data.append(updated_order_data)
-                
-            
             return Response("Assigned Staff Successfully", status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that
@@ -117,16 +95,6 @@ class OrderDeliverNotificationCompleteView(APIView):
                 # Update status or perform other actions as needed
                 request.deliver = True
                 request.save()
-                
-                # Convert necessary fields to built-in types
-                # order = request.order
-                # deliver = request.deliver
-                
-                # updated_order_data = {
-                #     'order': order,
-                #     'deliver': deliver,
-                # }
-                # updated_data.append(updated_order_data)
             
             return Response("Order Item deliver successfully", status=status.HTTP_200_OK)
         else:
@@ -166,27 +134,46 @@ class OrdersDeliverGetAllNotificationsView(APIView):
                                 'deliver': deliver_data
                             })
             
-            # orderSerializer = OrderItemSerializer(order, many=True)
-            # Return the serialized data as a response
-            # return Response(orderSerializer.data, status=status.HTTP_200_OK)
-            
             return Response(notification_data, status=status.HTTP_200_OK)
         except OrderItem.DoesNotExist:
             return Response("No OrderItem found", status=status.HTTP_404_NOT_FOUND)
     
-class OrdersCheckoutBillView(APIView):
-    def get(self, request, table):
-        # Retrieve the order instance
-        try:
-            billRequest = BillRequest.objects.get(table=table, request_status=False)
-        except Order.DoesNotExist:
-            return Response({"error": "Bill request not found"}, status=status.HTTP_404_NOT_FOUND)
+# class OrdersCheckoutBillView(APIView):
+#     def get(self, request, table):
+#         # Retrieve the order instance
+#         try:
+#             # billRequest = BillRequest.objects.get(table=table, request_status=False)
+#             billRequest = BillRequest.objects.get(request_status=False)
+#         except Order.DoesNotExist:
+#             return Response({"error": "Bill request not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        # Get the bill from the order
-        bill = billRequest.total_amount
+#         # Get the bill from the order
+#         bill = billRequest.total_amount
 
-        # Return the bill as a response
-        return Response({"bill": bill}, status=status.HTTP_200_OK)
+#         # Return the bill as a response
+#         return Response({"bill": bill}, status=status.HTTP_200_OK)
         
+class OrdersCheckoutBillView(APIView):
+    def get(self, request):
+        # Retrieve all bill requests that have not been processed
+        bill_requests = BillRequest.objects.filter(request_status=False)
+        
+        # Serialize the bill requests
+        serializer = BillRequestSerializer(bill_requests, many=True)
+        
+        # Return the serialized bill requests as a response
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class OrdersDeleteBillView(APIView):
+    def delete(self, request, table):
+        try:
+            bill_request = BillRequest.objects.get(table=table, request_status=False)
+        except BillRequest.DoesNotExist:
+            return Response({"error": "Bill request not found for the given table number"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Delete the bill request
+        bill_request.delete()
+
+        return Response({"message": "Bill request deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
     
     
