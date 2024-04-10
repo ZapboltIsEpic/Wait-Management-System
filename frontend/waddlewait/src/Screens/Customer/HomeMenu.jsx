@@ -67,16 +67,13 @@ function Item({ item, cart, setCart }) {
     <Card sx={{ width: 350, height: 300 }}>
       <Grid onClick={handlePopUpItem}>
         <CardMedia
-          sx={{ height: 140 }}
+          sx={{ height: 180 }}
           image={item.image}
           title={item.name}
           />
         <CardContent>
           <Typography gutterBottom>
             {item.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ height: 50 }} >
-            {item.description}
           </Typography>
         </CardContent>
       </Grid>
@@ -189,7 +186,7 @@ function Items({ items, cateId, cart, setCart }) {
   )
 }
 
-function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrder, tableNum}) {
+function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrder, showOrders, setShowOrders, setBill, tableNum}) {
   const handleOrder = () => {
     setShowCart(false)
     axios.post('http://127.0.0.1:8000/customer/order', {
@@ -221,7 +218,24 @@ function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrde
         },
       }}
     >
-      <DialogTitle>Cart</DialogTitle>
+      <DialogTitle>
+        <Typography fontSize="20px" >Cart</Typography>
+        <Button
+          variant="contained"
+          color='warning'
+          onClick={() => setShowOrders(true)}
+          size="small" 
+        >
+          View Orders
+        </Button>
+        <Orders 
+          orders={orders}
+          showOrders={showOrders} 
+          setShowOrders={setShowOrders} 
+          setBill={setBill} 
+          tableNum={tableNum}
+        />
+      </DialogTitle>
       <DialogContent>
       <TableContainer>
           <Table>
@@ -566,26 +580,11 @@ function HomeMenu() {
             <Button
               variant="contained"
               color='warning'
-              onClick={() => setShowOrders(true)}
-              >
-              Order
-            </Button>
-            <Button
-              variant="contained"
-              color='warning'
               endIcon={<ShoppingCart />}
               onClick={() => setShowCart(true)}
               >
               Cart
             </Button>
-
-            <Orders 
-              orders={orders}
-              showOrders={showOrders} 
-              setShowOrders={setShowOrders} 
-              setBill={setBill} 
-              tableNum={confirmTable}
-            />
             <Cart 
               cart={cart}
               setCart={setCart}
@@ -594,6 +593,9 @@ function HomeMenu() {
               showCart={showCart} 
               setShowCart={setShowCart} 
               setOrder={setOrder} 
+              showOrders={showOrders}
+              setShowOrders={setShowOrders}
+              setBill={setBill}
               tableNum={confirmTable}
             />
 
