@@ -14,6 +14,7 @@ import KitchenOrderRequestsCompleted from './Screens/Kitchen/KitchenOrderRequest
 import WaiterOrderRequests from './Screens/Waiter/WaiterOrderRequests';
 import WaiterAssistanceRequests from './Screens/Waiter/WaiterAssistanceRequests';
 import ManagerMenu from './Screens/Manager/ManagerMenu';
+import WaiterBillRequests from './Screens/Waiter/WaiterBillRequests';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/waiter/main" element={<WaiterMain/>} />
         <Route path="/waiter/order-requests" element={<WaiterOrderRequests/>} />
         <Route path="/waiter/assistance-requests" element={<WaiterAssistanceRequests/>} />
+        <Route path="/waiter/bill-requests" element={<WaiterBillRequests/>} />
 
         {/* Manager Routes */}
         <Route path="/manager/main" element={<ManagerMain/>} />

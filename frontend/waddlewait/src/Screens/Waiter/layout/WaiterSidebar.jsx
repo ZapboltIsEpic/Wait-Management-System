@@ -13,6 +13,10 @@ export const WaiterSidebar = () => {
         navigate("/waiter/assistance-requests"); 
     };
 
+    const handleBillRequestsClick = () => {
+        navigate("/waiter/bill-requests"); 
+    };
+
     const handleSignOutClick = () => {
         navigate("/"); 
     };
@@ -21,6 +25,7 @@ export const WaiterSidebar = () => {
         <div className="WaiterSidebar">
             <div><a onClick={handleOrderRequestsClick}>Order Requests</a></div>
             <div><a onClick={handleAssistanceRequestClick}>Assistance Requests</a></div>
+            <div><a onClick={handleBillRequestsClick}>Bill Requests</a></div>
             <div><a onClick={handleSignOutClick}>Sign Out</a></div>
         </div>
     );
