@@ -37,6 +37,7 @@ import {
 } from '@mui/lab';
 import { ManagerSidebar } from './layout/ManagerSidebar';
 import axios from 'axios';
+import './manager.css'
 
 function ManagerMenu() {
 	const navigate = useNavigate();
@@ -56,6 +57,7 @@ function ManagerMenu() {
 	const [category, setCategory] = React.useState("");
 
 	const [categories, setCategories] = React.useState([]);
+	const [hasNewCategory, setNewCategory] = React.useState(false);
 	React.useEffect(() => {
 		const fetchMenu = async () => {
 			try {
@@ -63,12 +65,16 @@ function ManagerMenu() {
 				const data = response.data;
 				setCategories(data['categories'])
 				setItems(data['menuItems'])
+
+				if (hasNewCategory == true) {
+					setNewCategory(false);
+				}
 			} catch (error) {
 				console.error('Error fetching data:', error);
 			}
 		};
 		fetchMenu();
-	}, [categories]);
+	}, [hasNewCategory]);
 
 
 	// const addMenuItem = () => {
@@ -130,7 +136,7 @@ function ManagerMenu() {
 				open={categoryDialog}
 				onClose={setCategoryDialog}
 				categories={categories}
-				setCategories={setCategories}
+				setNewCategory={setNewCategory}
 			/>
 		</div>
 	)
@@ -161,7 +167,21 @@ function Items({ items, cateId}) {
 
 function Item({ item}) {
   const [showPopUpItem, setShowPopUpItem] = React.useState(false);
+	const [itemName, setItemName] = React.useState(item.name)
+	const [itemDescription, setItemDescription] = React.useState(item.description)
+	const [itemPrice, setItemPrice] = React.useState(item.price)
 
+	const handleItemNameChange = (event) => {
+    setItemName(event.target.value);
+  };
+
+	const handleItemDescriptionChange = (event) => {
+    setItemDescription(event.target.value);
+  };
+
+	const handleItemPriceChange = (event) => {
+    setItemPrice(event.target.value);
+  };
 
   const handlePopUpItem = () => {
     setShowPopUpItem(true)
@@ -175,7 +195,9 @@ function Item({ item}) {
           image={item.image}
           title={item.name}
           />
-        <CardContent>
+        <CardContent
+			sx={{paddingTop: 1, paddingBottom: 1}}
+		>
           <Typography gutterBottom>
             {item.name}
           </Typography>
@@ -193,9 +215,25 @@ function Item({ item}) {
           width: '100%' 
         }}
       >
-        <Typography variant="body1" color="textSecondary">
-          $ {item.price}
-        </Typography>
+		<Box
+			sx={{display: 'flex',
+				justifyContent: 'space-between',
+				flexDirection: 'row',
+				alignItems: 'center',
+				width: '100%',
+			}}
+		>
+			<Typography variant="body1" color="textSecondary">
+			$ {item.price}
+			</Typography>
+			<Button
+				variant="outlined"	
+				color='warning'
+				onClick={() => {setShowPopUpItem(true)}}
+			>
+				Edit
+			</Button>
+		</Box>
       </Box>
       </CardActions>
 
@@ -203,45 +241,72 @@ function Item({ item}) {
         open={showPopUpItem}
         onClose={() => setShowPopUpItem(false)}
       >
-        <Card sx={{ width: 700, height: 600 }}>
+        <Card sx={{ width: 600, height: 600 }}>
           <Grid onClick={handlePopUpItem}>
             <CardMedia
               sx={{ height: 250 }}
               image={item.image}
               title={item.name}
-              />
-            <CardContent sx={{ height: 250 }}>
-              <Typography variant="h4">
-                {item.name}
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                {item.description}
-              </Typography>
-            </CardContent>
-          </Grid>
+					/>
+					<CardContent 
+						sx={{ 
+							height: 250, 
+							display: 'flex',
+							flexDirection: 'column',
+						}}>
+						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+							<p className="edit-input-label">Name</p>
+							<TextField id="outlined-basic" variant="outlined" className="edit-input"
+								value={itemName}
+								onChange={handleItemNameChange}
+							/>
+						</Box>
+						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+							<p className="edit-input-label">Description</p>
+							<TextField id="outlined-basic" variant="outlined" className="edit-input"
+								value={itemDescription}
+								onChange={handleItemDescriptionChange}
+							/>
+						</Box>
+						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+							<p className="edit-input-label">Price ($)</p>
+							<TextField id="outlined-basic" variant="outlined" className="edit-input"
+								value={itemPrice}
+								onChange={handleItemPriceChange}
+							/>
+						</Box>
+					</CardContent>
+				</Grid>
           <CardActions>
-          <Box 
-            sx={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center', 
-              width: '580px' 
-            }}
-          >
-            <Typography variant="body1" color="textSecondary">
-              $ {item.price}
-            </Typography>
-          </Box>
+						<Box 
+							sx={{ 
+								display: 'flex', 
+								justifyContent: 'space-between', 
+								alignItems: 'center', 
+								width: '580px' 
+							}}
+						>
+							<Button
+								variant="outlined"	
+								color='warning'
+								// onClick={() => {
+								// 	axios.delete("http://localhost:8000/menu/modify/)
+								// }}
+							> Delete Item</Button>
+							<Button
+								variant="outlined"	
+								color='warning'
+							> Save Changes</Button>
+						</Box>
           </CardActions>
         </Card>
       </Dialog>
-
     </Card>
   );
 }
 
 function CategoryDialog(props) {
-  const { onClose, open, categories, setCategories} = props;
+  const { onClose, open, categories, setNewCategory} = props;
 
   const handleClose = () => {
     onClose(false);
@@ -259,9 +324,7 @@ function CategoryDialog(props) {
 				.then(response => {
 				console.log(response);
 
-				// Update local display
-				let newCategories = [...categories, categoryName]
-				setCategories(newCategories)
+				setNewCategory(true);
 
 				})
 				.catch(error => {
