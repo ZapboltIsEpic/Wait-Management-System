@@ -32,6 +32,7 @@ urlpatterns = [
     path('tables/', views.table_list),
     path('table/<int:table_number>', views.table_detail),
     path('table/reserve', views.reserve_table),
+    path('table/leave', views.leave_table),
     path('menu/', include('waddlewaitMenu.urls')),
     path('customer/', include('customer.urls')),
     path('kitchenstaff/', include('kitchenstaff.urls')),
