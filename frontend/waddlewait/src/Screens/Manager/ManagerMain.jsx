@@ -8,16 +8,8 @@ function ManagerMain() {
 
 	const [open, setOpen] = React.useState(false);
 
-	const navigateTo = (link) => {
-		navigate(link);
-	}
-
 	const toggleDrawer = (isOpen) => () => {
 		setOpen(isOpen);
-	};
-
-	const toggleSignOut = () => {
-		navigate("/staff/login");
 	};
 
 	return (
@@ -29,7 +21,6 @@ function ManagerMain() {
 			<p>
 				This is the Manager Main Screen <code>src/App.js</code> and save to reload.
 			</p>
-			<Button onClick={toggleSignOut}>Sign Out</Button>
 		</div>
 	);
 }

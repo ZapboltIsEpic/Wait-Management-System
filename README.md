@@ -4,7 +4,7 @@
 
 Ensure that you are in root directory of project
 
-1. To run backend: run "./run_backend.sh"
+1. To run backend: run "./run_backend.sh". When asked to clear database, type "yes"
 
 2. To run frontend: run "./run_frontend.sh"
 

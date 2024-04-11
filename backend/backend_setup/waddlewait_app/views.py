@@ -47,3 +47,24 @@ def table_detail(request, table_number):
             serializer.save()
             return Response(serializer.data)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def reserve_table(request):
+    if request.method == 'PUT':
+        table = request.data.get('table')
+
+        if not table:
+            return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            tableObj = Table.objects.get(pk=table)
+            tableObj.table_in_use = True
+            tableObj.save()
+
+            return JsonResponse({'message': 'Table succesfully reserved',
+                                 'table': table}, status=status.HTTP_200_OK)
+
+        except:
+            return JsonResponse({'message': 'Table number not found'}, status=status.HTTP_404_NOT_FOUND)
+

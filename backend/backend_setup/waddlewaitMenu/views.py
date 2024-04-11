@@ -27,7 +27,6 @@ def menu(request):
             'categories': categories_serializer.data, 
             'menuItems': menuItems_serializer.data,
         }
-        
         return JsonResponse(data)
 
 @api_view(['GET','POST'])
@@ -92,7 +91,6 @@ def addMenuItemWithImage(request):
     if request.method == 'POST':
         #return {"sd": "what"}
         image_file = request.FILES.get('image')
-
         data = {
             'name': request.data.get('name'),
             'description': request.data.get('description'),
@@ -102,7 +100,6 @@ def addMenuItemWithImage(request):
         }
 
         menu_item_serializer = MenuItemSerializer(data=data)
-
         if menu_item_serializer.is_valid():
             menu_item_serializer.save()
             return Response(menu_item_serializer.data, status=status.HTTP_201_CREATED)

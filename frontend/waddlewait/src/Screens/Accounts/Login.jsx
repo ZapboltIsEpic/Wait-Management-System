@@ -27,13 +27,9 @@ function Login() {
 		}
 	}
 
-	const [role, setRole] = React.useState('');
 	const [username, setUserName] = React.useState('');
 	const [password, setPassword] = React.useState('');
 
-	const roleChange = (event) => {
-		setRole(event.target.value);
-  };
 	
 	const [error, setErrorOpen] = React.useState(false);
 	const [errorMessage, setErrorMessage] = React.useState(false);
@@ -63,22 +59,6 @@ function Login() {
 						}}
 					/>
 				</div>
-
-				<div className='input-role-container'>
-                    <FormControl className="input-role">
-                        <InputLabel>Role</InputLabel>
-                        <Select
-                            id="demo-simple-select"
-                            value={role}
-                            label="Role"
-                            onChange={roleChange}
-                        >
-                            <MenuItem value={"kitchen_staff"}>Kitchen Staff</MenuItem>
-                            <MenuItem value={"wait_staff"}>Wait Staff</MenuItem>
-                            <MenuItem value={"manager"}>Manager</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
 				<div className="button-container">
 					<Button 
 						variant="outlined"
@@ -95,7 +75,7 @@ function Login() {
 						onClick={async () => {
 							// Authentication goes here
 
-							if (username === "" || password === "" || role === "") {
+							if (username === "" || password === "") {
 								setErrorMessage("Login failed. Please ensure all fields are filled.");
 								setErrorOpen(true);
 								return;
@@ -105,13 +85,10 @@ function Login() {
 								const response = await axios.post('http://127.0.0.1:8000/authentication/login', {
 									email: username,
 									password: password,
-									role: role
 								});
 
 								// Handle successful login, e.g., store token in local storage
-								console.log('Login successful');
-								console.log(response.data)
-								navigateTo(role);
+								navigateTo(response.data.role);
 							} catch (error) {
 								console.log(error)
 								setErrorMessage("Login failed. Please check your username/password/role and try again.")
