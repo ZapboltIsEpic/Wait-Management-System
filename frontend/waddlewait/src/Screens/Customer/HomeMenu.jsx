@@ -71,7 +71,9 @@ function Item({ item, cart, setCart }) {
           image={item.image}
           title={item.name}
           />
-        <CardContent>
+        <CardContent
+          sx={{paddingTop: 1, paddingBottom: 1}}
+        >
           <Typography gutterBottom>
             {item.name}
           </Typography>
@@ -121,7 +123,7 @@ function Item({ item, cart, setCart }) {
         open={showPopUpItem}
         onClose={() => setShowPopUpItem(false)}
       >
-        <Card sx={{ width: 700, height: 600 }}>
+        <Card sx={{ width: 600, height: 600 }}>
           <Grid onClick={handlePopUpItem}>
             <CardMedia
               sx={{ height: 250 }}
