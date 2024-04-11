@@ -23,7 +23,7 @@ class LoginView(APIView):
         user = User.objects.filter(email=email).first()
         
         if (user is None):
-            raise AuthenticationFailed('User not found')
+            raise AuthenticationFailed('No account exist')
         
         if not user.check_password(password):
             raise AuthenticationFailed('Password incorrect')
@@ -44,7 +44,8 @@ class LoginView(APIView):
         response.set_cookie(key='jwt', value=token, httponly=True)
         
         response.data = {
-            'jwt': token
+            'jwt': token,
+            'role': user.role
         }
         
         return response
