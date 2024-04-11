@@ -9,17 +9,28 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('waddlewaitMenu', '0003_menuitem_image'),
-        ('waddlewait_app', '0003_remove_table_id_alter_table_table_number'),
+        ('waddlewait_app', '0001_initial'),
+        ('waddlewaitMenu', '0001_initial'),
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='BillRequest',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('total_amount', models.DecimalField(decimal_places=2, max_digits=10)),
+                ('staff_name', models.CharField(default='', max_length=255)),
+                ('request_status', models.BooleanField(default=False)),
+                ('table_id', models.IntegerField(default=1)),
+            ],
+        ),
         migrations.CreateModel(
             name='Order',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('is_complete', models.BooleanField(default=False)),
+                ('bill', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('table', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='waddlewait_app.table')),
             ],
         ),
@@ -30,13 +41,12 @@ class Migration(migrations.Migration):
                 ('quantity', models.IntegerField(default=1)),
                 ('is_preparing', models.BooleanField(default=False)),
                 ('is_ready', models.BooleanField(default=False)),
+                ('item_made_time', models.DateTimeField(null=True)),
+                ('wait_staff_assigned_time', models.DateTimeField(null=True)),
+                ('wait_staff_assigned', models.CharField(default='none', max_length=255)),
+                ('deliver', models.BooleanField(default=False)),
                 ('item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='waddlewaitMenu.menuitem')),
                 ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='orders.order')),
             ],
-        ),
-        migrations.AddField(
-            model_name='order',
-            name='items',
-            field=models.ManyToManyField(through='orders.OrderItem', to='waddlewaitMenu.menuitem'),
         ),
     ]

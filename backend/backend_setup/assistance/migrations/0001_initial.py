@@ -15,8 +15,10 @@ class Migration(migrations.Migration):
             name='Assistance',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tableNumber', models.IntegerField()),
-                ('staffName', models.CharField(max_length=255)),
+                ('createdTime', models.DateTimeField(auto_now_add=True)),
+                ('table', models.IntegerField()),
+                ('staffAcceptedTime', models.DateTimeField(null=True)),
+                ('staffName', models.CharField(default='none', max_length=255)),
                 ('tableStatus', models.BooleanField(default=False)),
             ],
         ),
