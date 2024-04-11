@@ -24,7 +24,6 @@ def createOrder(request):
         table = request_data.get('table')
         items_data = request_data.get('items')
         
-        # print(items_data)
         if not table or not items_data: ## or not items_data:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -41,55 +40,34 @@ def createOrder(request):
         if order_serializer.is_valid():
             order_instance = order_serializer.save()  # Save the serializer
 
-            item_counts = Counter(item_data['id'] for item_data in items_data)
-            for item_data in items_data:
-                key = item_data['id']
-                order_item_data = {
-                    'order': order_instance.id,
-                    'item': key,
-                    'quantity': item_counts[key]
-                }
-                print(order_item_data)
+            allItems = []
 
-                order_item_serializer = OrderItemSerializer(data=order_item_data)
+            for item in items_data:
+                item_id = item['id']
 
-                if order_item_serializer.is_valid():
-                    order_item_serializer.save()
+                existing_item = next((x for x in allItems if x['item'] == item_id), None)
+
+                if existing_item:
+                    existing_item['quantity'] += 1
                 else:
-                    return JsonResponse({'message': 'Invalid item data',
-                                         'error': order_item_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+                    allItems.append({
+                        'order': order_instance.id,
+                        'item': item_id,
+                        'quantity': 1
+                    })
+
+            order_items_serializer = OrderItemSerializer(data=allItems, many = True)
+
+            if order_items_serializer.is_valid():
+                order_items_serializer.save()
+            else:
+                return JsonResponse({'message': 'Invalid item data',
+                                     'error': order_items_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
             return JsonResponse({"message": "Items added to order successfully",
                                  'total_amount': total_bill}, status=status.HTTP_201_CREATED)
-
-        return JsonResponse({'message': 'Invalid order data'}, status=status.HTTP_404_NOT_FOUND)
-
-@api_view(['GET'])
-def viewPastOrderedItems(request, table):
-    if request.method == 'GET':
-        try:            
-            orderItems= OrderItem.objects.filter(order__table=table)
-            orderItems_serializer = OrderItemSerializer(orderItems, many = True)
-            '''
-            allItems = []
-
-            for item in orderItems_serializer.data:
-                item_id = item['item']
-                existing_item = next((x for x in allItems if x['id'] == item_id), None)
-                if existing_item:
-                    existing_item['quantity'] += item['quantity']
-                else:
-                    menu_item = MenuItem.objects.get(pk=item_id)
-                    allItems.append({
-                        'id': item_id,
-                        'name': item['name'],
-                        'quantity': item['quantity'],
-                        'price': menu_item.price
-                    })
-            '''
-            return Response(orderItems_serializer.data, status=status.HTTP_200_OK)  
-        except Exception as e:
-            return JsonResponse({'message': 'Table number does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        else: 
+            return JsonResponse({'message': 'Invalid order data'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
 def viewCustomerOrder(request, tableNumber):

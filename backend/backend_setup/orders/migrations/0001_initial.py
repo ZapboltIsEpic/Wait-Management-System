@@ -11,8 +11,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ('waddlewait_app', '0001_initial'),
         ('waddlewaitMenu', '0001_initial'),
-        ('waddlewait_app', '0001_initial'),
-        ('waddlewaitMenu', '0001_initial'),
     ]
 
     operations = [
@@ -43,7 +41,6 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('is_complete', models.BooleanField(default=False)),
                 ('bill', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('bill', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('table', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='waddlewait_app.table')),
             ],
         ),
@@ -54,10 +51,6 @@ class Migration(migrations.Migration):
                 ('quantity', models.IntegerField(default=1)),
                 ('is_preparing', models.BooleanField(default=False)),
                 ('is_ready', models.BooleanField(default=False)),
-                ('item_made_time', models.DateTimeField(null=True)),
-                ('wait_staff_assigned_time', models.DateTimeField(null=True)),
-                ('wait_staff_assigned', models.CharField(default='none', max_length=255)),
-                ('deliver', models.BooleanField(default=False)),
                 ('item_made_time', models.DateTimeField(null=True)),
                 ('wait_staff_assigned_time', models.DateTimeField(null=True)),
                 ('wait_staff_assigned', models.CharField(default='none', max_length=255)),

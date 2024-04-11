@@ -33,7 +33,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             return "Pending"
 
     def get_price(self, obj):
-        return obj.item.price
+        return obj.item.price * obj.quantity
         
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

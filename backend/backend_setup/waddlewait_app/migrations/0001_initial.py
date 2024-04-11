@@ -13,9 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.CreateModel(
             name='Table',
-            name='Table',
             fields=[
-                ('table_number', models.IntegerField(blank=True, primary_key=True, serialize=False)),
                 ('table_number', models.IntegerField(blank=True, primary_key=True, serialize=False)),
                 ('table_in_use', models.BooleanField(blank=True)),
                 ('seats_max', models.IntegerField(blank=True)),

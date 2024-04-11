@@ -334,7 +334,7 @@ function Orders ({ showOrders, setShowOrders, setBill, tableNum }) {
               {orders.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{item["name"]}</TableCell>
-                  <TableCell>{item["price"]}</TableCell>
+                  <TableCell>${item["price"]}</TableCell>
                   <TableCell>{item["quantity"]}</TableCell>
                   <TableCell>{item["status"]}</TableCell>
                 </TableRow>
