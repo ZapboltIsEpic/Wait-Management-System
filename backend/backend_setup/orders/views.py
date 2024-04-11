@@ -139,32 +139,31 @@ class OrdersDeliverGetAllNotificationsView(APIView):
             return Response(notification_data, status=status.HTTP_200_OK)
         except OrderItem.DoesNotExist:
             return Response("No OrderItem found", status=status.HTTP_404_NOT_FOUND)
-    
-# class OrdersCheckoutBillView(APIView):
-#     def get(self, request, table):
-#         # Retrieve the order instance
-#         try:
-#             # billRequest = BillRequest.objects.get(table=table, request_status=False)
-#             billRequest = BillRequest.objects.get(request_status=False)
-#         except Order.DoesNotExist:
-#             return Response({"error": "Bill request not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-#         # Get the bill from the order
-#         bill = billRequest.total_amount
-
-#         # Return the bill as a response
-#         return Response({"bill": bill}, status=status.HTTP_200_OK)
         
 class OrdersCheckoutBillView(APIView):
     def get(self, request):
         # Retrieve all bill requests that have not been processed
         bill_requests = BillRequest.objects.filter(request_status=False)
-        
-        # Serialize the bill requests
         serializer = BillRequestSerializer(bill_requests, many=True)
         
+        # Extract table IDs from bill requests
+        order_items_table_ids_bills = []
+        for bill_request in bill_requests:
+            table = bill_request.table_id
+            
+            orderItems = OrderItem.objects.filter(order__table=table)
+            orderItems_serializer = OrderItemSerializer(orderItems, many = True)
+            
+            bill_request_data = {
+                'table': bill_request.table_id,
+                'total_amount' : bill_request.total_amount,
+                'items': orderItems_serializer.data
+            }
+            
+            order_items_table_ids_bills.append(bill_request_data)
+        
         # Return the serialized bill requests as a response
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(order_items_table_ids_bills, status=status.HTTP_200_OK)
     
 class OrdersDeleteBillView(APIView):
     def delete(self, request, table):
