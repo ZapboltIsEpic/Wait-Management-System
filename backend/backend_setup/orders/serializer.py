@@ -1,30 +1,12 @@
 from rest_framework import serializers
 from waddlewait_app.models import Table
-from waddlewaitMenu.models import MenuItem
 from .models import Order, OrderItem, BillRequest
 from waddlewait_app.serializers import TableSerializer
-'''
-class OrderItemSerializer(serializers.ModelSerializer):
-    item_name = serializers.SerializerMethodField()
-    status = serializers.SerializerMethodField()
-
-    class Meta:
-        model = OrderItem
-        fields = ['id', 
-                  'order', 
-                  'item',
-                  'quantity', 
-                  'is_preparing',
-                  'is_ready',
-                  'wait_staff_assigned',
-                  'deliver'
-                  ]
-'''    
 
 class OrderItemSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
-    # price = serializers.DecimalField(max_digits=10, decimal_places=2)
+    price = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderItem
@@ -34,6 +16,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             'order',
             'item',
             'name',
+            'price',
             'quantity',
             'status'
         ]
@@ -48,7 +31,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
             return "Preparing"
         else:
             return "Pending"
-        
+
+    def get_price(self, obj):
+        return obj.item.price
         
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
@@ -65,7 +50,7 @@ class BillRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BillRequest
         fields = ['id',
-                  'table_id',
+                  'table',
                   'total_amount',
                   'staff_name',
                   'request_status',

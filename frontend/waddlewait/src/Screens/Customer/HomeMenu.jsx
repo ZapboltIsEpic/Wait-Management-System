@@ -71,7 +71,9 @@ function Item({ item, cart, setCart }) {
           image={item.image}
           title={item.name}
           />
-        <CardContent>
+        <CardContent
+          sx={{paddingTop: 1, paddingBottom: 1}}
+        >
           <Typography gutterBottom>
             {item.name}
           </Typography>
@@ -281,7 +283,22 @@ function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrde
   );
 }
 
-function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
+function Orders ({ showOrders, setShowOrders, setBill, tableNum }) {
+  const [orders, setOrders] = React.useState([])
+
+  React.useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
+        const data = response.data;
+        setOrders(data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchOrders();
+  }, []);
+
   const handleBill = () => {
     axios.post('http://127.0.0.1:8000/customer/bill', {
       table: tableNum,
@@ -309,8 +326,8 @@ function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
               <TableRow>
                 <TableCell>Item Name</TableCell>
                 <TableCell>Price</TableCell>
-                {/* <TableCell>Quantity</TableCell> */}
-                {/* <TableCell>Status</TableCell> */}
+                <TableCell>Quantity</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -318,8 +335,8 @@ function Orders ({ orders, showOrders, setShowOrders, setBill, tableNum }) {
                 <TableRow key={item.id}>
                   <TableCell>{item["name"]}</TableCell>
                   <TableCell>{item["price"]}</TableCell>
-                  {/* <TableCell>{item.quantity}</TableCell> */}
-                  {/* <TableCell>{item.status}</TableCell> */}
+                  <TableCell>{item["quantity"]}</TableCell>
+                  <TableCell>{item["status"]}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

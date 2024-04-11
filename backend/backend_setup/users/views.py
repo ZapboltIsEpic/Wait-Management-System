@@ -18,18 +18,14 @@ class LoginView(APIView):
     def post(self, request):
         email = request.data['email']
         password = request.data['password']
-        role = request.data['role']
         
         user = User.objects.filter(email=email).first()
         
         if (user is None):
-            raise AuthenticationFailed('User not found')
+            raise AuthenticationFailed('No account exist')
         
         if not user.check_password(password):
             raise AuthenticationFailed('Password incorrect')
-
-        if not user.role == role:
-            raise AuthenticationFailed('role incorrect')
         
         payload = {
             'id': user.id,
@@ -44,7 +40,8 @@ class LoginView(APIView):
         response.set_cookie(key='jwt', value=token, httponly=True)
         
         response.data = {
-            'jwt': token
+            'jwt': token,
+            'role': user.role
         }
         
         return response

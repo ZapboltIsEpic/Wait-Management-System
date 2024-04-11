@@ -9,7 +9,7 @@ from waddlewaitMenu.serializers import MenuItemSerializer
 import json
 
 # Import the serializer
-from .serializer import OrderSerializer, OrderItemSerializer
+from .serializer import OrderSerializer, OrderItemSerializer, BillRequestSerializer
 
 class OrderDeliverRequestNotificationView(APIView):
     def put(self, request):
@@ -25,17 +25,6 @@ class OrderDeliverRequestNotificationView(APIView):
                 request.is_ready=True
                 request.item_made_time = datetime.datetime.now()
                 request.save()
-                
-                # # Convert necessary fields to built-in types
-                # order = request.order
-                # item = request.item
-                
-                # # Create a dictionary with updated order data
-                # updated_order_data = {
-                #     'order': order,
-                #     'item': item,
-                # }
-                # updated_data.append(updated_order_data)
                 
             return Response("Order Deliver Notification Success", status=status.HTTP_200_OK)
         else:
@@ -69,17 +58,6 @@ class OrderDeliverNotificationAcceptedView(APIView):
                 request.wait_staff_assigned_time = datetime.datetime.now()
                 request.save()
                 
-                # # Convert necessary fields to built-in types
-                # order = request.order
-                # wait_staff_assigned = request.wait_staff_assigned
-                
-                # updated_order_data = {
-                #     'order': order,
-                #     'wait_staff_assigned': wait_staff_assigned,
-                # }
-                # updated_data.append(updated_order_data)
-                
-            
             return Response("Assigned Staff Successfully", status=status.HTTP_200_OK)
         else:
             # If no notifications are found, return a response indicating that
@@ -119,16 +97,6 @@ class OrderDeliverNotificationCompleteView(APIView):
                 # Update status or perform other actions as needed
                 request.deliver = True
                 request.save()
-                
-                # Convert necessary fields to built-in types
-                # order = request.order
-                # deliver = request.deliver
-                
-                # updated_order_data = {
-                #     'order': order,
-                #     'deliver': deliver,
-                # }
-                # updated_data.append(updated_order_data)
             
             return Response("Order Item deliver successfully", status=status.HTTP_200_OK)
         else:
@@ -168,49 +136,45 @@ class OrdersDeliverGetAllNotificationsView(APIView):
                                 'deliver': deliver_data
                             })
             
-            # orderSerializer = OrderItemSerializer(order, many=True)
-            # Return the serialized data as a response
-            # return Response(orderSerializer.data, status=status.HTTP_200_OK)
-            
             return Response(notification_data, status=status.HTTP_200_OK)
         except OrderItem.DoesNotExist:
             return Response("No OrderItem found", status=status.HTTP_404_NOT_FOUND)
-    
+        
 class OrdersCheckoutBillView(APIView):
-    def get(self, request, table):
-        # Retrieve the order instance
-        try:
-            billRequest = BillRequest.objects.get(table_id=table, request_status=False)
-        except Order.DoesNotExist:
-            return Response({"error": "Bill request not found"}, status=status.HTTP_404_NOT_FOUND)
+    def get(self, request):
+        # Retrieve all bill requests that have not been processed
+        bill_requests = BillRequest.objects.filter(request_status=False)
+        serializer = BillRequestSerializer(bill_requests, many=True)
         
-        # Get the bill from the order
-        bill = billRequest.total_amount
-        table_id = billRequest.table_id
-
-        orderIds = Order.objects.filter(table_id=table_id)
-        orders = []
-        for orderId in orderIds:
-            orderItems = OrderItem.objects.filter(order_id = orderId, is_ready=True)
-            for orderItem in orderItems:
-                orders.append({"quantity": orderItem.quantity, "item_id": orderItem.item_id})
-        
-        for order in orders:
-            item_id = order['item_id']
-            item_data = MenuItem.objects.get(id = item_id)
+        # Extract table IDs from bill requests
+        order_items_table_ids_bills = []
+        for bill_request in bill_requests:
+            table = bill_request.table_id
             
-            menuItems_serializer = MenuItemSerializer(item_data, context={'request': request})
+            orderItems = OrderItem.objects.filter(order__table=table)
+            orderItems_serializer = OrderItemSerializer(orderItems, many = True)
+            
+            bill_request_data = {
+                'table': bill_request.table_id,
+                'total_amount' : bill_request.total_amount,
+                'items': orderItems_serializer.data
+            }
+            
+            order_items_table_ids_bills.append(bill_request_data)
+        
+        # Return the serialized bill requests as a response
+        return Response(order_items_table_ids_bills, status=status.HTTP_200_OK)
+    
+class OrdersDeleteBillView(APIView):
+    def delete(self, request, table):
+        try:
+            bill_request = BillRequest.objects.get(table=table, request_status=False)
+        except BillRequest.DoesNotExist:
+            return Response({"error": "Bill request not found for the given table number"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Delete the bill request
+        bill_request.delete()
 
-            category_data = Category.objects.get(id = item_data.category_id)
-            order['name'] = item_data.name
-            order['image'] = menuItems_serializer.data['image']
-            order['description'] = item_data.description
-            order['price'] = item_data.price
-            order['category_name'] = category_data.name
-        
-        # Return the bill as a response
-        # return Response({"bill": bill}, status=status.HTTP_200_OK)
-        return Response({"orders": orders, "bill": bill}, status=status.HTTP_200_OK)
-        
+        return Response({"message": "Bill request deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
     
     
