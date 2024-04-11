@@ -18,7 +18,6 @@ class LoginView(APIView):
     def post(self, request):
         email = request.data['email']
         password = request.data['password']
-        role = request.data['role']
         
         user = User.objects.filter(email=email).first()
         
@@ -27,9 +26,6 @@ class LoginView(APIView):
         
         if not user.check_password(password):
             raise AuthenticationFailed('Password incorrect')
-
-        if not user.role == role:
-            raise AuthenticationFailed('role incorrect')
         
         payload = {
             'id': user.id,
