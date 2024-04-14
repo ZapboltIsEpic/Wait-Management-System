@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Tab,
@@ -57,7 +57,7 @@ function ManagerMenu() {
 	const [category, setCategory] = React.useState("");
 
 	const [categories, setCategories] = React.useState([]);
-	const [hasNewCategory, setNewCategory] = React.useState(false);
+	const [hasChange, setNewChange] = React.useState(false);
 	React.useEffect(() => {
 		const fetchMenu = async () => {
 			try {
@@ -66,15 +66,15 @@ function ManagerMenu() {
 				setCategories(data['categories'])
 				setItems(data['menuItems'])
 
-				if (hasNewCategory == true) {
-					setNewCategory(false);
+				if (hasChange == true) {
+					setNewChange(false);
 				}
 			} catch (error) {
 				console.error('Error fetching data:', error);
 			}
 		};
 		fetchMenu();
-	}, [hasNewCategory]);
+	}, [hasChange]);
 
 
 	// const addMenuItem = () => {
@@ -128,7 +128,7 @@ function ManagerMenu() {
 				</Box>
 				{categories.map((cate) => (
 					<TabPanel value={String(cate.id)} key={cate.id}>
-						<Items items={items} cateId={cate.id}/>
+						<Items items={items} cateId={cate.id} setNewChange={setNewChange}/>
 					</TabPanel>
 				))}
 			</TabContext>
@@ -136,13 +136,13 @@ function ManagerMenu() {
 				open={categoryDialog}
 				onClose={setCategoryDialog}
 				categories={categories}
-				setNewCategory={setNewCategory}
+				setNewChange={setNewChange}
 			/>
 		</div>
 	)
 }
 
-function Items({ items, cateId}) {
+function Items({ items, cateId, setNewChange}) {
   var cateItems = [];
 
   for (var index in items) {
@@ -157,7 +157,7 @@ function Items({ items, cateId}) {
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         {cateItems.map((item) => (
           <Grid item key={item.id}>
-            <Item item={item}/>
+            <Item item={item} setNewChange={setNewChange}/>
           </Grid>
         ))}
       </Grid>
@@ -165,7 +165,8 @@ function Items({ items, cateId}) {
   )
 }
 
-function Item({ item}) {
+function Item({item, setNewChange}) {
+
   const [showPopUpItem, setShowPopUpItem] = React.useState(false);
 	const [itemName, setItemName] = React.useState(item.name)
 	const [itemDescription, setItemDescription] = React.useState(item.description)
@@ -185,6 +186,11 @@ function Item({ item}) {
 
   const handlePopUpItem = () => {
     setShowPopUpItem(true)
+  }
+
+  const [file, setFile] = React.useState()
+  const handleFileChange = (event) => {
+	setFile(event.target.files[0])
   }
 
   return (
@@ -278,26 +284,58 @@ function Item({ item}) {
 					</CardContent>
 				</Grid>
           <CardActions>
-						<Box 
-							sx={{ 
-								display: 'flex', 
-								justifyContent: 'space-between', 
-								alignItems: 'center', 
-								width: '580px' 
-							}}
-						>
-							<Button
-								variant="outlined"	
-								color='warning'
-								// onClick={() => {
-								// 	axios.delete("http://localhost:8000/menu/modify/)
-								// }}
-							> Delete Item</Button>
-							<Button
-								variant="outlined"	
-								color='warning'
-							> Save Changes</Button>
-						</Box>
+				<Box 
+					sx={{ 
+						display: 'flex', 
+						justifyContent: 'space-between', 
+						alignItems: 'center', 
+						width: '580px' 
+					}}
+				>
+					<Button
+						variant="outlined"	
+						color='warning'
+						onClick={() => {
+							axios.delete(`http://localhost:8000/menu/modify/${item.id}`)
+							.then(() => {
+								setShowPopUpItem(false);
+								setNewChange(true);
+							})
+							.catch(error => {
+								console.log(error);
+							})
+						}}
+					> Delete Item</Button>
+					<input type="file" onChange={handleFileChange}/>
+					<Button
+						variant="outlined"	
+						color='warning'
+						onClick={() => {
+							// const formData = new FormData();
+							// formData.append('file', file);
+							// formData.append('fileName', file.name);
+							// console.log(formData[0])
+							// console.log(item.image)
+							// let stringSplit = item.image.split('/')
+							// let imageString = stringSplit[stringSplit.length - 1]
+							// axios.put(`http://localhost:8000/menu/modify/${item.id}`, {
+							// 	name: itemName,
+							// 	description: itemDescription,
+							// 	price: itemPrice,
+							// 	image: formData,
+							// 	category: item.category.id,	
+							// })
+							// .then(() => {
+							// 	setShowPopUpItem(false);
+							// 	setNewChange(true);
+							// })
+							// .catch(error => {
+							// 	console.log(error);
+							// })
+						}}
+					> Save Changes
+					</Button>
+				</Box>
           </CardActions>
         </Card>
       </Dialog>
@@ -306,7 +344,7 @@ function Item({ item}) {
 }
 
 function CategoryDialog(props) {
-  const { onClose, open, categories, setNewCategory} = props;
+  const { onClose, open, categories, setNewChange} = props;
 
   const handleClose = () => {
     onClose(false);
@@ -324,7 +362,7 @@ function CategoryDialog(props) {
 				.then(response => {
 				console.log(response);
 
-				setNewCategory(true);
+				setNewChange(true);
 
 				})
 				.catch(error => {

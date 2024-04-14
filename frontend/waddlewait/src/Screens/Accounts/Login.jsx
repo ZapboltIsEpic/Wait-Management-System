@@ -1,10 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import { Button, InputLabel, MenuItem} from '@mui/material';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box'
 import './accounts.css'
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -40,16 +41,23 @@ function Login() {
 				<h1>
 					Login
 				</h1>
-				<div className="input-container">
+				<Box
+					className="input-container"
+					component="form"
+				>
 					<TextField
 						label="Username"
 						className="input-login"
 						onChange={(event) => {
 							setUserName(event.target.value)
 						}}
+						autoComplete='off'
 					/>
-				</div>
-				<div className="input-container">
+				</Box>
+				<Box 
+					className="input-container"
+					component="form"
+				>
 					<TextField
 						label="Password"
 						type="password"
@@ -57,8 +65,9 @@ function Login() {
 						onChange={(event) => {
 							setPassword(event.target.value)
 						}}
+						autoComplete='off'
 					/>
-				</div>
+				</Box>
 				<div className="button-container">
 					<Button 
 						variant="outlined"
