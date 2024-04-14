@@ -5,7 +5,6 @@ from django.db import transaction
 
 from orders.models import Order, BillRequest, OrderItem
 from waddlewait_app.models import Table
-from waddlewaitMenu.models import MenuItem
 from assistance.models import Assistance
 from orders.serializer import OrderSerializer, BillRequestSerializer, OrderItemSerializer
 from assistance.serializer import AssistanceSerializer
