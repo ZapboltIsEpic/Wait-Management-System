@@ -127,12 +127,17 @@ function Item({ item, cart, setCart }) {
               image={item.image}
               title={item.name}
               />
-            <CardContent sx={{ height: 250 }}>
+            <CardContent>
               <Typography variant="h4">
                 {item.name}
               </Typography>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="caption" color="text.secondary">
                 {item.description}
+              </Typography>
+            </CardContent>
+            <CardContent sx={{ height: 250}}>
+              <Typography variant="body1">
+                Ingredients: {item.ingredients}
               </Typography>
             </CardContent>
           </Grid>
@@ -285,13 +290,14 @@ function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrde
 
 function Orders ({ showOrders, setShowOrders, setBill, tableNum }) {
   const [orders, setOrders] = React.useState([])
-
+  const [total, setTotal] = React.useState(0)
   React.useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
+        const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`)
         const data = response.data;
         setOrders(data)
+        setTotal(data.reduce((acc, currentValue) => acc + currentValue.price, 0))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -473,7 +479,7 @@ function HomeMenu() {
   
   const handleAssistance = () => {
     axios.post('http://127.0.0.1:8000/customer/assistance', {
-      "table_number": tableNum
+      "table": tableNum
     })
     .catch(error => {
       console.log(error);
