@@ -35,3 +35,10 @@ div {
     flex-direction: row;
     justify-content: space-around;
 }
+
+.bottom-button {
+	position: absolute;
+	bottom: 20px; /* Adjust as needed */
+	left: 50%;
+	transform: translateX(-50%);
+}

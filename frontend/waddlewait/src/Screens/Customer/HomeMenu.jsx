@@ -15,9 +15,6 @@ import {
   Snackbar,
   Alert,
   Dialog, 
-  DialogTitle, 
-  DialogContent, 
-  DialogActions,
   Table, 
   TableContainer, 
   TableHead, 
@@ -29,7 +26,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  IconButton
+  ClearIcon
 } from '@mui/material';
 import {
   TabPanel,
@@ -40,7 +37,6 @@ import {
   ShoppingCart,
   DeleteOutline
 } from '@mui/icons-material';
-import ClearIcon from '@mui/icons-material/Clear';
 import { useNavigate } from 'react-router-dom';
 
 function Item({ item, cart, setCart }) {
@@ -194,30 +190,17 @@ function Items({ items, cateId, cart, setCart }) {
   )
 }
 
-function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrder, showOrders, setShowOrders, setBill, tableNum}) {
-  const handleOrder = () => {
-    setShowCart(false)
-    axios.post('http://127.0.0.1:8000/customer/order', {
-      table: tableNum,
-      items: cart
-    });
-    setOrder(true)
-    setShowCart(false)
-    setCart([])
+function CartOrder({ cart, setCart, orders, setOrders, showCartOrder, setShowCartOrder, setOrder, setBill, tableNum}) {
+  const [value, setValue] = React.useState("cart");
 
-    setOrders(orders.concat(cart))
-  }
-  
-  
-  const handleDeleteItem = (itemIndex) => {
-    var newCart = [...cart]
-    newCart.splice(itemIndex,1)
-    setCart(newCart)
-  }
+  const handleChangeTab = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <Dialog 
-      open={showCart} 
-      onClose={() => setShowCart(false)} 
+      open={showCartOrder} 
+      onClose={() => setShowCartOrder(false)} 
       PaperProps={{
         sx: {
           width: '80%',
@@ -225,83 +208,115 @@ function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrde
         },
       }}
     >
-      <DialogTitle>
-        <Typography fontSize="20px" >Cart</Typography>
-        <IconButton onClick={() => setShowCart(false)} sx={{ position: 'absolute', right: 5, top: 5 }}>
-          <ClearIcon />
-        </IconButton>
-        <Button
-          variant="contained"
-          color='warning'
-          onClick={() => setShowOrders(true)}
-          size="small" 
-        >
-          View Orders
-        </Button>
-        <Orders 
-          orders={orders}
-          showOrders={showOrders} 
-          setShowOrders={setShowOrders} 
-          setBill={setBill} 
-          tableNum={tableNum}
-        />
-      </DialogTitle>
-      <DialogContent>
-        
-      <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Item Name</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right"></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {cart.map((item, itemIndex) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell align="right">${item.price}</TableCell>
-                  <TableCell align="right">
-                    <DeleteOutline onClick={() => handleDeleteItem(itemIndex)}/>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </DialogContent>
-      <DialogActions>
-        <Box sx={{ 
-          display: 'auto',
-          width: '100%' 
-        }}
-        >
-          { cart.length === 0 ? (
-            <Button disabled color='warning' variant="contained">
-              Order
-            </Button>
-          ):(
-            <Button onClick={handleOrder} color='warning' variant="contained">
-              Order
-            </Button>
-          )}
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} 
+            onChange={handleChangeTab}
+            textColor="inherit"
+            indicatorColor="inherit"
+          >
+            <Tab label="Cart" value="cart" />
+            <Tab label="Order" value="order" />
+          </Tabs>
         </Box>
-      </DialogActions>
+          <TabPanel value="cart">
+            <Cart
+              cart={cart}
+              setCart={setCart}
+              orders={orders}
+              setOrders={setOrders}
+              setOrder={setOrder} 
+              tableNum={tableNum}
+            />
+          </TabPanel>
+          <TabPanel value="order">
+            <Orders 
+              orders={orders}
+              setShowCartOrder={setShowCartOrder} 
+              setBill={setBill} 
+              tableNum={tableNum}
+            />
+          </TabPanel>
+      </TabContext>        
     </Dialog>
   );
 }
 
-function Orders ({ showOrders, setShowOrders, setBill, tableNum }) {
+function Cart({cart, setCart, orders, setOrders, setOrder, tableNum}) {
+
+  const handleOrder = () => {
+    axios.post('http://127.0.0.1:8000/customer/order', {
+      table: tableNum,
+      items: cart
+    });
+    setOrder(true)
+    setCart([])
+
+    setOrders(orders.concat(cart))
+  }
+  
+  const handleDeleteItem = (itemIndex) => {
+    var newCart = [...cart]
+    newCart.splice(itemIndex,1)
+    setCart(newCart)
+  }
+
+  return (
+    <>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Item Name</TableCell>
+              <TableCell align="right">Price</TableCell>
+              <TableCell align="right"></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {cart.map((item, itemIndex) => (
+              <TableRow key={item.id}>
+                <TableCell>{item.name}</TableCell>
+                <TableCell align="right">${item.price}</TableCell>
+                <TableCell align="right">
+                  <DeleteOutline onClick={() => handleDeleteItem(itemIndex)}/>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Box sx={{ 
+        display: 'auto',
+        width: '100%' 
+      }}
+      >
+        <div class="bottom-button">
+          { cart.length === 0 ? (
+            <Button disabled color='warning' variant="contained">
+              Order
+            </Button>
+        ):(
+            <Button onClick={handleOrder} color='warning' variant="contained">
+              Order
+            </Button>
+          )}
+          </div>
+      </Box>
+    </>
+  )
+}
+
+function Orders ({ setShowCartOrder, setBill, tableNum }) {
   const [orders, setOrders] = React.useState([])
   const [total, setTotal] = React.useState(0)
+
   React.useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
         const data = response.data;
         setOrders(data)
-        setTotal(data.reduce((acc, currentValue) => acc + currentValue.price, 0))
+        setTotal(data.reduce((acc, currentValue) => acc + (currentValue.price*currentValue.quantity), 0))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -314,30 +329,15 @@ function Orders ({ showOrders, setShowOrders, setBill, tableNum }) {
       table: tableNum,
     });
     setBill(true)
-    setShowOrders(false)
+    setShowCartOrder(false)
   }
 
   return (
-    <Dialog
-      open={showOrders} 
-      onClose={() => setShowOrders(false)} 
-      PaperProps={{
-        sx: {
-          width: '80%',
-          height: '80%'
-        },
-      }}
-    >
-      <DialogTitle>Orders
-      <IconButton onClick={() => setShowOrders(false)} sx={{ position: 'absolute', right: 5, top: 5 }}>
-          <ClearIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent>
+    <>
       <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
+        <Table>
+          <TableHead>
+            <TableRow>
                 <TableCell>Item Name</TableCell>
                 <TableCell>Price</TableCell>
                 <TableCell>Quantity</TableCell>
@@ -356,25 +356,29 @@ function Orders ({ showOrders, setShowOrders, setBill, tableNum }) {
             </TableBody>
           </Table>
         </TableContainer>
-      </DialogContent>
-      <DialogActions>
+        
         <Box sx={{ 
           display: 'auto',
           width: '100%' 
         }}
         >
-          { orders.length === 0 ? (
-            <Button disabled color='warning' variant="contained">
-              Bill
-            </Button>
-          ):(
-            <Button onClick={handleBill} color='warning' variant="contained">
-              Bill
-            </Button>
-          )}
+          <div class="bottom-button">
+          <Typography variant="body1" align="center">
+            Total: ${total.toFixed(2)}
+          </Typography>
+          <br />
+            { orders.length === 0 ? (
+                <Button disabled color='warning' variant="contained">
+                  Bill
+                </Button>
+            ):(
+                <Button onClick={handleBill} color='warning' variant="contained">
+                  Bill
+                </Button>
+            )}
+          </div>
         </Box>
-      </DialogActions>
-    </Dialog>
+    </>
   );
 }
 
@@ -392,8 +396,7 @@ function HomeMenu() {
 
   // Menu variables
   const [assistance, setAssistance] = React.useState(false);
-  const [showOrders, setShowOrders] = React.useState(false)
-  const [showCart, setShowCart] = React.useState(false);
+  const [showCartOrder, setShowCartOrder] = React.useState(false);
   const [bill, setBill] = React.useState(false)
   const [order, setOrder] = React.useState(false)
   const [categories, setCategories] = React.useState([]);
@@ -462,6 +465,13 @@ function HomeMenu() {
   const changeTableNum = (event) => {
     setTableNum(event.target.value);
   };
+
+  const handleExitMenu = () => {
+    navigateTo('/');
+    axios.put('http://127.0.0.1:8000/table/leave', {
+      table: tableNum,
+    });
+  }
 
   const handleConfirm = () => {
     if (tableNum && groupSize && groupSize > 0) {
@@ -599,9 +609,7 @@ function HomeMenu() {
             <div>
               <Button 
                 variant="outlined"
-                onClick={() => {
-                  navigateTo('/');
-                }}
+                onClick={handleExitMenu}
                 className="button"
                 color='warning'
               >
@@ -612,23 +620,22 @@ function HomeMenu() {
               variant="contained"
               color='warning'
               endIcon={<ShoppingCart />}
-              onClick={() => setShowCart(true)}
+              onClick={() => setShowCartOrder(true)}
               >
               Cart
             </Button>
-            <Cart 
+            <CartOrder
               cart={cart}
               setCart={setCart}
               orders={orders}
               setOrders={setOrders}
-              showCart={showCart} 
-              setShowCart={setShowCart} 
+              showCartOrder={showCartOrder} 
+              setShowCartOrder={setShowCartOrder} 
               setOrder={setOrder} 
-              showOrders={showOrders}
-              setShowOrders={setShowOrders}
               setBill={setBill}
               tableNum={confirmTable}
             />
+            
 
             <Snackbar open={bill} autoHideDuration={8000} onClose={() => setBill(false)}>
               <Alert
