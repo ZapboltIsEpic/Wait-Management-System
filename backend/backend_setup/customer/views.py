@@ -103,7 +103,7 @@ def viewPastOrderedItems(request, table):
 @api_view(['POST'])
 def requestCustomerAssistance(request):
     if request.method == 'POST':
-        table = request.data.get('table_number')
+        table = request.data.get('table')
         if table is None:
             return JsonResponse({'message': 'Invalid input format'}, status=status.HTTP_400_BAD_REQUEST)
         existingAssistance = Assistance.objects.filter(table=table, tableStatus=False).exists()
