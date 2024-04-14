@@ -29,14 +29,14 @@ function MakeOrder({order, getOrders, setOrders}) {
         <div>
           {tableItems.map((tableItem, key) => (
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '10px 0', overflowY: 'auto'}} key={key}>
-              <p> {tableItem.quantity} orders of Item {tableItem.item}</p>
+              <p> {tableItem.quantity} orders of Item {tableItem.name}</p>
               <ItemStatus orderId={order.id} itemId={tableItem.id} itemPrepare={tableItem.is_preparing} itemReady={tableItem.is_ready}/>
             </div>
           ))}
         </div>
         <Button 
           variant="contained" 
-          color="primary"
+          color="warning"
           onClick={() => {
             axios.put(`http://localhost:8000/kitchenstaff/complete/${order.id}`)
             .then(() => {

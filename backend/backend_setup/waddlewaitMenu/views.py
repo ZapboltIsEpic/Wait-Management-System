@@ -89,7 +89,6 @@ def addMenuItem(request, categoryName):
 @api_view(['POST'])
 def addMenuItemWithImage(request):
     if request.method == 'POST':
-        #return {"sd": "what"}
         image_file = request.FILES.get('image')
         data = {
             'name': request.data.get('name'),
@@ -115,10 +114,16 @@ def modifyMenuItem(request, pk):
         return Response(str(MenuItem.objects.values_list('pk', flat=True)),status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'PUT':
+        data = request.data
+        print(data)
+        print(ImageFile(data['image']))
+        data['image'] = ImageFile(data['image'])
+        # print(data)
         serializer = MenuItemUpdateSerializer(menu_item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        print(serializer.errors)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'DELETE':

@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.menu, name='menu'),
-    path('modify/<int:pk>/', views.modifyMenuItem, name='modify-menu-item'),
+    path('modify/<int:pk>', views.modifyMenuItem, name='modify-menu-item'),
     path('categories', views.categories, name ="category"),
     path('order/categorised/<int:pk>/', views.modifyMenuOrder, name='modify-menu-item'), #pk is category id
     path('order/categories', views.modifyCategoryOrder, name ="category"),

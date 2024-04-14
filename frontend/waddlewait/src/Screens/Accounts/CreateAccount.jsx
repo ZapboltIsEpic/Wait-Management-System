@@ -1,12 +1,13 @@
 import React from 'react';
 import './accounts.css'
 import { TextField, Button, InputLabel, MenuItem } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
 
 function CreateStaffAccount() {
 	const navigate = useNavigate();
@@ -39,38 +40,42 @@ function CreateStaffAccount() {
 				<h1>
 					Register
 				</h1>
-				<div className="input-container">
+				<Box className="input-container" component="form">
 					<TextField
 						label="Name"
 						placeholder='Jane_Doe'
 						className="input-register"
 						onChange={(e) => setName(e.target.value)}
+						autoComplete='off'
 					/>
-				</div>
-				<div className="input-container">
+				</Box>
+				<Box className="input-container" component="form">
 					<TextField
 						label="Email"
 						placeholder='example@gmail.com'
 						className="input-register"
 						onChange={(e) => setUsername(e.target.value)}
+						autoComplete='off'
 					/>
-				</div>
-				<div className="input-container">
+				</Box>
+				<Box className="input-container" component="form">
 					<TextField
 						label="Password"
 						className="input-register"
 						type="password"
 						onChange={(e) => setPassword(e.target.value)}
+						autoComplete='off'
 					/>
-				</div>
-				<div className="input-container">
+				</Box>
+				<Box className="input-container" component="form">
 					<TextField
 						label="Confirm Password"
 						className="input-register"
 						type="password"
 						onChange={(e) => setConfirmPassword(e.target.value)}
+						autoComplete='off'
 					/>
-				</div>
+				</Box>
 				<div className='input-role-container'>
                     <FormControl className="input-role">
                         <InputLabel>Role</InputLabel>
@@ -117,7 +122,6 @@ function CreateStaffAccount() {
 										setErrorOpen(true);
 										return;
 									}
-									console.log("hi")
 									try {
 										const response = await axios.post('http://127.0.0.1:8000/authentication/register', {
 									   	name: name,
@@ -127,7 +131,6 @@ function CreateStaffAccount() {
 										});
 
 										// Handle successful register
-										console.log('Register successful');
 										setSuccessOpen(true);
 									} catch (error) {
 										console.log(error)
