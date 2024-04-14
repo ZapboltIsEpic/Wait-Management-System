@@ -40,6 +40,7 @@ import {
   ShoppingCart,
   DeleteOutline
 } from '@mui/icons-material';
+import ClearIcon from '@mui/icons-material/Clear';
 import { useNavigate } from 'react-router-dom';
 
 function Item({ item, cart, setCart }) {
@@ -213,7 +214,6 @@ function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrde
     newCart.splice(itemIndex,1)
     setCart(newCart)
   }
-
   return (
     <Dialog 
       open={showCart} 
@@ -227,6 +227,9 @@ function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrde
     >
       <DialogTitle>
         <Typography fontSize="20px" >Cart</Typography>
+        <IconButton onClick={() => setShowCart(false)} sx={{ position: 'absolute', right: 5, top: 5 }}>
+          <ClearIcon />
+        </IconButton>
         <Button
           variant="contained"
           color='warning'
@@ -244,6 +247,7 @@ function Cart({ cart, setCart, orders, setOrders, showCart, setShowCart, setOrde
         />
       </DialogTitle>
       <DialogContent>
+        
       <TableContainer>
           <Table>
             <TableHead>
@@ -324,7 +328,11 @@ function Orders ({ showOrders, setShowOrders, setBill, tableNum }) {
         },
       }}
     >
-      <DialogTitle>Orders</DialogTitle>
+      <DialogTitle>Orders
+      <IconButton onClick={() => setShowOrders(false)} sx={{ position: 'absolute', right: 5, top: 5 }}>
+          <ClearIcon />
+        </IconButton>
+      </DialogTitle>
       <DialogContent>
       <TableContainer>
           <Table>
