@@ -81,7 +81,7 @@ def leave_table(request):
             tableObj.table_in_use = False
             tableObj.save()
 
-            return JsonResponse({'message': 'Table succesfully reserved',
+            return JsonResponse({'message': 'Table succesfully left',
                                  'table': table}, status=status.HTTP_200_OK)
 
         except:
