@@ -25,16 +25,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='BillRequest',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('total_amount', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('staff_name', models.CharField(default='', max_length=255)),
-                ('request_status', models.BooleanField(default=False)),
-                ('table_id', models.IntegerField(default=1)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Order',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
