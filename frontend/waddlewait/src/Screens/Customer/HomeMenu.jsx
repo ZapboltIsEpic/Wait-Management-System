@@ -294,7 +294,7 @@ function Orders ({ showOrders, setShowOrders, setBill, tableNum }) {
   React.useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`)
+        const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
         const data = response.data;
         setOrders(data)
         setTotal(data.reduce((acc, currentValue) => acc + currentValue.price, 0))
