@@ -17,24 +17,27 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
-function MakeBill({ billRequest }) {
-  // check if bill is already addressed
+function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}) {
+  const handleAcceptRequest = () => {
+    setBillRequestAccepted(true);
+    setAcceptedBillRequest(billRequest);
+  }
 
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Table no " + 1}
+        title={"Table no " + billRequest.table}
       />
       <CardContent className="order-card-contents">
         <Typography color="text.secondary">
-          {"Bill: " + billRequest.bill}
+          {"Bill: " + billRequest.total_amount}
         </Typography>
         <FormControl fullWidth>
           <Button 
             variant="contained" 
             color="primary"
             onClick={() => {
-            //   handleAcceptRequest();
+              handleAcceptRequest();
             }}
         >
           Accept
@@ -46,58 +49,100 @@ function MakeBill({ billRequest }) {
 }
 
 function WaiterBillRequests() {
+  const navigate = useNavigate();
+
+  const [acceptedBillRequest, setAcceptedBillRequest] = useState(null);
+  const [billRequestAccepted, setBillRequestAccepted] = useState(false);
   const [billRequests, setBillRequests] = useState([]);
-  const [openDrawer, setOpenDrawer] = useState(false);
-
-    const toggleDrawer = (isOpen) => () => {
-        setOpenDrawer(isOpen);
-    };
-
-    // API which is called every few seconds
-    // Check if a bill request exists
-
-    // Call this one when u find something
-    // Find a new bill requests
+  
     useEffect(() => {
-      // SHOULD BE ALL BILLS OR SMTH
-      axios.get('http://localhost:8000/orders/checkout/3')
+      function checkBills() {
+        axios.get('http://localhost:8000/orders/checkout')
         .then(response => {
           console.log(response.data)
-          setBillRequests(response.data.orders);
+          setBillRequests(response.data);
         })
         .catch(error => {
           console.log(error);
         });
+      }
+
+      const notificationLoop = setInterval(checkBills, 4000);
+
+      // Cleanup function to stop the loop when the component unmounts
+      return () => clearInterval(notificationLoop);
     }, []);
+
+    const handleCompletedOrderRequest = () => {
+      axios.delete(`http://127.0.0.1:8000/orders/delete/checkout/${acceptedBillRequest.table}/`)
+      .then(response => {
+        console.log(response.json);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+      setBillRequestAccepted(false);
+      setAcceptedBillRequest(null);
+    }
+
+    const callManager = () => {
+      // call manager
+    };
 
   return (
     <div className="App">
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-      <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+      <Drawer 
+        variant="permanent"
+        anchor="left"
+      >
           { <WaiterSidebar />}
       </Drawer>
-        <div>
-            <h1>Bill Requests</h1>
-            <div className="order-requests-container">
-            {/* {billRequests.map((request, index) => (
-                <MakeBill key={index} 
-                billRequest={request}
-                />
-            ))} */}
-            {billRequests.map((request, index) => (
-                <div key={index}>
-                  <p>Quantity:{request.quantity}</p>
-                  <p>Name:{request.name}</p>
-                  <p>Description:{request.description}</p>
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image={request.image}
-                    title={request.name}
-                  />
-                </div>
-            ))}
+      <h1> Wait Staff </h1>
+      <div>
+        <Button 
+          variant="outlined"
+          onClick={() => {
+            navigate('/');
+          }}
+          className="button"
+          color='warning'
+        >
+          Exit
+        </Button>
+      </div>
+      {
+        billRequestAccepted 
+          ? (
+            <div>
+              <h1>Bill Request for Table {acceptedBillRequest.table} </h1>
+              <p>Items:</p>
+              <p>{acceptedBillRequest.items.map((item, index) => (
+                <span key={index}>{item.name} x {item.quantity} = {item.price*item.quantity} </span>
+              ))}
+              </p>
+              <p>Total: {acceptedBillRequest.total_amount}</p>
+              <Button onClick={callManager}>Call Manager</Button>
+              <Button onClick={handleCompletedOrderRequest} autoFocus>
+                Complete
+              </Button>
             </div>
-        </div>
+          ) 
+          : (
+            <div>
+              <h1>Bill Requests</h1>
+              <hr />
+              <div className="order-requests-container">
+              {billRequests.map((request, index) => (
+                  <MakeBill key={index} 
+                  billRequest={request}
+                  setBillRequestAccepted={setBillRequestAccepted}
+                  setAcceptedBillRequest={setAcceptedBillRequest}
+                  />
+              ))}
+              </div>
+            </div>
+          )
+      }
     </div>
   );
 }

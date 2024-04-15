@@ -50,7 +50,7 @@ class BillRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BillRequest
         fields = ['id',
-                  'table',
+                  'table_id',
                   'total_amount',
                   'staff_name',
                   'request_status',

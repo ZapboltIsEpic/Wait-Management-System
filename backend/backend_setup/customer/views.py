@@ -135,12 +135,12 @@ def requestCustomerBill(request):
         if total_amount is None:
             return JsonResponse({'message': 'No bill available for the table number'}, status=status.HTTP_404_NOT_FOUND)
 
-        request_data = {
+        return_data = {
             'table_id' : table_id,
             'total_amount' : total_amount,
         }
 
-        bill_serializer = BillRequestSerializer(data=request_data)
+        bill_serializer = BillRequestSerializer(data=return_data)
 
         if bill_serializer.is_valid():
             bill_serializer.save()
