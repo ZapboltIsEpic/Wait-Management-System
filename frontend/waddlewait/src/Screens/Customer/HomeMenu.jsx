@@ -15,6 +15,9 @@ import {
   Snackbar,
   Alert,
   Dialog, 
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   Table, 
   TableContainer, 
   TableHead, 
@@ -26,7 +29,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  ClearIcon
+  IconButton
 } from '@mui/material';
 import {
   TabPanel,
@@ -35,7 +38,8 @@ import {
 import {
   NotificationImportant,
   ShoppingCart,
-  DeleteOutline
+  DeleteOutline,
+  Close
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -54,6 +58,7 @@ function Item({ item, cart, setCart }) {
     }, 2000);
 
     setShowPopUpItem(false)
+    console.log(cart)
   };
 
   const handlePopUpItem = () => {
@@ -61,8 +66,8 @@ function Item({ item, cart, setCart }) {
   }
 
   return (
-    <Card sx={{ width: 350, height: 300 }}>
-      <Grid onClick={handlePopUpItem}>
+    <Card sx={{ width: 350, height: 280 }}>
+      <Grid onClick={handlePopUpItem} sx={{ height: 220 }}>
         <CardMedia
           sx={{ height: 180 }}
           image={item.image}
@@ -71,7 +76,7 @@ function Item({ item, cart, setCart }) {
         <CardContent
           sx={{paddingTop: 1, paddingBottom: 1}}
         >
-          <Typography gutterBottom>
+          <Typography variant='h6'>
             {item.name}
           </Typography>
         </CardContent>
@@ -117,23 +122,21 @@ function Item({ item, cart, setCart }) {
         open={showPopUpItem}
         onClose={() => setShowPopUpItem(false)}
       >
-        <Card>
+        <Card sx={{ height: 600 }}>
           <Grid onClick={handlePopUpItem}>
             <CardMedia
-              sx={{ height: 250 }}
+              sx={{ height: 400 }}
               image={item.image}
               title={item.name}
               />
-            <CardContent>
+            <CardContent sx={{ height: 100}}>
               <Typography variant="h4">
                 {item.name}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="h6" color="text.secondary">
                 {item.description}
               </Typography>
-            </CardContent>
-            <CardContent sx={{ height: 250}}>
-              <Typography variant="body1">
+              <Typography variant="body2" >
                 Ingredients: {item.ingredients}
               </Typography>
             </CardContent>
@@ -193,6 +196,11 @@ function Items({ items, cateId, cart, setCart }) {
 function CartOrder({ cart, setCart, orders, setOrders, showCartOrder, setShowCartOrder, setOrder, setBill, tableNum}) {
   const [value, setValue] = React.useState("cart");
 
+  const handleClose = () => {
+    setValue("cart")
+    setShowCartOrder(false)
+  }
+
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
   };
@@ -200,7 +208,7 @@ function CartOrder({ cart, setCart, orders, setOrders, showCartOrder, setShowCar
   return (
     <Dialog 
       open={showCartOrder} 
-      onClose={() => setShowCartOrder(false)} 
+      onClose={handleClose} 
       PaperProps={{
         sx: {
           width: '80%',
@@ -208,17 +216,22 @@ function CartOrder({ cart, setCart, orders, setOrders, showCartOrder, setShowCar
         },
       }}
     >
-      <TabContext value={value}>
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', height: '1px'}}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} 
             onChange={handleChangeTab}
             textColor="inherit"
             indicatorColor="inherit"
           >
-            <Tab label="Cart" value="cart" />
-            <Tab label="Order" value="order" />
+            <Tab label="Cart" value="cart" key="1" />
+            <Tab label="Order" value="order" key="2" />
           </Tabs>
         </Box>
+        <IconButton onClick={handleClose} aria-label="Close">
+          <Close />
+        </IconButton>
+      </DialogTitle>
+      <TabContext value={value}>
           <TabPanel value="cart">
             <Cart
               cart={cart}
@@ -243,7 +256,14 @@ function CartOrder({ cart, setCart, orders, setOrders, showCartOrder, setShowCar
 }
 
 function Cart({cart, setCart, orders, setOrders, setOrder, tableNum}) {
+  const [total, setTotal] = React.useState(0)
 
+  React.useEffect(() => {
+    const newTotal = cart.reduce((acc, item) => acc + parseFloat(item.price), 0)
+    setTotal(parseFloat(newTotal))
+  }, [cart])
+
+  
   const handleOrder = () => {
     axios.post('http://127.0.0.1:8000/customer/order', {
       table: tableNum,
@@ -263,45 +283,50 @@ function Cart({cart, setCart, orders, setOrders, setOrder, tableNum}) {
 
   return (
     <>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Item Name</TableCell>
-              <TableCell align="right">Price</TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {cart.map((item, itemIndex) => (
-              <TableRow key={item.id}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell align="right">${item.price}</TableCell>
-                <TableCell align="right">
-                  <DeleteOutline onClick={() => handleDeleteItem(itemIndex)}/>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Box sx={{ 
-        display: 'auto',
-        width: '100%' 
-      }}
-      >
-        <div class="bottom-button">
-          { cart.length === 0 ? (
-            <Button disabled color='warning' variant="contained">
-              Order
-            </Button>
-        ):(
-            <Button onClick={handleOrder} color='warning' variant="contained">
-              Order
-            </Button>
-          )}
+      <DialogContent dividers>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <TableContainer style={{ height: 420 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Item Name</TableCell>
+                  <TableCell align="right">Price</TableCell>
+                  <TableCell align="right"></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cart.map((item, itemIndex) => (
+                  <TableRow key={item.id}>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell align="right">${item.price}</TableCell>
+                    <TableCell align="right">
+                      <DeleteOutline onClick={() => handleDeleteItem(itemIndex)}/>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+        <Typography variant="body1" align="center" sx={{ mt: 2 }}>
+          Total: ${total.toFixed(2)}
+        </Typography>
+      </DialogContent>
+      <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+        <Box sx={{ width: '100%' }}>
+          <div className="bottom-button">
+            {cart.length === 0 ? (
+              <Button disabled color="warning" variant="contained">
+                Order
+              </Button>
+            ) : (
+              <Button onClick={handleOrder} color="warning" variant="contained">
+                Order
+              </Button>
+            )}
           </div>
-      </Box>
+        </Box>
+      </DialogActions>
     </>
   )
 }
@@ -316,7 +341,7 @@ function Orders ({ setShowCartOrder, setBill, tableNum }) {
         const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
         const data = response.data;
         setOrders(data)
-        setTotal(data.reduce((acc, currentValue) => acc + (currentValue.price*currentValue.quantity), 0))
+        setTotal(data.reduce((acc, item) => acc + (item.price*item.quantity), 0))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -334,50 +359,44 @@ function Orders ({ setShowCartOrder, setBill, tableNum }) {
 
   return (
     <>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-                <TableCell>Item Name</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>Quantity</TableCell>
-                <TableCell>Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item["name"]}</TableCell>
-                  <TableCell>${item["price"]}</TableCell>
-                  <TableCell>{item["quantity"]}</TableCell>
-                  <TableCell>{item["status"]}</TableCell>
+      <DialogContent dividers>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <TableContainer style={{ height: 420 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Item Name</TableCell>
+                  <TableCell>Price</TableCell>
+                  <TableCell>Quantity</TableCell>
+                  <TableCell>Status</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        
-        <Box sx={{ 
-          display: 'auto',
-          width: '100%' 
-        }}
-        >
-          <div class="bottom-button">
-          <Typography variant="body1" align="center">
-            Total: ${total.toFixed(2)}
-          </Typography>
-          <br />
-            { orders.length === 0 ? (
-                <Button disabled color='warning' variant="contained">
-                  Bill
-                </Button>
-            ):(
-                <Button onClick={handleBill} color='warning' variant="contained">
-                  Bill
-                </Button>
-            )}
+              </TableHead>
+              <TableBody>
+                {orders.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>${item.price}</TableCell>
+                    <TableCell>{item.quantity}</TableCell>
+                    <TableCell>{item.status}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+        <Typography variant="body1" align="center" sx={{ mt: 2 }}>
+          Total: ${total.toFixed(2)}
+        </Typography>
+      </DialogContent>
+      <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+        <Box sx={{ width: '100%' }}>
+          <div className="bottom-button">
+            <Button onClick={handleBill} color="warning" variant="contained">
+              Bill
+            </Button>
           </div>
         </Box>
+      </DialogActions>
     </>
   );
 }
@@ -622,7 +641,7 @@ function HomeMenu() {
               endIcon={<ShoppingCart />}
               onClick={() => setShowCartOrder(true)}
               >
-              Cart
+              Order
             </Button>
             <CartOrder
               cart={cart}
