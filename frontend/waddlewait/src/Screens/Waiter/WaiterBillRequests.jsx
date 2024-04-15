@@ -49,15 +49,12 @@ function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}
 }
 
 function WaiterBillRequests() {
+  const navigate = useNavigate();
+
   const [acceptedBillRequest, setAcceptedBillRequest] = useState(null);
   const [billRequestAccepted, setBillRequestAccepted] = useState(false);
   const [billRequests, setBillRequests] = useState([]);
-  const [openDrawer, setOpenDrawer] = useState(false);
-
-    const toggleDrawer = (isOpen) => () => {
-        setOpenDrawer(isOpen);
-    };
-
+  
     useEffect(() => {
       function checkBills() {
         axios.get('http://localhost:8000/orders/checkout')
@@ -94,10 +91,25 @@ function WaiterBillRequests() {
 
   return (
     <div className="App">
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-      <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+      <Drawer 
+        variant="permanent"
+        anchor="left"
+      >
           { <WaiterSidebar />}
       </Drawer>
+      <h1> Wait Staff </h1>
+      <div>
+        <Button 
+          variant="outlined"
+          onClick={() => {
+            navigate('/');
+          }}
+          className="button"
+          color='warning'
+        >
+          Exit
+        </Button>
+      </div>
       {
         billRequestAccepted 
           ? (
@@ -118,6 +130,7 @@ function WaiterBillRequests() {
           : (
             <div>
               <h1>Bill Requests</h1>
+              <hr />
               <div className="order-requests-container">
               {billRequests.map((request, index) => (
                   <MakeBill key={index} 

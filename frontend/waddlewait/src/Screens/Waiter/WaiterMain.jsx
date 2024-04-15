@@ -2,19 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Drawer } from '@mui/material';
 import { WaiterSidebar } from './layout/WaiterSidebar';
+import './waiter.css';
 
 function WaiterMain() {
 	const navigate = useNavigate();
-
-	const [open, setOpen] = React.useState(false);
-
-	const navigateTo = (link) => {
-		navigate(link);
-	}
-
-	const toggleDrawer = (isOpen) => () => {
-		setOpen(isOpen);
-	};
 
 	const toggleSignOut = () => {
 		navigate("/staff/login");
@@ -22,14 +13,30 @@ function WaiterMain() {
 
 	return (
 		<div className="App">
-			<Button onClick={toggleDrawer(true)}>Open drawer</Button>
-			<Drawer open={open} onClose={toggleDrawer(false)}>
+			<Drawer 
+			variant="permanent"
+			anchor="left"
+			>
 				{ <WaiterSidebar />}
 			</Drawer>
-			<p>
-				This is the Waiter Main Screen <code>src/App.js</code> and save to reload.
-			</p>
-			<Button onClick={toggleSignOut}>Sign Out</Button>
+			<div className="main-content">
+				<h1> Wait Staff </h1>
+				<div>
+				<Button 
+					variant="outlined"
+					onClick={() => {
+					navigate('/');
+					}}
+					className="button"
+					color='warning'
+				>
+					Exit
+				</Button>
+				</div>
+				<p>
+					This is the Waiter Main Screen <code>src/App.js</code> and save to reload.
+				</p>
+			</div>
 		</div>
 	);
 }

@@ -13,6 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import './waiter.css';
 
 function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAcceptedAssistanceRequest }) {
   // console.log({assistanceRequest})
@@ -64,6 +65,8 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
 }
 
 function WaiterAssistanceRequests() {
+  const navigate = useNavigate();
+
   const [acceptedAssistanceRequest, setAcceptedAssistanceRequest] = useState(null);
   const [assistanceRequestAccepted, setAssistanceRequestAccepted] = useState(false);
   const [assistanceRequests, setAssistanceRequests] = useState([]);
@@ -72,11 +75,6 @@ function WaiterAssistanceRequests() {
   const [latestAccepetedAssistanceRequest, setLatestAccepetedAssistanceRequest] = useState({})
   const [newNotification, setNewNotification] = React.useState(false);
   const [notification, setNotification] = React.useState('');
-  const [openDrawer, setOpenDrawer] = useState(false);
-
-	const toggleDrawer = (isOpen) => () => {
-		setOpenDrawer(isOpen);
-	};
 
   const callManager = () => {
     // call manager
@@ -163,51 +161,68 @@ function WaiterAssistanceRequests() {
 
   return (
     <div className="App">
-        <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-        <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+        <Drawer 
+        variant="permanent"
+        anchor="left"
+        >
             { <WaiterSidebar />}
         </Drawer>
-        {
-          assistanceRequestAccepted 
-            ? (
-              <div>
-                <h1>Assistance Request Table {acceptedAssistanceRequest.tableNumber} </h1>
-                <p>Staff Name: {acceptedAssistanceRequest.staffName}</p>
-                <Button onClick={callManager}>Call Manager</Button>
-                <Button onClick={handleCompletedAssistanceRequest} autoFocus>
-                  Complete
-                </Button>
-              </div>
-            ) 
-            : (
-              // This will be displayed if assistance_request_accepted is false
-              <div>
-                <h1>Assistance Requests</h1>
-                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
-                  {assistanceRequests.map((request, index) => (
-                    <MakeAssistance key={index}
-                    assistanceRequest={request}
-                    setAssistanceRequestAccepted={setAssistanceRequestAccepted}
-                    setAcceptedAssistanceRequest={setAcceptedAssistanceRequest} />
-                  ))}
+        <div className="main-content">
+          <h1> Wait Staff </h1>
+          <div>
+            <Button 
+              variant="outlined"
+              onClick={() => {
+                navigate('/');
+              }}
+              className="button"
+              color='warning'
+            >
+              Exit
+            </Button>
+          </div>
+          {
+            assistanceRequestAccepted 
+              ? (
+                <div>
+                  <h1>Assistance Request Table {acceptedAssistanceRequest.tableNumber} </h1>
+                  <p>Staff Name: {acceptedAssistanceRequest.staffName}</p>
+                  <Button onClick={callManager}>Call Manager</Button>
+                  <Button onClick={handleCompletedAssistanceRequest} autoFocus>
+                    Complete
+                  </Button>
                 </div>
-              </div>
-            )
-        }
-        <Snackbar open={newNotification} autoHideDuration={3000} 
-          onClose={() => {
-            setNewNotification(false)}
+              ) 
+              : (
+                // This will be displayed if assistance_request_accepted is false
+                <div>
+                  <h1>Assistance Requests</h1>
+                  <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
+                    {assistanceRequests.map((request, index) => (
+                      <MakeAssistance key={index}
+                      assistanceRequest={request}
+                      setAssistanceRequestAccepted={setAssistanceRequestAccepted}
+                      setAcceptedAssistanceRequest={setAcceptedAssistanceRequest} />
+                    ))}
+                  </div>
+                </div>
+              )
           }
-        >
-          <Alert
-            onClose={() => setNewNotification(false)}
-            severity="info"
-            variant="filled"
-            sx={{ width: '100%' }}
+          <Snackbar open={newNotification} autoHideDuration={3000} 
+            onClose={() => {
+              setNewNotification(false)}
+            }
           >
-            {notification}
-          </Alert>
-        </Snackbar>
+            <Alert
+              onClose={() => setNewNotification(false)}
+              severity="info"
+              variant="filled"
+              sx={{ width: '100%' }}
+            >
+              {notification}
+            </Alert>
+          </Snackbar>
+      </div>
     </div>
   );
 }
