@@ -55,6 +55,19 @@ function WaiterBillRequests() {
   const [billRequestAccepted, setBillRequestAccepted] = useState(false);
   const [billRequests, setBillRequests] = useState([]);
   
+    // Call Checkout API for bills immediately upon opening tab
+    useEffect(() => {
+      axios.get('http://localhost:8000/orders/checkout')
+      .then(response => {
+        setBillRequests(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }, []);
+
+
+    // Call Checkout API every 4 seconds
     useEffect(() => {
       function checkBills() {
         axios.get('http://localhost:8000/orders/checkout')
@@ -95,54 +108,43 @@ function WaiterBillRequests() {
         variant="permanent"
         anchor="left"
       >
-          { <WaiterSidebar />}
+      { <WaiterSidebar />}
       </Drawer>
-      <h1> Wait Staff </h1>
-      <div>
-        <Button 
-          variant="outlined"
-          onClick={() => {
-            navigate('/');
-          }}
-          className="button"
-          color='warning'
-        >
-          Exit
-        </Button>
-      </div>
-      {
-        billRequestAccepted 
-          ? (
-            <div>
-              <h1>Bill Request for Table {acceptedBillRequest.table} </h1>
-              <p>Items:</p>
-              <p>{acceptedBillRequest.items.map((item, index) => (
-                <span key={index}>{item.name} x {item.quantity} = {item.price*item.quantity} </span>
-              ))}
-              </p>
-              <p>Total: {acceptedBillRequest.total_amount}</p>
-              <Button onClick={callManager}>Call Manager</Button>
-              <Button onClick={handleCompletedOrderRequest} autoFocus>
-                Complete
-              </Button>
-            </div>
-          ) 
-          : (
-            <div>
-              <h1>Bill Requests</h1>
-              <hr />
-              <div className="order-requests-container">
-              {billRequests.map((request, index) => (
-                  <MakeBill key={index} 
-                  billRequest={request}
-                  setBillRequestAccepted={setBillRequestAccepted}
-                  setAcceptedBillRequest={setAcceptedBillRequest}
-                  />
-              ))}
+      <div className="main-content">
+        {
+          billRequestAccepted 
+            ? (
+              <div>
+                <h1>Bill Request for Table {acceptedBillRequest.table} </h1>
+                <p>Items:</p>
+                <p>{acceptedBillRequest.items.map((item, index) => (
+                  <span key={index}>{item.name} x {item.quantity} = {item.price*item.quantity} </span>
+                ))}
+                </p>
+                <p>Total: {acceptedBillRequest.total_amount}</p>
+                <Button onClick={callManager}>Call Manager</Button>
+                <Button onClick={handleCompletedOrderRequest} autoFocus>
+                  Complete
+                </Button>
               </div>
-            </div>
-          )
-      }
+            ) 
+            : (
+              <div>
+                <h1>Bill Requests</h1>
+                <hr />
+                <div className="order-requests-container">
+                {billRequests.map((request, index) => (
+                    <MakeBill key={index} 
+                    billRequest={request}
+                    setBillRequestAccepted={setBillRequestAccepted}
+                    setAcceptedBillRequest={setAcceptedBillRequest}
+                    />
+                ))}
+                </div>
+              </div>
+            )
+        }
+      </div>
     </div>
   );
 }

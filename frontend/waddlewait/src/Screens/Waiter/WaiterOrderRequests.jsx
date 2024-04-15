@@ -180,19 +180,6 @@ function WaiterOrderRequests() {
           { <WaiterSidebar />}
       </Drawer>
       <div className="main-content">
-        <h1> Wait Staff </h1>
-        <div>
-          <Button 
-            variant="outlined"
-            onClick={() => {
-              navigate('/');
-            }}
-            className="button"
-            color='warning'
-          >
-            Exit
-          </Button>
-        </div>
         {
           orderRequestAccepted 
             ? (
@@ -209,6 +196,7 @@ function WaiterOrderRequests() {
             : (
               <div>
                 <h1>Order Requests</h1>
+                <hr />
                 <div className="order-requests-container">
                   {orderRequests.map((request, index) => (
                     <MakeOrder key={index} 

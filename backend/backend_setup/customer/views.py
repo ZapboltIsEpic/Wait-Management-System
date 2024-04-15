@@ -125,7 +125,15 @@ def requestCustomerBill(request):
         existingBillRequest = BillRequest.objects.filter(table_id=table_id, request_status=False).exists()
     
         if existingBillRequest:
-            return JsonResponse({'message': 'Bill request for table already sent'}, status=status.HTTP_200_OK)
+            existingBillRequest = BillRequest.objects.filter(table_id=table_id, request_status=False).first()
+
+            orders = Order.objects.filter(table=table_id)
+            if not orders.exists():
+              return JsonResponse({'message': 'No orders found for the table number'}, status=status.HTTP_404_NOT_FOUND)
+            total_amount = orders.aggregate(total=Sum('bill'))['total']
+            existingBillRequest.total_amount = total_amount
+            existingBillRequest.save()
+            return JsonResponse({'message': 'Bill request for table already sent, updated total amount'}, status=status.HTTP_200_OK)
         
         orders = Order.objects.filter(table=table_id)
 
