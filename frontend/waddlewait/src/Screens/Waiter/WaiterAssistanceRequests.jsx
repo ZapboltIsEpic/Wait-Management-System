@@ -168,19 +168,6 @@ function WaiterAssistanceRequests() {
             { <WaiterSidebar />}
         </Drawer>
         <div className="main-content">
-          <h1> Wait Staff </h1>
-          <div>
-            <Button 
-              variant="outlined"
-              onClick={() => {
-                navigate('/');
-              }}
-              className="button"
-              color='warning'
-            >
-              Exit
-            </Button>
-          </div>
           {
             assistanceRequestAccepted 
               ? (
@@ -197,6 +184,7 @@ function WaiterAssistanceRequests() {
                 // This will be displayed if assistance_request_accepted is false
                 <div>
                   <h1>Assistance Requests</h1>
+                  <hr />
                   <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
                     {assistanceRequests.map((request, index) => (
                       <MakeAssistance key={index}
