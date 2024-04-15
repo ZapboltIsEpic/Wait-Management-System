@@ -24,11 +24,17 @@ Connecting with the backend database.
 Added pop up dialog to the items.
 
 ### Week 8:
-
-
+Added table reservation to backend
+Backend changes the variable names to make consistency, I need to fix all the variable names as well.
+Update orders with reflashing the page.
 
 ### Week 9:
-
+Debugging and fix format
+    - put cart and order into tabs
+    - pop up format for items
+    - added close for cart and order
+    - added exit table that connects to backend
 
 
 ### Week 10:
+Fully finish customer and working on the final report.
