@@ -52,3 +52,13 @@ Week 8
 - integrated assistance/bill requests for customer based on models created
 - fixed image loading issue with frontend for menuitems
 - completed all required API endpoints for customer and waitstaff
+
+Week 9
+- fixed serializers for waitstaff to include name
+- debugged customer 
+- added close for cart and orders
+
+Week 10
+- created report template and assigned report items to team
+- created schedule for final presentation
+- debugged completing bill
