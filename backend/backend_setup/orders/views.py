@@ -47,11 +47,11 @@ class OrderDeliverRequestNotificationCheckView(APIView):
 
 class OrderDeliverNotificationAcceptedView(APIView):
     def put(self, request):
-        orderCheck = request.data.get('order')
-        itemCheck = request.data.get('item')
+        orderCheck = request.data.get('order_id')
+        itemCheck = request.data.get('item_name')
         wait_staff_assigned = request.data.get('wait_staff_assigned')
         
-        orderDeliverRequest = OrderItem.objects.filter(order=orderCheck, item = itemCheck, wait_staff_assigned='none')
+        orderDeliverRequest = OrderItem.objects.filter(order_id=orderCheck, item__name=itemCheck, wait_staff_assigned='none')
         
         if orderDeliverRequest.exists():
             # updated_data = []
@@ -87,11 +87,11 @@ class OrderDeliverNotificationAcceptedNotificationCheckView(APIView):
 
 class OrderDeliverNotificationCompleteView(APIView):
     def put(self, request):
-        orderCheck = request.data.get('order')
-        itemCheck = request.data.get('item')
+        orderCheck = request.data.get('order_id')
+        itemCheck = request.data.get('item_name')
         deliverCheck = request.data.get('deliver')
         
-        orderDeliverRequest = OrderItem.objects.filter(order=orderCheck, item = itemCheck, deliver=deliverCheck)
+        orderDeliverRequest = OrderItem.objects.filter(order_id=orderCheck, item__name=itemCheck, deliver=deliverCheck)
         
         if orderDeliverRequest.exists():
             # updated_data = []

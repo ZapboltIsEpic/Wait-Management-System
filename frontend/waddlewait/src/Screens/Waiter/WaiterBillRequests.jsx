@@ -33,7 +33,7 @@ function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Table no " + billRequest.table}
+        title={"Table number " + billRequest.table}
       />
       <CardContent className="order-card-contents">
         <Typography color="text.secondary">
@@ -42,7 +42,7 @@ function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}
         <FormControl fullWidth>
           <Button 
             variant="contained" 
-            color="primary"
+            color="warning"
             onClick={() => {
               handleAcceptRequest();
             }}
@@ -167,7 +167,7 @@ function WaiterBillRequests() {
               <div>
                 <h1>Bill Requests</h1>
                 <hr />
-                <div className="order-requests-container">
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
                 {billRequests.map((request, index) => (
                     <MakeBill key={index} 
                     billRequest={request}
