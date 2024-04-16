@@ -49,7 +49,7 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ['created_at']
 
     def get_formatted_time(self, obj):
-        return obj.created_at.strftime('%B %d %Y %H:%M')
+        return obj.created_at.strftime('%d %B %H:%M:%S')
 
 class BillRequestSerializer(serializers.ModelSerializer):
 
