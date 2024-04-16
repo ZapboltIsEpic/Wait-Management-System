@@ -16,10 +16,8 @@ import MenuItem from '@mui/material/MenuItem';
 import './waiter.css';
 
 function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAcceptedAssistanceRequest }) {
-  // console.log({assistanceRequest})
-  // console.log(assistanceRequest.table)
+
   const handleAcceptRequest = () => {
-    // console.log(assistanceRequest.table)
     axios.put('http://localhost:8000/assistance/notifications/accepted', {
       "table": assistanceRequest.table, 
       "staffName": assistanceRequest.staffName,
@@ -99,25 +97,37 @@ function WaiterAssistanceRequests() {
 
   useEffect(() => {
     axios.get('http://localhost:8000/assistance/requests')
-      .then(response => {
-        setAssistanceRequests(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    .then(response => {
+      const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
+      setAssistanceRequests(filteredRequests);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }, []);
 
   useEffect(() => {
     function checkNotifications() {
+
+      // Get most updated version of assistance requests
+      axios.get('http://localhost:8000/assistance/requests')
+      .then(response => {
+        const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
+        setAssistanceRequests(filteredRequests);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
       axios.get('http://localhost:8000/assistance/notificationscheck')
       .then(response => {
-        if (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request !== response.data.most_recent_assistance_request) {
+        let date1 = new Date(latestAssistanceRequest.most_recent_assistance_request)
+        let date2 = new Date(response.data.most_recent_assistance_request)
+        if (Object.keys(latestAssistanceRequest).length == 0 || 
+          (Object.keys(latestAssistanceRequest).length !== 0 && date2 > date1)) {
           setNewNotification(true);
           setNotification("New assistance request by table " + response.data.table_data);
           axios.get('http://localhost:8000/assistance/requests')
-          .then(response => {
-            setAssistanceRequests(response.data);
-          })
           .catch(error => {
             console.log(error);
           });
@@ -136,15 +146,15 @@ function WaiterAssistanceRequests() {
           setNewNotification(true);
           setNotification("Assistance request for table " + response.data.table_data + " was accepted");
 
-          axios.get('http://localhost:8000/assistance/requests')
-          .then(response => {
-            const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
-            setAssistanceRequests(filteredRequests);
-            console.log(response.data, "hi");
-          })
-          .catch(error => {
-            console.log(error);
-          });
+          // axios.get('http://localhost:8000/assistance/requests')
+          // .then(response => {
+          //   const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
+          //   setAssistanceRequests(filteredRequests);
+          //   console.log(response.data, "hi");
+          // })
+          // .catch(error => {
+          //   console.log(error);
+          // });
         }
         setLatestAccepetedAssistanceRequest(response.data);
       })

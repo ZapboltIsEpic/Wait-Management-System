@@ -13,18 +13,24 @@ function MakeOrder({order}) {
   let orderNumber = "Order number " + order.id
   let tableNumber = "Table no " + order.table
   let tableItems = order.items
+  let formattedTime = "Ordered on " + order.formatted_time
 
   return (
     <Card className="order-card" sx={{ minWidth: 400, maxHeight: 400, maxWidth: 400}}>
       <CardHeader
         title={orderNumber}
-        subheader={tableNumber}
+        subheader={
+          <>
+            <Typography variant="subtitle1">{tableNumber}</Typography>
+            <Typography variant="subtitle2">{formattedTime}</Typography>
+          </>
+        }
       />
       <CardContent className="order-card-contents">
         <div>
           {tableItems.map((tableItem, key) => (
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', margin: '10px 0'}} key={key}>
-              <p> {tableItem.quantity} orders of Item {tableItem.item}</p>
+              <p> {tableItem.quantity} orders of Item {tableItem.name}</p>
             </div>
           ))}
         </div>
@@ -65,12 +71,14 @@ function KitchenOrderRequestsCompleted() {
       >
         { <KitchenSidebar />}
       </Drawer>
-      <h1>Completed Order Requests</h1>
-      <hr/>
-      <div className="kitchen-orders-container">
-        {orderRequests.map((order, index) => (
-          <MakeOrder key={index} order={order}/>
-        ))}
+      <div className="main-content">
+        <h1>Completed Order Requests</h1>
+        <hr/>
+        <div className="order-card-container">
+          {orderRequests.map((order, index) => (
+            <MakeOrder key={index} order={order}/>
+          ))}
+        </div>
       </div>
     </div>
   );

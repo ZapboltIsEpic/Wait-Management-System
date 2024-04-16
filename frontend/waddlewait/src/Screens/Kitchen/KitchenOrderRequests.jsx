@@ -44,6 +44,14 @@ function MakeOrder({order, getOrders, setOrders}) {
           variant="contained" 
           color="warning"
           onClick={() => {
+            // Mark all items as complete
+            for (let i = 0; i < tableItems.length; i++) {
+              const tableItem = tableItems[i];
+              axios.put(`http://localhost:8000/kitchenstaff/ready/${order.id}/${tableItem.id}`)
+              .catch(error => {
+                console.log(error);
+              });
+            }
             axios.put(`http://localhost:8000/kitchenstaff/complete/${order.id}`)
             .then(() => {
               let currentOrders = getOrders;
@@ -179,12 +187,14 @@ function KitchenOrderRequests() {
       >
         { <KitchenSidebar />}
       </Drawer>
-      <h1>Order Requests</h1>
-      <hr/>
-      <div className="kitchen-orders-container">
-        {orderRequests.map((order, index) => (
-          <MakeOrder key={index} order={order} getOrders={orderRequests} setOrders={setOrderRequests}/>
-        ))}
+      <div style={{width: '85vw', height: '100vh', marginLeft: '15vw'}}>
+        <h1>Order Requests</h1>
+        <hr/>
+        <div className="kitchen-orders-container">
+          {orderRequests.map((order, index) => (
+            <MakeOrder key={index} order={order} getOrders={orderRequests} setOrders={setOrderRequests}/>
+          ))}
+        </div>
       </div>
       <Snackbar open={newOrder} autoHideDuration={3000} 
         onClose={() => {

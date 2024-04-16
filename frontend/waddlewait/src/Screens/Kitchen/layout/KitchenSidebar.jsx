@@ -31,7 +31,7 @@ export const KitchenSidebar = () => {
 		<div className="KitchenSidebar">
 			<List>
 				{KitchenListItems.map(({key , value}) => (
-					<ListItem className="list-item">	
+					<ListItem className="list-item" key={key}>	
 						<ListItemButton className="list-button" onClick={value} 
 							sx={{'&:hover': {
 									backgroundColor: '#fdfaf6',	
