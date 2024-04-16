@@ -16,6 +16,13 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}) {
   const handleAcceptRequest = () => {
@@ -26,7 +33,7 @@ function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Table no " + billRequest.table}
+        title={"Table number " + billRequest.table}
       />
       <CardContent className="order-card-contents">
         <Typography color="text.secondary">
@@ -86,7 +93,7 @@ function WaiterBillRequests() {
       return () => clearInterval(notificationLoop);
     }, []);
 
-    const handleCompletedOrderRequest = () => {
+    const handleCompletedBillRequest = () => {
       axios.delete(`http://127.0.0.1:8000/orders/delete/checkout/${acceptedBillRequest.table}/`)
       .then(response => {
         console.log(response.json);
@@ -114,25 +121,53 @@ function WaiterBillRequests() {
         {
           billRequestAccepted 
             ? (
-              <div>
-                <h1>Bill Request for Table {acceptedBillRequest.table} </h1>
-                <p>Items:</p>
-                <p>{acceptedBillRequest.items.map((item, index) => (
-                  <span key={index}>{item.name} x {item.quantity} = {item.price*item.quantity} </span>
-                ))}
-                </p>
-                <p>Total: {acceptedBillRequest.total_amount}</p>
-                <Button onClick={callManager}>Call Manager</Button>
-                <Button onClick={handleCompletedOrderRequest} autoFocus>
-                  Complete
-                </Button>
+              <div className="bill-for-waiters">
+                <DialogContent dividers>
+                  <h1>Bill Request for Table {acceptedBillRequest.table} </h1>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <TableContainer style={{ height: 420 }}>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Item Name</TableCell>
+                            <TableCell>Price</TableCell>
+                            <TableCell>Quantity</TableCell>
+                            <TableCell>Total Price</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {acceptedBillRequest.items.map((item, index) => (
+                            <TableRow key={index}>
+                              <TableCell>{item.name}</TableCell>
+                              <TableCell>${item.price}</TableCell>
+                              <TableCell>{item.quantity}</TableCell>
+                              <TableCell>{item.quantity*item.price.toFixed(2)}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Box>
+                  <Typography variant="body1" align="center" sx={{ mt: 2 }}>
+                    Total: ${acceptedBillRequest.total_amount.toFixed(2)}
+                  </Typography>
+                </DialogContent>
+                <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                  <Box sx={{ width: '100%' }}>
+                    <div className="bottom-button">
+                      <Button onClick={handleCompletedBillRequest} color="warning" variant="contained">
+                        Complete
+                      </Button>
+                    </div>
+                  </Box>
+                </DialogActions>
               </div>
             ) 
             : (
               <div>
                 <h1>Bill Requests</h1>
                 <hr />
-                <div className="order-requests-container">
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
                 {billRequests.map((request, index) => (
                     <MakeBill key={index} 
                     billRequest={request}

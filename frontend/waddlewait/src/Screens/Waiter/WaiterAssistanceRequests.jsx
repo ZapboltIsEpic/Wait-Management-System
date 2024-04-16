@@ -74,10 +74,6 @@ function WaiterAssistanceRequests() {
   const [newNotification, setNewNotification] = React.useState(false);
   const [notification, setNotification] = React.useState('');
 
-  const callManager = () => {
-    // call manager
-  };
-
   const handleCompletedAssistanceRequest = () => {
     axios.put('http://localhost:8000/assistance/notifications/completed', {
       "table": acceptedAssistanceRequest.table, 
@@ -184,8 +180,14 @@ function WaiterAssistanceRequests() {
                 <div>
                   <h1>Assistance Request Table {acceptedAssistanceRequest.tableNumber} </h1>
                   <p>Staff Name: {acceptedAssistanceRequest.staffName}</p>
-                  <Button onClick={callManager}>Call Manager</Button>
-                  <Button onClick={handleCompletedAssistanceRequest} autoFocus>
+                  <Button 
+                    variant="contained" 
+                    color="warning"
+                    onClick={() => {
+                      handleCompletedAssistanceRequest();
+                    }}
+                    autoFocus
+                  >
                     Complete
                   </Button>
                 </div>
