@@ -97,7 +97,6 @@ def addMenuItemWithImage(request):
             'category': {'name' : request.data.get('category')},
             'image': ImageFile(image_file) if image_file else None,
         }
-
         menu_item_serializer = MenuItemSerializer(data=data)
         if menu_item_serializer.is_valid():
             menu_item_serializer.save()
@@ -115,10 +114,8 @@ def modifyMenuItem(request, pk):
 
     if request.method == 'PUT':
         data = request.data
-        print(data)
-        print(ImageFile(data['image']))
-        data['image'] = ImageFile(data['image'])
-        # print(data)
+        if 'image' in data:
+            data['image'] = ImageFile(data['image'])
         serializer = MenuItemUpdateSerializer(menu_item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()

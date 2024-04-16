@@ -76,23 +76,6 @@ function ManagerMenu() {
 		};
 		fetchMenu();
 	}, [hasChange]);
-
-
-	// const addMenuItem = () => {
-	// 	axios.post('http://localhost:8000/menu/addnew/', {
-	// 		"name": name,
-	// 		"description": description,
-	// 		"price": price,
-	// 		"image": "menu_images/app3_crispycorn.jpg",
-	// 		"category": category
-	// 		})
-	// 		.then(response => {
-	// 		console.log(response);
-	// 		})
-	// 		.catch(error => {
-	// 		console.log(error);
-	// 	});
-	// }
 	
 	const [cateId, setCateId] = React.useState(1)
 	const [items, setItems] = React.useState([]);
@@ -321,7 +304,7 @@ function Item({item, setNewChange, categories}) {
 									onChange={handleCategoryChange}
 								>
 									{categories.map((cate) => (
-										<MenuItem key={cate.id} value={cate.name}>{cate.name}</MenuItem>
+										<MenuItem key={cate.id} value={cate.id}>{cate.name}</MenuItem>
 									))}
 								</Select>
 							</FormControl>
@@ -477,7 +460,7 @@ function AddMenuDialog(props) {
   };
 
 	const handleItemPriceChange = (event) => {
-		if (/^\d+(\.?\d{0,2})?$/.test(event.target.value)) {
+		if (/^\d+(\.?\d{0,2})?$/.test(event.target.value) || event.target.value == "") {
 			setItemPrice(event.target.value);
     }
   };
@@ -492,6 +475,7 @@ function AddMenuDialog(props) {
   }
 	
   const handleClose = () => {
+		setError(false);	
     onClose(false);
   };
 
@@ -504,6 +488,8 @@ function AddMenuDialog(props) {
   };
 
 	const [category, setCategory] = React.useState('');
+
+	const [showError, setError] = React.useState(false);
 
   return (
     <Dialog
@@ -550,7 +536,7 @@ function AddMenuDialog(props) {
 									onChange={handleCategoryChange}
 								>
 									{categories.map((cate) => (
-										<MenuItem key={cate.id} value={cate.id}>{cate.name}</MenuItem>
+										<MenuItem key={cate.id} value={cate.name}>{cate.name}</MenuItem>
 									))}
 								</Select>
 							</FormControl>
@@ -578,6 +564,10 @@ function AddMenuDialog(props) {
 						variant="outlined"	
 						color='warning'
 						onClick={() => {
+							if (itemName == "" || itemDescription == "" || itemPrice == "" || file == "" || category == "") {
+								setError(true);
+								return
+							}
 							const formData = new FormData();
 							formData.append('name', itemName);
 							formData.append('description', itemDescription);
@@ -593,7 +583,7 @@ function AddMenuDialog(props) {
 							  },
 							})
 							.then(() => {
-								setShowPopUpItem(false);
+								handleClose()
 								setNewChange(true);
 							})
 							.catch(error => {
@@ -606,6 +596,13 @@ function AddMenuDialog(props) {
 				</Box>
           </CardActions>
         </Card>
+				{showError && (
+					<>
+						<Alert severity="error" sx={{ width: '100%' }}>
+							Ensure all fields are filled and an image is selected
+						</Alert>
+					</>
+				)}
       </Dialog>
   );
 }
