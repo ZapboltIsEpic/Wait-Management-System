@@ -59,8 +59,7 @@ def createOrder(request):
             if order_items_serializer.is_valid():
                 order_items_serializer.save()
             else:
-                return JsonResponse({'message': 'Invalid item data',
-                                     'error': order_items_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+                return JsonResponse({'message': 'Invalid item data'}, status=status.HTTP_400_BAD_REQUEST)
 
             return JsonResponse({"message": "Items added to order successfully",
                                  'total_amount': total_bill}, status=status.HTTP_201_CREATED)
