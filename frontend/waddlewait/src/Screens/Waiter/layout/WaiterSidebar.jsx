@@ -26,29 +26,29 @@ export const WaiterSidebar = () => {
         navigate("/"); 
     };
 
+    const WaiterListItems = [
+        { key: 'Order Requests', value: handleOrderRequestsClick },
+        { key: 'Assistance Requests', value: handleAssistanceRequestClick },
+        { key: 'Bill Requests', value: handleBillRequestsClick },
+        { key: 'Sign Out', value: handleSignOutClick },
+    ];
+
     return (
         <div className="WaiterSidebar">
             <List>
-                <ListItem>
-                    <ListItemButton onClick={handleOrderRequestsClick}>
-                        <ListItemText primary="Order Requests" />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton onClick={handleAssistanceRequestClick}>
-                        <ListItemText primary="Assistance Requests" />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton onClick={handleBillRequestsClick}>
-                        <ListItemText primary="Bill Requests" />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton onClick={handleSignOutClick}>
-                        <ListItemText primary="Sign Out" />
-                    </ListItemButton>
-                </ListItem>
+                {WaiterListItems.map(({key , value}) => (
+					<ListItem className="list-item">	
+						<ListItemButton className="list-button" onClick={value} 
+							sx={{'&:hover': {
+									backgroundColor: '#fdfaf6',	
+									color: '#dd6800'
+								}
+							}}
+						>
+							<ListItemText primary={key} />
+						</ListItemButton>
+					</ListItem>
+				))}
             </List>
         </div>
     );
