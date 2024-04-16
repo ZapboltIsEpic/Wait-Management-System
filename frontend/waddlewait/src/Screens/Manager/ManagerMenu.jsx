@@ -46,6 +46,7 @@ function ManagerMenu() {
 	}
 	const [open, setOpen] = React.useState(false);
 	const [categoryDialog, setCategoryDialog] = React.useState(false);
+	const [addMenuDialog, setAddMenuDialog] = React.useState(false);
 
 	const toggleDrawer = (isOpen) => () => {
 		setOpen(isOpen);
@@ -117,32 +118,49 @@ function ManagerMenu() {
 							<Tab key={cate.id} label={cate.name} value={String(cate.id)} />
 						))}
 					</Tabs>
-					<Button
-						variant="outlined"	
-						color='warning'
-						sx={{marginRight: '20px'}}
-						onClick={() => {setCategoryDialog(true)}}
-					>
-						Add Category
-					</Button>
+					<Box>
+						<Button
+							variant="outlined"	
+							color='warning'
+							sx={{marginRight: '20px'}}
+							onClick={() => {
+								setAddMenuDialog(true)
+							}}
+						>
+							Add Menu Item
+						</Button>
+						<Button
+							variant="outlined"	
+							color='warning'
+							sx={{marginRight: '20px'}}
+							onClick={() => {setCategoryDialog(true)}}
+						>
+							Add Category
+						</Button>
+					</Box>
 				</Box>
 				{categories.map((cate) => (
 					<TabPanel value={String(cate.id)} key={cate.id}>
-						<Items items={items} cateId={cate.id} setNewChange={setNewChange}/>
+						<Items items={items} cateId={cate.id} setNewChange={setNewChange} categories={categories}/>
 					</TabPanel>
 				))}
 			</TabContext>
 			<CategoryDialog
 				open={categoryDialog}
 				onClose={setCategoryDialog}
-				categories={categories}
 				setNewChange={setNewChange}
+			/>
+			<AddMenuDialog
+				open={addMenuDialog}
+				onClose={setAddMenuDialog}
+				setNewChange={setNewChange}
+				categories={categories}
 			/>
 		</div>
 	)
 }
 
-function Items({ items, cateId, setNewChange}) {
+function Items({ items, cateId, setNewChange, categories}) {
   var cateItems = [];
 
   for (var index in items) {
@@ -150,14 +168,14 @@ function Items({ items, cateId, setNewChange}) {
     if (item.category.id === cateId) {
         cateItems.push(item);
     }
-}
+	}
 
   return (
     <>
       <Grid container spacing={4} justifyContent="center" alignItems="center">
         {cateItems.map((item) => (
           <Grid item key={item.id}>
-            <Item item={item} setNewChange={setNewChange}/>
+            <Item item={item} setNewChange={setNewChange} categories={categories}/>
           </Grid>
         ))}
       </Grid>
@@ -165,7 +183,7 @@ function Items({ items, cateId, setNewChange}) {
   )
 }
 
-function Item({item, setNewChange}) {
+function Item({item, setNewChange, categories}) {
 
   const [showPopUpItem, setShowPopUpItem] = React.useState(false);
 	const [itemName, setItemName] = React.useState(item.name)
@@ -181,17 +199,29 @@ function Item({item, setNewChange}) {
   };
 
 	const handleItemPriceChange = (event) => {
-    setItemPrice(event.target.value);
+		if (/^\d+(\.?\d{0,2})?$/.test(event.target.value)) {
+			setItemPrice(event.target.value);
+    }
   };
 
   const handlePopUpItem = () => {
     setShowPopUpItem(true)
   }
 
-  const [file, setFile] = React.useState()
+  const [file, setFile] = React.useState("")
   const handleFileChange = (event) => {
 		setFile(event.target.files[0])
   }
+
+	const [category, setCategory] = React.useState(item.category.id);
+
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+
+	const handleTriggerFileChange = () => {
+    document.getElementById('fileInput').click();
+  };
 
   return (
     <Card sx={{ width: 350, height: 300 }}>
@@ -202,8 +232,8 @@ function Item({item, setNewChange}) {
           title={item.name}
           />
         <CardContent
-			sx={{paddingTop: 1, paddingBottom: 1}}
-		>
+					sx={{paddingTop: 1, paddingBottom: 1}}
+				>
           <Typography gutterBottom>
             {item.name}
           </Typography>
@@ -212,7 +242,7 @@ function Item({item, setNewChange}) {
           </Typography>
         </CardContent>
       </Grid>
-      <CardActions>
+		<CardActions>
       <Box 
         sx={{ 
           display: 'flex', 
@@ -221,32 +251,31 @@ function Item({item, setNewChange}) {
           width: '100%' 
         }}
       >
-		<Box
-			sx={{display: 'flex',
-				justifyContent: 'space-between',
-				flexDirection: 'row',
-				alignItems: 'center',
-				width: '100%',
-			}}
+				<Box
+					sx={{display: 'flex',
+						justifyContent: 'space-between',
+						flexDirection: 'row',
+						alignItems: 'center',
+						width: '100%',
+					}}
+				>
+					<Typography variant="body1" color="textSecondary">
+					$ {item.price}
+					</Typography>
+					<Button
+						variant="outlined"	
+						color='warning'
+						onClick={() => {setShowPopUpItem(true)}}
+					>
+						Edit
+					</Button>
+				</Box>
+			</Box>
+		</CardActions>
+		<Dialog
+			open={showPopUpItem}
+			onClose={() => setShowPopUpItem(false)}
 		>
-			<Typography variant="body1" color="textSecondary">
-			$ {item.price}
-			</Typography>
-			<Button
-				variant="outlined"	
-				color='warning'
-				onClick={() => {setShowPopUpItem(true)}}
-			>
-				Edit
-			</Button>
-		</Box>
-      </Box>
-      </CardActions>
-
-      <Dialog
-        open={showPopUpItem}
-        onClose={() => setShowPopUpItem(false)}
-      >
         <Card sx={{ width: 600, height: 600 }}>
           <Grid onClick={handlePopUpItem}>
             <CardMedia
@@ -281,6 +310,22 @@ function Item({item, setNewChange}) {
 								onChange={handleItemPriceChange}
 							/>
 						</Box>
+						<Box sx={{marginTop: '20px'}}>
+							<FormControl fullWidth>
+								<InputLabel id="demo-simple-select-label">Category</InputLabel>
+								<Select
+									labelId="demo-simple-select-label"
+									id="demo-simple-select"
+									value={category}
+									label="Category"
+									onChange={handleCategoryChange}
+								>
+									{categories.map((cate) => (
+										<MenuItem key={cate.id} value={cate.name}>{cate.name}</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						</Box>
 					</CardContent>
 				</Grid>
           <CardActions>
@@ -306,7 +351,14 @@ function Item({item, setNewChange}) {
 							})
 						}}
 					> Delete Item</Button>
-					<input type="file" onChange={handleFileChange}/>
+					<input type="file" onChange={handleFileChange} style={{display: 'none'}} id="fileInput"/>
+					<Button 
+						variant="outlined"	
+						color='warning'
+						onClick={handleTriggerFileChange}
+					>
+						{file == "" ? "Choose File" : (file.name)}
+					</Button>
 					<Button
 						variant="outlined"	
 						color='warning'
@@ -315,9 +367,11 @@ function Item({item, setNewChange}) {
 							formData.append('name', itemName);
 							formData.append('description', itemDescription);
 							formData.append('price', itemPrice);
-							formData.append('category', item.category.id);
-							formData.append('image', file);
-							formData.append('fileName', file.name);
+							formData.append('category', category);
+							if (file != "") {
+								formData.append('image', file);
+								formData.append('fileName', file.name);
+							}
 							axios.put(`http://localhost:8000/menu/modify/${item.id}`, formData, {
 							  headers: {
 								'Content-Type': 'multipart/form-data',
@@ -403,6 +457,156 @@ function CategoryDialog(props) {
 				</Button>
 			</Box>
     </Dialog>
+  );
+}
+
+function AddMenuDialog(props) {
+  const { onClose, open, categories, setNewChange} = props;
+
+	const [showPopUpItem, setShowPopUpItem] = React.useState(false);
+	const [itemName, setItemName] = React.useState("")
+	const [itemDescription, setItemDescription] = React.useState("")
+	const [itemPrice, setItemPrice] = React.useState("")
+
+	const handleItemNameChange = (event) => {
+    setItemName(event.target.value);
+  };
+
+	const handleItemDescriptionChange = (event) => {
+    setItemDescription(event.target.value);
+  };
+
+	const handleItemPriceChange = (event) => {
+		if (/^\d+(\.?\d{0,2})?$/.test(event.target.value)) {
+			setItemPrice(event.target.value);
+    }
+  };
+
+  const handlePopUpItem = () => {
+    setShowPopUpItem(true)
+  }
+
+  const [file, setFile] = React.useState("")
+  const handleFileChange = (event) => {
+		setFile(event.target.files[0])
+  }
+	
+  const handleClose = () => {
+    onClose(false);
+  };
+
+	const handleTriggerFileChange = () => {
+    document.getElementById('fileInput').click();
+  };
+
+	const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+
+	const [category, setCategory] = React.useState('');
+
+  return (
+    <Dialog
+			open={open}
+			onClose={handleClose}
+		>
+        <Card sx={{ width: 600, height: 600 }}>
+          <Grid onClick={handlePopUpItem}>
+					<CardContent 
+						sx={{ 
+							height: 250, 
+							display: 'flex',
+							flexDirection: 'column',
+						}}>
+						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+							<p className="edit-input-label">Name</p>
+							<TextField id="outlined-basic" variant="outlined" className="edit-input"
+								value={itemName}
+								onChange={handleItemNameChange}
+							/>
+						</Box>
+						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+							<p className="edit-input-label">Description</p>
+							<TextField id="outlined-basic" variant="outlined" className="edit-input"
+								value={itemDescription}
+								onChange={handleItemDescriptionChange}
+							/>
+						</Box>
+						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+							<p className="edit-input-label">Price ($)</p>
+							<TextField id="outlined-basic" variant="outlined" className="edit-input"
+								value={itemPrice}
+								onChange={handleItemPriceChange}
+							/>
+						</Box>
+						<Box sx={{marginTop: '20px'}}>
+							<FormControl fullWidth>
+								<InputLabel id="demo-simple-select-label">Category</InputLabel>
+								<Select
+									labelId="demo-simple-select-label"
+									id="demo-simple-select"
+									value={category}
+									label="Category"
+									onChange={handleCategoryChange}
+								>
+									{categories.map((cate) => (
+										<MenuItem key={cate.id} value={cate.id}>{cate.name}</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						</Box>
+					</CardContent>
+				</Grid>
+          <CardActions>
+				<Box 
+					sx={{ 
+						display: 'flex', 
+						justifyContent: 'space-between', 
+						alignItems: 'center', 
+						width: '580px' 
+					}}
+				>
+					<input type="file" onChange={handleFileChange} style={{display: 'none'}} id="fileInput"/>
+					<Button 
+						variant="outlined"	
+						color='warning'
+						onClick={handleTriggerFileChange}
+					>
+						{file == "" ? "Choose File" : (file.name)}
+					</Button>
+					<Button
+						variant="outlined"	
+						color='warning'
+						onClick={() => {
+							const formData = new FormData();
+							formData.append('name', itemName);
+							formData.append('description', itemDescription);
+							formData.append('price', itemPrice);
+							formData.append('category', category);
+							if (file != "") {
+								formData.append('image', file);
+								formData.append('fileName', file.name);
+							}
+							axios.post(`http://localhost:8000/menu/addnew/`, formData, {
+							  headers: {
+								'Content-Type': 'multipart/form-data',
+							  },
+							})
+							.then(() => {
+								setShowPopUpItem(false);
+								setNewChange(true);
+							})
+							.catch(error => {
+								console.log(error);
+							})
+						}}
+					> 
+						Add Item
+					</Button>
+				</Box>
+          </CardActions>
+        </Card>
+      </Dialog>
   );
 }
 

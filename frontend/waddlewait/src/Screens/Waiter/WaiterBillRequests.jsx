@@ -31,7 +31,7 @@ function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}
   }
 
   return (
-    <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
+    <Card className="order-card" sx={{ minWidth: 300, minHeight: 250, maxHeight: 250, maxWidth: 300}}>
       <CardHeader
         title={"Table number " + billRequest.table}
       />
@@ -96,6 +96,15 @@ function WaiterBillRequests() {
     const handleCompletedBillRequest = () => {
       axios.delete(`http://127.0.0.1:8000/orders/delete/checkout/${acceptedBillRequest.table}/`)
       .then(response => {
+
+        axios.get('http://localhost:8000/orders/checkout')
+        .then(response => {
+          setBillRequests(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
         console.log(response.json);
       })
       .catch(error => {
@@ -152,7 +161,7 @@ function WaiterBillRequests() {
                     Total: ${acceptedBillRequest.total_amount.toFixed(2)}
                   </Typography>
                 </DialogContent>
-                <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                <DialogActions>
                   <Box sx={{ width: '100%' }}>
                     <div className="bottom-button">
                       <Button onClick={handleCompletedBillRequest} color="warning" variant="contained">
