@@ -173,14 +173,14 @@ function KitchenOrderRequests() {
 
   return (
     <div style={{width: '100vw', height: '100vh'}}>
-      <div className="kitchen-header-bar">
-        <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
-            { <KitchenSidebar />}
-        </Drawer>
-        <Button onClick={toggleSignOut}>Sign Out</Button>
-      </div>
+      <Drawer 
+        variant="permanent"
+        anchor="left"
+      >
+        { <KitchenSidebar />}
+      </Drawer>
       <h1>Order Requests</h1>
+      <hr/>
       <div className="kitchen-orders-container">
         {orderRequests.map((order, index) => (
           <MakeOrder key={index} order={order} getOrders={orderRequests} setOrders={setOrderRequests}/>
