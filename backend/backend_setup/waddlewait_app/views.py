@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Table
-from orders.models import Order
+from assistance.models import Assistance
 from .serializers import TableSerializer, TableBookingSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -81,6 +81,11 @@ def leave_table(request):
             tableObj = Table.objects.get(pk=table)
             tableObj.table_in_use = False
             tableObj.save()
+
+            # removed any attached assistance request
+            assistanceRequest = Assistance.objects.filter(table=table)
+            if assistanceRequest.exists():
+                assistanceRequest.delete()
 
             return JsonResponse({'message': 'Table succesfully left',
                                  'table': table}, status=status.HTTP_200_OK)
