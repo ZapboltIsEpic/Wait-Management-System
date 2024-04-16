@@ -35,7 +35,7 @@ function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}
         <FormControl fullWidth>
           <Button 
             variant="contained" 
-            color="primary"
+            color="warning"
             onClick={() => {
               handleAcceptRequest();
             }}
