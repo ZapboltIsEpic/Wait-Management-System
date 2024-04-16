@@ -311,17 +311,17 @@ function Item({item, setNewChange}) {
 						variant="outlined"	
 						color='warning'
 						onClick={() => {
-							console.log(file)
 							const formData = new FormData();
-							formData.append('file', file);
+							formData.append('name', itemName);
+							formData.append('description', itemDescription);
+							formData.append('price', itemPrice);
+							formData.append('category', item.category.id);
+							formData.append('image', file);
 							formData.append('fileName', file.name);
-
-							axios.put(`http://localhost:8000/menu/modify/${item.id}`, {
-								name: itemName,
-								description: itemDescription,
-								price: itemPrice,
-								image: formData,
-								category: item.category.id,	
+							axios.put(`http://localhost:8000/menu/modify/${item.id}`, formData, {
+							  headers: {
+								'Content-Type': 'multipart/form-data',
+							  },
 							})
 							.then(() => {
 								setShowPopUpItem(false);
