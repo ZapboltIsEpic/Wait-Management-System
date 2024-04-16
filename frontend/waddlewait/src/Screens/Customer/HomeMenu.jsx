@@ -58,7 +58,6 @@ function Item({ item, cart, setCart }) {
     }, 2000);
 
     setShowPopUpItem(false)
-    console.log(cart)
   };
 
   const handlePopUpItem = () => {
