@@ -5,6 +5,7 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
 
 export const WaiterSidebar = () => {
     const navigate = useNavigate();
@@ -25,21 +26,29 @@ export const WaiterSidebar = () => {
         navigate("/"); 
     };
 
+    const WaiterListItems = [
+        { key: 'Order Requests', value: handleOrderRequestsClick },
+        { key: 'Assistance Requests', value: handleAssistanceRequestClick },
+        { key: 'Bill Requests', value: handleBillRequestsClick },
+        { key: 'Sign Out', value: handleSignOutClick },
+    ];
+
     return (
         <div className="WaiterSidebar">
             <List>
-                <ListItem button onClick={handleOrderRequestsClick}>
-                    <ListItemText primary="Order Requests" />
-                </ListItem>
-                <ListItem button onClick={handleAssistanceRequestClick}>
-                    <ListItemText primary="Assistance Requests" />
-                </ListItem>
-            <ListItem button onClick={handleBillRequestsClick}>
-                <ListItemText primary="Bill Requests" />
-            </ListItem>
-            <ListItem button onClick={handleSignOutClick}>
-                <ListItemText primary="Sign Out" />
-            </ListItem>
+                {WaiterListItems.map(({key , value}) => (
+					<ListItem className="list-item" key={key}>	
+						<ListItemButton className="list-button" onClick={value} 
+							sx={{'&:hover': {
+									backgroundColor: '#fdfaf6',	
+									color: '#dd6800'
+								}
+							}}
+						>
+							<ListItemText primary={key} />
+						</ListItemButton>
+					</ListItem>
+				))}
             </List>
         </div>
     );

@@ -15,10 +15,10 @@ function Login() {
 
 	const navigateTo = (link) => {
 		if (link === 'kitchen_staff') {
-			navigate('/kitchen/main');
+			navigate('/kitchen/order-requests');
 		}
 		else if (link === 'wait_staff') {
-			navigate('/waiter/main');
+			navigate('/waiter/order-requests');
 		}
 		else if (link === 'manager') {
 			navigate('/manager/main');

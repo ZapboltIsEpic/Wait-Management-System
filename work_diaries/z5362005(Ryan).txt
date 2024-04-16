@@ -37,3 +37,22 @@ Week 5:
 
 Week 7:
 - Wrote up Jira issues (Front end Interface) for Frontend team
+- Wrote Kitchen interface (UI)
+- 
+
+Week 8:
+- Connected Kitchen interface with notifications API
+- Helped Yijun with Waiter API usage
+- Fixed bugs from Sprint 2 Demo
+- Updated Jira board
+
+Week 9:
+- Reorganised backend API for Bill
+- Updated Jira Board
+- Created Manager interface with display of current menu
+- Helped Jasmine delegate tasks
+- Helped Yijun debug Backend Code and write notifications for Waiter
+
+Week 10:
+- Updated Jira board
+- Updated UI of Kitchen staff to match Yijun's Wait staff
