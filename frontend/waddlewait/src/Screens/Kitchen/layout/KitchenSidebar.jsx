@@ -42,7 +42,6 @@ export const KitchenSidebar = () => {
 							<ListItemText primary={key} />
 						</ListItemButton>
 					</ListItem>
-
 				))}
 			</List>
 		</div>
