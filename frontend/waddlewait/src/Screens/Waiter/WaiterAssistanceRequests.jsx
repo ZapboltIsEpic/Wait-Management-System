@@ -49,7 +49,7 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
         <FormControl fullWidth>
           <Button 
             variant="contained" 
-            color="primary"
+            color="warning"
             onClick={() => {
               handleAcceptRequest();
             }}

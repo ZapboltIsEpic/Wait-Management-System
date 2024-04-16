@@ -285,7 +285,7 @@ function Cart({cart, setCart, orders, setOrders, setOrder, tableNum}) {
     <>
       <DialogContent dividers>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <TableContainer style={{ height: 420 }}>
+          <TableContainer style={{ height: '100%' }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -361,7 +361,7 @@ function Orders ({ setShowCartOrder, setBill, tableNum }) {
     <>
       <DialogContent dividers>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <TableContainer style={{ height: 420 }}>
+          <TableContainer style={{ height: '100%' }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -391,9 +391,15 @@ function Orders ({ setShowCartOrder, setBill, tableNum }) {
       <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
         <Box sx={{ width: '100%' }}>
           <div className="bottom-button">
-            <Button onClick={handleBill} color="warning" variant="contained">
-              Bill
-            </Button>
+            {orders.length === 0 ? (
+              <Button disabled color="warning" variant="contained">
+                Bill
+              </Button>
+            ) : (
+              <Button onClick={handleBill} color="warning" variant="contained">
+                Bill
+              </Button>
+            )}
           </div>
         </Box>
       </DialogActions>

@@ -190,7 +190,7 @@ function Item({item, setNewChange}) {
 
   const [file, setFile] = React.useState()
   const handleFileChange = (event) => {
-	setFile(event.target.files[0])
+		setFile(event.target.files[0])
   }
 
   return (
@@ -311,29 +311,28 @@ function Item({item, setNewChange}) {
 						variant="outlined"	
 						color='warning'
 						onClick={() => {
-							// const formData = new FormData();
-							// formData.append('file', file);
-							// formData.append('fileName', file.name);
-							// console.log(formData[0])
-							// console.log(item.image)
-							// let stringSplit = item.image.split('/')
-							// let imageString = stringSplit[stringSplit.length - 1]
-							// axios.put(`http://localhost:8000/menu/modify/${item.id}`, {
-							// 	name: itemName,
-							// 	description: itemDescription,
-							// 	price: itemPrice,
-							// 	image: formData,
-							// 	category: item.category.id,	
-							// })
-							// .then(() => {
-							// 	setShowPopUpItem(false);
-							// 	setNewChange(true);
-							// })
-							// .catch(error => {
-							// 	console.log(error);
-							// })
+							console.log(file)
+							const formData = new FormData();
+							formData.append('file', file);
+							formData.append('fileName', file.name);
+
+							axios.put(`http://localhost:8000/menu/modify/${item.id}`, {
+								name: itemName,
+								description: itemDescription,
+								price: itemPrice,
+								image: formData,
+								category: item.category.id,	
+							})
+							.then(() => {
+								setShowPopUpItem(false);
+								setNewChange(true);
+							})
+							.catch(error => {
+								console.log(error);
+							})
 						}}
-					> Save Changes
+					> 
+						Save Changes
 					</Button>
 				</Box>
           </CardActions>
