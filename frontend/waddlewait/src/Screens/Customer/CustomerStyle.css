@@ -35,3 +35,8 @@ div {
     flex-direction: row;
     justify-content: space-around;
 }
+
+.total-price {
+	variant: "body1";
+	align: "center"
+}

@@ -308,10 +308,10 @@ function Cart({cart, setCart, orders, setOrders, setOrder, tableNum}) {
             </Table>
           </TableContainer>
         </Box>
-        <Typography variant="body1" align="center" sx={{ mt: 2 }}>
-          Total: ${total.toFixed(2)}
-        </Typography>
       </DialogContent>
+      <Typography className='total-price' >
+        Total: ${total.toFixed(2)}
+      </Typography>
       <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
         <Box sx={{ width: '100%' }}>
           <div className="bottom-button">
@@ -384,10 +384,10 @@ function Orders ({ setShowCartOrder, setBill, tableNum }) {
             </Table>
           </TableContainer>
         </Box>
-        <Typography variant="body1" align="center" sx={{ mt: 2 }}>
-          Total: ${total.toFixed(2)}
-        </Typography>
       </DialogContent>
+      <Typography className='totoal-price'>
+        Total: ${total.toFixed(2)}
+      </Typography>
       <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
         <Box sx={{ width: '100%' }}>
           <div className="bottom-button">
