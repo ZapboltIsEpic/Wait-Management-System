@@ -208,19 +208,15 @@ function CartOrder({ cart, setCart, orders, setOrders, showCartOrder, setShowCar
     <Dialog 
       open={showCartOrder} 
       onClose={handleClose} 
-      PaperProps={{
-        sx: {
-          width: '80%',
-          height: '80%'
-        },
-      }}
     >
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', height: '1px'}}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} 
             onChange={handleChangeTab}
+            className='cart-order-tabs'
             textColor="inherit"
             indicatorColor="inherit"
+            sx={{ width: '530px' }}
           >
             <Tab label="Cart" value="cart" key="1" />
             <Tab label="Order" value="order" key="2" />
@@ -284,7 +280,7 @@ function Cart({cart, setCart, orders, setOrders, setOrder, tableNum}) {
     <>
       <DialogContent dividers>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <TableContainer style={{ height: '100%' }}>
+          <TableContainer style={{ height: '450px' }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -307,25 +303,26 @@ function Cart({cart, setCart, orders, setOrders, setOrder, tableNum}) {
             </Table>
           </TableContainer>
         </Box>
+        <DialogActions>
+          <Box sx={{ width: '100%' }}>
+            <Typography className='total-price' >
+              Total: ${total.toFixed(2)}
+            </Typography>
+            <br />
+            <div className="bottom-button">
+              {cart.length === 0 ? (
+                <Button disabled color="warning" variant="contained">
+                  Order
+                </Button>
+              ) : (
+                <Button onClick={handleOrder} color="warning" variant="contained">
+                  Order
+                </Button>
+              )}
+            </div>
+          </Box>
+        </DialogActions>
       </DialogContent>
-      <Typography className='total-price' >
-        Total: ${total.toFixed(2)}
-      </Typography>
-      <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-        <Box sx={{ width: '100%' }}>
-          <div className="bottom-button">
-            {cart.length === 0 ? (
-              <Button disabled color="warning" variant="contained">
-                Order
-              </Button>
-            ) : (
-              <Button onClick={handleOrder} color="warning" variant="contained">
-                Order
-              </Button>
-            )}
-          </div>
-        </Box>
-      </DialogActions>
     </>
   )
 }
@@ -360,7 +357,7 @@ function Orders ({ setShowCartOrder, setBill, tableNum }) {
     <>
       <DialogContent dividers>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <TableContainer style={{ height: '100%' }}>
+          <TableContainer style={{ height: '450px' }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -383,25 +380,27 @@ function Orders ({ setShowCartOrder, setBill, tableNum }) {
             </Table>
           </TableContainer>
         </Box>
+        <DialogActions>
+          <Box sx={{ width: '100%' }}>
+            <Typography className='total-price' >
+              Total: ${total.toFixed(2)}
+            </Typography>
+            <br />
+            <div className="bottom-button">
+              {orders.length === 0 ? (
+                <Button disabled color="warning" variant="contained">
+                  Bill
+                </Button>
+              ) : (
+                <Button onClick={handleBill} color="warning" variant="contained">
+                  Bill
+                </Button>
+              )}
+
+            </div>
+          </Box>
+        </DialogActions>
       </DialogContent>
-      <Typography className='totoal-price'>
-        Total: ${total.toFixed(2)}
-      </Typography>
-      <DialogActions sx={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-        <Box sx={{ width: '100%' }}>
-          <div className="bottom-button">
-            {orders.length === 0 ? (
-              <Button disabled color="warning" variant="contained">
-                Bill
-              </Button>
-            ) : (
-              <Button onClick={handleBill} color="warning" variant="contained">
-                Bill
-              </Button>
-            )}
-          </div>
-        </Box>
-      </DialogActions>
     </>
   );
 }
