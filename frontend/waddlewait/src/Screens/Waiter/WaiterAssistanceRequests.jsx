@@ -13,12 +13,11 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import './waiter.css';
 
 function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAcceptedAssistanceRequest }) {
-  // console.log({assistanceRequest})
-  // console.log(assistanceRequest.table)
+
   const handleAcceptRequest = () => {
-    // console.log(assistanceRequest.table)
     axios.put('http://localhost:8000/assistance/notifications/accepted', {
       "table": assistanceRequest.table, 
       "staffName": assistanceRequest.staffName,
@@ -50,7 +49,7 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
         <FormControl fullWidth>
           <Button 
             variant="contained" 
-            color="primary"
+            color="warning"
             onClick={() => {
               handleAcceptRequest();
             }}
@@ -64,6 +63,8 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
 }
 
 function WaiterAssistanceRequests() {
+  const navigate = useNavigate();
+
   const [acceptedAssistanceRequest, setAcceptedAssistanceRequest] = useState(null);
   const [assistanceRequestAccepted, setAssistanceRequestAccepted] = useState(false);
   const [assistanceRequests, setAssistanceRequests] = useState([]);
@@ -72,11 +73,6 @@ function WaiterAssistanceRequests() {
   const [latestAccepetedAssistanceRequest, setLatestAccepetedAssistanceRequest] = useState({})
   const [newNotification, setNewNotification] = React.useState(false);
   const [notification, setNotification] = React.useState('');
-  const [openDrawer, setOpenDrawer] = useState(false);
-
-	const toggleDrawer = (isOpen) => () => {
-		setOpenDrawer(isOpen);
-	};
 
   const callManager = () => {
     // call manager
@@ -101,25 +97,37 @@ function WaiterAssistanceRequests() {
 
   useEffect(() => {
     axios.get('http://localhost:8000/assistance/requests')
-      .then(response => {
-        setAssistanceRequests(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    .then(response => {
+      const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
+      setAssistanceRequests(filteredRequests);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }, []);
 
   useEffect(() => {
     function checkNotifications() {
+
+      // Get most updated version of assistance requests
+      axios.get('http://localhost:8000/assistance/requests')
+      .then(response => {
+        const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
+        setAssistanceRequests(filteredRequests);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
       axios.get('http://localhost:8000/assistance/notificationscheck')
       .then(response => {
-        if (Object.keys(latestAssistanceRequest).length !== 0 && latestAssistanceRequest.most_recent_assistance_request !== response.data.most_recent_assistance_request) {
+        let date1 = new Date(latestAssistanceRequest.most_recent_assistance_request)
+        let date2 = new Date(response.data.most_recent_assistance_request)
+        if (Object.keys(latestAssistanceRequest).length == 0 || 
+          (Object.keys(latestAssistanceRequest).length !== 0 && date2 > date1)) {
           setNewNotification(true);
           setNotification("New assistance request by table " + response.data.table_data);
           axios.get('http://localhost:8000/assistance/requests')
-          .then(response => {
-            setAssistanceRequests(response.data);
-          })
           .catch(error => {
             console.log(error);
           });
@@ -138,15 +146,15 @@ function WaiterAssistanceRequests() {
           setNewNotification(true);
           setNotification("Assistance request for table " + response.data.table_data + " was accepted");
 
-          axios.get('http://localhost:8000/assistance/requests')
-          .then(response => {
-            const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
-            setAssistanceRequests(filteredRequests);
-            console.log(response.data, "hi");
-          })
-          .catch(error => {
-            console.log(error);
-          });
+          // axios.get('http://localhost:8000/assistance/requests')
+          // .then(response => {
+          //   const filteredRequests = response.data.filter(request => request.staffAcceptedTime === null);
+          //   setAssistanceRequests(filteredRequests);
+          //   console.log(response.data, "hi");
+          // })
+          // .catch(error => {
+          //   console.log(error);
+          // });
         }
         setLatestAccepetedAssistanceRequest(response.data);
       })
@@ -163,51 +171,56 @@ function WaiterAssistanceRequests() {
 
   return (
     <div className="App">
-        <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-        <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+        <Drawer 
+        variant="permanent"
+        anchor="left"
+        >
             { <WaiterSidebar />}
         </Drawer>
-        {
-          assistanceRequestAccepted 
-            ? (
-              <div>
-                <h1>Assistance Request Table {acceptedAssistanceRequest.tableNumber} </h1>
-                <p>Staff Name: {acceptedAssistanceRequest.staffName}</p>
-                <Button onClick={callManager}>Call Manager</Button>
-                <Button onClick={handleCompletedAssistanceRequest} autoFocus>
-                  Complete
-                </Button>
-              </div>
-            ) 
-            : (
-              // This will be displayed if assistance_request_accepted is false
-              <div>
-                <h1>Assistance Requests</h1>
-                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
-                  {assistanceRequests.map((request, index) => (
-                    <MakeAssistance key={index}
-                    assistanceRequest={request}
-                    setAssistanceRequestAccepted={setAssistanceRequestAccepted}
-                    setAcceptedAssistanceRequest={setAcceptedAssistanceRequest} />
-                  ))}
+        <div className="main-content">
+          {
+            assistanceRequestAccepted 
+              ? (
+                <div>
+                  <h1>Assistance Request Table {acceptedAssistanceRequest.tableNumber} </h1>
+                  <p>Staff Name: {acceptedAssistanceRequest.staffName}</p>
+                  <Button onClick={callManager}>Call Manager</Button>
+                  <Button onClick={handleCompletedAssistanceRequest} autoFocus>
+                    Complete
+                  </Button>
                 </div>
-              </div>
-            )
-        }
-        <Snackbar open={newNotification} autoHideDuration={3000} 
-          onClose={() => {
-            setNewNotification(false)}
+              ) 
+              : (
+                // This will be displayed if assistance_request_accepted is false
+                <div>
+                  <h1>Assistance Requests</h1>
+                  <hr />
+                  <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
+                    {assistanceRequests.map((request, index) => (
+                      <MakeAssistance key={index}
+                      assistanceRequest={request}
+                      setAssistanceRequestAccepted={setAssistanceRequestAccepted}
+                      setAcceptedAssistanceRequest={setAcceptedAssistanceRequest} />
+                    ))}
+                  </div>
+                </div>
+              )
           }
-        >
-          <Alert
-            onClose={() => setNewNotification(false)}
-            severity="info"
-            variant="filled"
-            sx={{ width: '100%' }}
+          <Snackbar open={newNotification} autoHideDuration={3000} 
+            onClose={() => {
+              setNewNotification(false)}
+            }
           >
-            {notification}
-          </Alert>
-        </Snackbar>
+            <Alert
+              onClose={() => setNewNotification(false)}
+              severity="info"
+              variant="filled"
+              sx={{ width: '100%' }}
+            >
+              {notification}
+            </Alert>
+          </Snackbar>
+      </div>
     </div>
   );
 }

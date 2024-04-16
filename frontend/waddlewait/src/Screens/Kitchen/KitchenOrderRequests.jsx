@@ -6,7 +6,7 @@ import { KitchenSidebar } from './layout/KitchenSidebar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-// import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,13 +17,19 @@ function MakeOrder({order, getOrders, setOrders}) {
   
   let orderNumber = "Order number " + order.id
   let tableNumber = "Table no " + order.table
+  let formattedTime = "Ordered on " + order.formatted_time
   let tableItems = order.items
 
   return (
     <Card className="order-card" sx={{ minWidth: 400, maxHeight: 500, maxWidth: 400}}>
       <CardHeader
         title={orderNumber}
-        subheader={tableNumber}
+        subheader={
+          <>
+            <Typography variant="subtitle1">{tableNumber}</Typography>
+            <Typography variant="subtitle2">{formattedTime}</Typography>
+          </>
+        }
       />
       <CardContent className="order-card-contents">
         <div>
@@ -38,6 +44,14 @@ function MakeOrder({order, getOrders, setOrders}) {
           variant="contained" 
           color="warning"
           onClick={() => {
+            // Mark all items as complete
+            for (let i = 0; i < tableItems.length; i++) {
+              const tableItem = tableItems[i];
+              axios.put(`http://localhost:8000/kitchenstaff/ready/${order.id}/${tableItem.id}`)
+              .catch(error => {
+                console.log(error);
+              });
+            }
             axios.put(`http://localhost:8000/kitchenstaff/complete/${order.id}`)
             .then(() => {
               let currentOrders = getOrders;
@@ -167,18 +181,20 @@ function KitchenOrderRequests() {
 
   return (
     <div style={{width: '100vw', height: '100vh'}}>
-      <div className="kitchen-header-bar">
-        <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
-            { <KitchenSidebar />}
-        </Drawer>
-        <Button onClick={toggleSignOut}>Sign Out</Button>
-      </div>
-      <h1>Order Requests</h1>
-      <div className="kitchen-orders-container">
-        {orderRequests.map((order, index) => (
-          <MakeOrder key={index} order={order} getOrders={orderRequests} setOrders={setOrderRequests}/>
-        ))}
+      <Drawer 
+        variant="permanent"
+        anchor="left"
+      >
+        { <KitchenSidebar />}
+      </Drawer>
+      <div style={{width: '85vw', height: '100vh', marginLeft: '15vw'}}>
+        <h1>Order Requests</h1>
+        <hr/>
+        <div className="kitchen-orders-container">
+          {orderRequests.map((order, index) => (
+            <MakeOrder key={index} order={order} getOrders={orderRequests} setOrders={setOrderRequests}/>
+          ))}
+        </div>
       </div>
       <Snackbar open={newOrder} autoHideDuration={3000} 
         onClose={() => {

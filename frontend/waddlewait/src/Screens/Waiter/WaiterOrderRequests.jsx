@@ -16,6 +16,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import './waiter.css';
 
 function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequest}) {
   const handleAcceptRequest = () => {
@@ -71,6 +72,8 @@ function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequ
 }
 
 function WaiterOrderRequests() {
+  const navigate = useNavigate();
+
   const [acceptedOrderRequest, setAcceptedOrderRequest] = useState(null);
   const [orderRequestAccepted, setOrderRequestAccepted] = useState(false);
   const [orderRequests, setOrderRequests] = useState([]);
@@ -170,51 +173,56 @@ function WaiterOrderRequests() {
 
   return (
     <div className="App">
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-      <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
+      <Drawer 
+      variant="permanent"
+      anchor="left"
+      >
           { <WaiterSidebar />}
       </Drawer>
-      {
-        orderRequestAccepted 
-          ? (
-            <div>
-              <h1>Order Request {acceptedOrderRequest.order} Table {acceptedOrderRequest.table} </h1>
-              <p>Item: {acceptedOrderRequest.item}</p>
-              <p>Quantity: {acceptedOrderRequest.quantity}</p>
-              <Button onClick={callManager}>Call Manager</Button>
-              <Button onClick={handleCompletedOrderRequest} autoFocus>
-                Complete
-              </Button>
-            </div>
-          ) 
-          : (
-            <div>
-              <h1>Order Requests</h1>
-              <div className="order-requests-container">
-                {orderRequests.map((request, index) => (
-                  <MakeOrder key={index} 
-                  orderRequest={request}
-                  setOrderRequestAccepted={setOrderRequestAccepted}
-                  setAcceptedOrderRequest={setAcceptedOrderRequest} />
-                ))}
+      <div className="main-content">
+        {
+          orderRequestAccepted 
+            ? (
+              <div>
+                <h1>Order Request {acceptedOrderRequest.order} Table {acceptedOrderRequest.table} </h1>
+                <p>Item: {acceptedOrderRequest.item}</p>
+                <p>Quantity: {acceptedOrderRequest.quantity}</p>
+                <Button onClick={callManager}>Call Manager</Button>
+                <Button onClick={handleCompletedOrderRequest} autoFocus>
+                  Complete
+                </Button>
               </div>
-            </div>
-          )
-      }
-      <Snackbar open={newNotification} autoHideDuration={3000} 
-          onClose={() => {
-            setNewNotification(false)}
-          }
-        >
-          <Alert
-            onClose={() => setNewNotification(false)}
-            severity="info"
-            variant="filled"
-            sx={{ width: '100%' }}
+            ) 
+            : (
+              <div>
+                <h1>Order Requests</h1>
+                <hr />
+                <div className="order-requests-container">
+                  {orderRequests.map((request, index) => (
+                    <MakeOrder key={index} 
+                    orderRequest={request}
+                    setOrderRequestAccepted={setOrderRequestAccepted}
+                    setAcceptedOrderRequest={setAcceptedOrderRequest} />
+                  ))}
+                </div>
+              </div>
+            )
+        }
+        <Snackbar open={newNotification} autoHideDuration={3000} 
+            onClose={() => {
+              setNewNotification(false)}
+            }
           >
-            {notification}
-          </Alert>
-        </Snackbar>
+            <Alert
+              onClose={() => setNewNotification(false)}
+              severity="info"
+              variant="filled"
+              sx={{ width: '100%' }}
+            >
+              {notification}
+            </Alert>
+          </Snackbar>
+      </div>
     </div>
   );
 }
