@@ -6,7 +6,7 @@ import { KitchenSidebar } from './layout/KitchenSidebar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-// import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,13 +17,19 @@ function MakeOrder({order, getOrders, setOrders}) {
   
   let orderNumber = "Order number " + order.id
   let tableNumber = "Table no " + order.table
+  let formattedTime = "Ordered on " + order.formatted_time
   let tableItems = order.items
 
   return (
     <Card className="order-card" sx={{ minWidth: 400, maxHeight: 500, maxWidth: 400}}>
       <CardHeader
         title={orderNumber}
-        subheader={tableNumber}
+        subheader={
+          <>
+            <Typography variant="subtitle1">{tableNumber}</Typography>
+            <Typography variant="subtitle2">{formattedTime}</Typography>
+          </>
+        }
       />
       <CardContent className="order-card-contents">
         <div>
