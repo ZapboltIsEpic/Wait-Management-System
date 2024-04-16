@@ -5,6 +5,7 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
 
 export const WaiterSidebar = () => {
     const navigate = useNavigate();
@@ -28,18 +29,26 @@ export const WaiterSidebar = () => {
     return (
         <div className="WaiterSidebar">
             <List>
-                <ListItem button onClick={handleOrderRequestsClick}>
-                    <ListItemText primary="Order Requests" />
+                <ListItem>
+                    <ListItemButton onClick={handleOrderRequestsClick}>
+                        <ListItemText primary="Order Requests" />
+                    </ListItemButton>
                 </ListItem>
-                <ListItem button onClick={handleAssistanceRequestClick}>
-                    <ListItemText primary="Assistance Requests" />
+                <ListItem>
+                    <ListItemButton onClick={handleAssistanceRequestClick}>
+                        <ListItemText primary="Assistance Requests" />
+                    </ListItemButton>
                 </ListItem>
-            <ListItem button onClick={handleBillRequestsClick}>
-                <ListItemText primary="Bill Requests" />
-            </ListItem>
-            <ListItem button onClick={handleSignOutClick}>
-                <ListItemText primary="Sign Out" />
-            </ListItem>
+                <ListItem>
+                    <ListItemButton onClick={handleBillRequestsClick}>
+                        <ListItemText primary="Bill Requests" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem>
+                    <ListItemButton onClick={handleSignOutClick}>
+                        <ListItemText primary="Sign Out" />
+                    </ListItemButton>
+                </ListItem>
             </List>
         </div>
     );

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../../App.css";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
 
 export const KitchenSidebar = () => {
 	const navigate = useNavigate();
@@ -13,15 +17,34 @@ export const KitchenSidebar = () => {
 		navigate('/kitchen/completed-requests'); 
 	};
 
-	const handleKitchenMainClick = () => {
-		navigate('/kitchen/main'); 
+	const handleSignOutClick = () => {
+		navigate("/"); 
 	};
+
+	const KitchenListItems = [
+    { key: 'Order Requests', value: handleOrderRequestsClick },
+    { key: 'Completed Requests', value: handleCompletedRequestsClick },
+    { key: 'Sign Out', value: handleSignOutClick },
+  ];
 
 	return (
 		<div className="KitchenSidebar">
-			<div><a onClick={handleKitchenMainClick}>Kitchen main</a></div>
-			<div><a onClick={handleOrderRequestsClick}>Order Requests</a></div>
-			<div><a onClick={handleCompletedRequestsClick}>Completed Requests</a></div>
+			<List>
+				{KitchenListItems.map(({key , value}) => (
+					<ListItem className="list-item">	
+						<ListItemButton className="list-button" onClick={value} 
+							sx={{'&:hover': {
+									backgroundColor: '#fdfaf6',	
+									color: '#dd6800'
+								}
+							}}
+						>
+							<ListItemText primary={key} />
+						</ListItemButton>
+					</ListItem>
+
+				))}
+			</List>
 		</div>
 	);
 };
