@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Table
+from orders.models import Order
 from .serializers import TableSerializer, TableBookingSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
