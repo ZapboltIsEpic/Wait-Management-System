@@ -5,6 +5,8 @@ from rest_framework import status
 
 from .models import OrderItem, Order, BillRequest
 from waddlewaitMenu.models import MenuItem, Category
+from waddlewait_app.models import Table
+from assistance.models import Assistance
 from waddlewaitMenu.serializers import MenuItemSerializer
 import json
 
@@ -175,6 +177,23 @@ class OrdersDeleteBillView(APIView):
         # Delete the bill request
         bill_request.delete()
 
-        return Response({"message": "Bill request deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+        # Assumption: everything associated with booking gets deleted once bill request completed
+
+        # Delete assistance request
+        assistanceRequest = Assistance.objects.filter(table=table)
+        if assistanceRequest.exists():
+            assistanceRequest.delete()
+
+        # Delete orders associated with table
+        orders = Order.objects.filter(table=table)
+        if orders.exists():
+            orders.delete()
+
+        # Set table use status to false
+        tableObj = Table.objects.get(pk=table)
+        tableObj.table_in_use = False
+        tableObj.save()
+
+        return Response({"message": "Bill request deleted successfully, associated orders and assistance requests removed"}, status=status.HTTP_204_NO_CONTENT)
     
     
