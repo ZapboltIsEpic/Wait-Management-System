@@ -5,8 +5,6 @@ import StaffLogin from './Screens/Accounts/Login';
 import CustomerHomeMenu from './Screens/Customer/HomeMenu';
 import StaffForgotPassword from './Screens/Accounts/ForgotPasswordAccount';
 import Home from './Screens/Home';
-import KitchenMain from './Screens/Kitchen/KitchenMain';
-import WaiterMain from './Screens/Waiter/WaiterMain';
 import ManagerMain from './Screens/Manager/ManagerMain';
 import CreateStaffAccount from './Screens/Accounts/CreateAccount';
 import KitchenOrderRequests from './Screens/Kitchen/KitchenOrderRequests';
@@ -31,12 +29,10 @@ function App() {
         <Route path="/customer" element={<CustomerHomeMenu/>} />
 
         {/* Kitchen Routes */}
-        <Route path="/kitchen/main" element={<KitchenMain/>} />
         <Route path="/kitchen/order-requests" element={<KitchenOrderRequests/>} />
         <Route path="/kitchen/completed-requests" element={<KitchenOrderRequestsCompleted/>} />
 
         {/* Waiter Routes */}
-        <Route path="/waiter/main" element={<WaiterMain/>} />
         <Route path="/waiter/order-requests" element={<WaiterOrderRequests/>} />
         <Route path="/waiter/assistance-requests" element={<WaiterAssistanceRequests/>} />
         <Route path="/waiter/bill-requests" element={<WaiterBillRequests/>} />

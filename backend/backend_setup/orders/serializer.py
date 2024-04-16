@@ -36,21 +36,27 @@ class OrderItemSerializer(serializers.ModelSerializer):
         return obj.item.price * obj.quantity
         
 class OrderSerializer(serializers.ModelSerializer):
+    formatted_time = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
         fields = ['id',
                   'created_at',
+                  'formatted_time',
                   'table',
                   'is_complete',
                   'bill']
         read_only_fields = ['created_at']
+
+    def get_formatted_time(self, obj):
+        return obj.created_at.strftime('%d %B %H:%M:%S')
 
 class BillRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BillRequest
         fields = ['id',
-                  'table',
+                  'table_id',
                   'total_amount',
                   'staff_name',
                   'request_status',
