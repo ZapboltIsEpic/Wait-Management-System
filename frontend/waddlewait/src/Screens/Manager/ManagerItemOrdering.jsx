@@ -23,14 +23,8 @@ function ManagerItemOrdering() {
         axios.get(`http://127.0.0.1:8000/menu/order/categorised/${cateId}`)
         .then((response) => {
             let currentOrder = response.data.menuItems
-            //indexOne = currentOrder[indexOne-1].id
-            //indexTwo = currentOrder[indexTwo-1].id
-            console.log(indexOne)
-            //let currentOrder = response.data.menuItems
             
             let newOrder = []
-            console.log(indexOne, indexTwo)
-            console.log(currentOrder[indexTwo-1].id,currentOrder[indexOne-1].id)
             for (let i = 1; i < currentOrder.length + 1; i++) {
                 if (i == indexOne) {
                     newOrder.push(currentOrder[indexTwo-1].id)
@@ -39,11 +33,7 @@ function ManagerItemOrdering() {
                 } else {
                     newOrder.push(currentOrder[i-1].id)
                 }
-            }
-            console.log(currentOrder, newOrder)
-            console.log(currentOrder)
-            console.log(newOrder)
-            
+            }            
             axios.post(`http://127.0.0.1:8000/menu/order/categorised/${cateId}/`, {
                 menuItems: newOrder
             })
