@@ -337,7 +337,7 @@ function Orders ({ setShowCartOrder, setBill, tableNum }) {
         const response = await axios.get(`http://127.0.0.1:8000/customer/ordered/${tableNum}`);
         const data = response.data;
         setOrders(data)
-        setTotal(data.reduce((acc, item) => acc + (item.price*item.quantity), 0))
+        setTotal(data.reduce((acc, item) => acc + (item.price), 0))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -606,7 +606,7 @@ function HomeMenu() {
       // Menu
       <>
         <h1>
-          Welcome! Please select your meal!
+          Welcome! Your table number is {confirmTable}, please select your meal!
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', marginX: 2}}>
             <Button
