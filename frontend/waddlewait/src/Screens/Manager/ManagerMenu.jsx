@@ -48,15 +48,6 @@ function ManagerMenu() {
 	const [categoryDialog, setCategoryDialog] = React.useState(false);
 	const [addMenuDialog, setAddMenuDialog] = React.useState(false);
 
-	const toggleDrawer = (isOpen) => () => {
-		setOpen(isOpen);
-	};
-	
-	const [name, setName] = React.useState("");
-	const [description, setDescription] = React.useState("");
-	const [price, setPrice] = React.useState("");
-	const [category, setCategory] = React.useState("");
-
 	const [categories, setCategories] = React.useState([]);
 	const [hasChange, setNewChange] = React.useState(false);
 	React.useEffect(() => {
