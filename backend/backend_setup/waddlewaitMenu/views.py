@@ -180,7 +180,8 @@ def modifyCategoryOrder(request):
     if request.method == 'POST':
         try:
             list = request.data.get('categories')
-            list = list[1:-1].split(',')
+            print(list)
+            # list = list[1:-1].split(',')
             for item in list:
                 category_item = get_object_or_404(Category, pk=item)
         except Category.DoesNotExist:

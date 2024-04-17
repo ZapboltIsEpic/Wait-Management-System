@@ -86,59 +86,65 @@ function ManagerMenu() {
 
 	return (
 		<div>
-			<Button onClick={toggleDrawer(true)}>Open drawer</Button>
-			<Drawer open={open} onClose={toggleDrawer(false)}>
-				{ <ManagerSidebar />}
-			</Drawer>
-			<TabContext value={String(cateId)}>
-				<Box sx={{paddingY: '5px', borderBottom: 1, borderColor: 'divider', justifyContent: 'space-between', display: 'flex', flexDirection: 'row'}}>
-					<Tabs sx={{marginLeft: '20px' }}value={String(cateId)} 
-						onChange={handleChangeTab}
-						textColor="inherit"
-						indicatorColor="inherit"
-					>
-						{categories.map((cate) => (
-							<Tab key={cate.id} label={cate.name} value={String(cate.id)} />
-						))}
-					</Tabs>
-					<Box>
-						<Button
-							variant="outlined"	
-							color='warning'
-							sx={{marginRight: '20px'}}
-							onClick={() => {
-								setAddMenuDialog(true)
-							}}
+			<Drawer 
+        variant="permanent"
+        anchor="left"
+      >
+        { <ManagerSidebar />}
+      </Drawer>
+			<div style={{width: '85vw', height: '100vh', marginLeft: '15vw'}}>
+				<h1>Menu</h1>
+        <hr/>
+				<TabContext value={String(cateId)}>
+					<Box sx={{paddingY: '5px', borderBottom: 1, borderColor: 'divider', justifyContent: 'space-between', display: 'flex', flexDirection: 'row'}}>
+						<Tabs sx={{marginLeft: '20px' }}value={String(cateId)} 
+							onChange={handleChangeTab}
+							textColor="inherit"
+							indicatorColor="inherit"
 						>
-							Add Menu Item
-						</Button>
-						<Button
-							variant="outlined"	
-							color='warning'
-							sx={{marginRight: '20px'}}
-							onClick={() => {setCategoryDialog(true)}}
-						>
-							Add Category
-						</Button>
+							{categories.map((cate) => (
+								<Tab key={cate.id} label={cate.name} value={String(cate.id)} />
+							))}
+						</Tabs>
+						<Box>
+							<Button
+								variant="outlined"	
+								color='warning'
+								sx={{marginRight: '20px'}}
+								onClick={() => {
+									setAddMenuDialog(true)
+								}}
+							>
+								Add Menu Item
+							</Button>
+							<Button
+								variant="outlined"	
+								color='warning'
+								sx={{marginRight: '20px'}}
+								onClick={() => {setCategoryDialog(true)}}
+							>
+								Add Category
+							</Button>
+						</Box>
 					</Box>
-				</Box>
-				{categories.map((cate) => (
-					<TabPanel value={String(cate.id)} key={cate.id}>
-						<Items items={items} cateId={cate.id} setNewChange={setNewChange} categories={categories}/>
-					</TabPanel>
-				))}
-			</TabContext>
-			<CategoryDialog
-				open={categoryDialog}
-				onClose={setCategoryDialog}
-				setNewChange={setNewChange}
-			/>
-			<AddMenuDialog
-				open={addMenuDialog}
-				onClose={setAddMenuDialog}
-				setNewChange={setNewChange}
-				categories={categories}
-			/>
+					{categories.map((cate) => (
+						<TabPanel value={String(cate.id)} key={cate.id}>
+							<Items items={items} cateId={cate.id} setNewChange={setNewChange} categories={categories}/>
+						</TabPanel>
+					))}
+				</TabContext>
+				<CategoryDialog
+					open={categoryDialog}
+					onClose={setCategoryDialog}
+					setNewChange={setNewChange}
+				/>
+				<AddMenuDialog
+					open={addMenuDialog}
+					onClose={setAddMenuDialog}
+					setNewChange={setNewChange}
+					categories={categories}
+				/>
+			</div>
 		</div>
 	)
 }
@@ -409,7 +415,18 @@ function CategoryDialog(props) {
 
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={handleClose} open={open}
+			PaperProps={{
+				style: {
+					maxWidth: '400px',
+					width: '100%',
+					padding: '10px',
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'space-around'
+				},
+			}}
+		>
       <DialogTitle>Adding New Category</DialogTitle>
 			<TextField 
 				style={{margin: '10px'}} 
@@ -495,114 +512,133 @@ function AddMenuDialog(props) {
     <Dialog
 			open={open}
 			onClose={handleClose}
+			PaperProps={{
+				style: {
+					maxWidth: '600px',
+					width: '100%',
+					height: '450px',
+					padding: '10px',
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'space-around'
+				},
+			}}
 		>
-        <Card sx={{ width: 600, height: 600 }}>
-          <Grid onClick={handlePopUpItem}>
-					<CardContent 
-						sx={{ 
-							height: 250, 
-							display: 'flex',
-							flexDirection: 'column',
-						}}>
-						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-							<p className="edit-input-label">Name</p>
-							<TextField id="outlined-basic" variant="outlined" className="edit-input"
-								value={itemName}
-								onChange={handleItemNameChange}
-							/>
-						</Box>
-						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-							<p className="edit-input-label">Description</p>
-							<TextField id="outlined-basic" variant="outlined" className="edit-input"
-								value={itemDescription}
-								onChange={handleItemDescriptionChange}
-							/>
-						</Box>
-						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-							<p className="edit-input-label">Price ($)</p>
-							<TextField id="outlined-basic" variant="outlined" className="edit-input"
-								value={itemPrice}
-								onChange={handleItemPriceChange}
-							/>
-						</Box>
-						<Box sx={{marginTop: '20px'}}>
-							<FormControl fullWidth>
-								<InputLabel id="demo-simple-select-label">Category</InputLabel>
-								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
-									value={category}
-									label="Category"
-									onChange={handleCategoryChange}
-								>
-									{categories.map((cate) => (
-										<MenuItem key={cate.id} value={cate.name}>{cate.name}</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						</Box>
-					</CardContent>
-				</Grid>
-          <CardActions>
-				<Box 
+			<DialogTitle>Adding New Menu Item</DialogTitle>
+			<Card sx={{ width: 600, height: 600 }}>
+				<Grid onClick={handlePopUpItem}>
+				<CardContent 
 					sx={{ 
-						display: 'flex', 
-						justifyContent: 'space-between', 
-						alignItems: 'center', 
-						width: '580px' 
-					}}
+						height: 250, 
+						display: 'flex',
+						flexDirection: 'column',
+					}}>
+					<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+						<p className="edit-input-label">Name</p>
+						<TextField id="outlined-basic" variant="outlined" className="edit-input"
+							value={itemName}
+							onChange={handleItemNameChange}
+						/>
+					</Box>
+					<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+						<p className="edit-input-label">Description</p>
+						<TextField id="outlined-basic" variant="outlined" className="edit-input"
+							value={itemDescription}
+							onChange={handleItemDescriptionChange}
+						/>
+					</Box>
+					<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+						<p className="edit-input-label">Price ($)</p>
+						<TextField id="outlined-basic" variant="outlined" className="edit-input"
+							value={itemPrice}
+							onChange={handleItemPriceChange}
+						/>
+					</Box>
+					<Box sx={{marginTop: '20px'}}>
+						<FormControl sx={{width: '200px'}}>
+							<InputLabel id="demo-simple-select-label">Category</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={category}
+								label="Category"
+								onChange={handleCategoryChange}
+							>
+								{categories.map((cate) => (
+									<MenuItem key={cate.id} value={cate.name}>{cate.name}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</Box>
+				</CardContent>
+			</Grid>
+				<CardActions>
+			<Box 
+				sx={{ 
+					display: 'flex', 
+					justifyContent: 'space-between', 
+					alignItems: 'center', 
+					width: '580px' 
+				}}
+			>
+				<Button
+					variant="outlined"	
+					color='warning'
+					onClick={() => handleClose()}
 				>
-					<input type="file" onChange={handleFileChange} style={{display: 'none'}} id="fileInput"/>
-					<Button 
-						variant="outlined"	
-						color='warning'
-						onClick={handleTriggerFileChange}
-					>
-						{file == "" ? "Choose File" : (file.name)}
-					</Button>
-					<Button
-						variant="outlined"	
-						color='warning'
-						onClick={() => {
-							if (itemName == "" || itemDescription == "" || itemPrice == "" || file == "" || category == "") {
-								setError(true);
-								return
-							}
-							const formData = new FormData();
-							formData.append('name', itemName);
-							formData.append('description', itemDescription);
-							formData.append('price', itemPrice);
-							formData.append('category', category);
-							if (file != "") {
-								formData.append('image', file);
-								formData.append('fileName', file.name);
-							}
-							axios.post(`http://localhost:8000/menu/addnew/`, formData, {
-							  headers: {
-								'Content-Type': 'multipart/form-data',
-							  },
-							})
-							.then(() => {
-								handleClose()
-								setNewChange(true);
-							})
-							.catch(error => {
-								console.log(error);
-							})
-						}}
-					> 
-						Add Item
-					</Button>
-				</Box>
-          </CardActions>
-        </Card>
-				{showError && (
-					<>
-						<Alert severity="error" sx={{ width: '100%' }}>
-							Ensure all fields are filled and an image is selected
-						</Alert>
-					</>
-				)}
+					Back
+				</Button>
+				<input type="file" onChange={handleFileChange} style={{display: 'none'}} id="fileInput"/>
+				<Button 
+					variant="outlined"	
+					color='warning'
+					onClick={handleTriggerFileChange}
+				>
+					{file == "" ? "Choose File" : (file.name)}
+				</Button>
+				<Button
+					variant="outlined"	
+					color='warning'
+					onClick={() => {
+						if (itemName == "" || itemDescription == "" || itemPrice == "" || file == "" || category == "") {
+							setError(true);
+							return
+						}
+						const formData = new FormData();
+						formData.append('name', itemName);
+						formData.append('description', itemDescription);
+						formData.append('price', itemPrice);
+						formData.append('category', category);
+						if (file != "") {
+							formData.append('image', file);
+							formData.append('fileName', file.name);
+						}
+						axios.post(`http://localhost:8000/menu/addnew/`, formData, {
+							headers: {
+							'Content-Type': 'multipart/form-data',
+							},
+						})
+						.then(() => {
+							handleClose()
+							setNewChange(true);
+						})
+						.catch(error => {
+							console.log(error);
+						})
+					}}
+				> 
+					Add Item
+				</Button>
+			</Box>
+				</CardActions>
+			</Card>
+			{showError && (
+				<>
+					<Alert severity="error" sx={{ width: '100%' }}>
+						Ensure all fields are filled and an image is selected
+					</Alert>
+				</>
+			)}
       </Dialog>
   );
 }

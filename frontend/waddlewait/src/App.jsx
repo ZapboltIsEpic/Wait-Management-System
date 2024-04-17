@@ -12,6 +12,7 @@ import KitchenOrderRequestsCompleted from './Screens/Kitchen/KitchenOrderRequest
 import WaiterOrderRequests from './Screens/Waiter/WaiterOrderRequests';
 import WaiterAssistanceRequests from './Screens/Waiter/WaiterAssistanceRequests';
 import ManagerMenu from './Screens/Manager/ManagerMenu';
+import ManagerCategories from './Screens/Manager/ManagerCategories';
 import WaiterBillRequests from './Screens/Waiter/WaiterBillRequests';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
 
         {/* Manager Routes */}
         <Route path="/manager/main" element={<ManagerMain/>} />
+        <Route path="/manager/categories" element={<ManagerCategories/>} />
         <Route path="/manager/menu" element={<ManagerMenu/>} />
 
       </Routes>
