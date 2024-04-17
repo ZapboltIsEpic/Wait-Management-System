@@ -35,3 +35,9 @@ Week 9:
 - Completed the notification frontend for assistance and order requests for waitstaff
 - added bill to waitstaff
 
+Week 10:
+- Polished up UI/UX for waitstaff
+- Fixed bug about waitstaff order requests both backend and frontend
+- Wrote user manual for project report
+- Fixed bug for kitchen staff where there are too many items on 1 order-request so it doesnt fit the card
+

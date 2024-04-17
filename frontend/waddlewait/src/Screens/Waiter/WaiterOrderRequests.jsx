@@ -20,11 +20,12 @@ import './waiter.css';
 
 function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequest}) {
   const handleAcceptRequest = () => {
+    console.log(orderRequest);
     axios.put('http://localhost:8000/orders/delivernotifications/accepted', {
-      "order": orderRequest.order, 
-      "item": orderRequest.item, 
+      "order_id": orderRequest.order_id, 
+      "item_name": orderRequest.item_name, 
       // should be the waiter's name
-      "wait_staff_assigned": "yijun", 
+      "wait_staff_assigned": "none",
     })
     .then(response => {
       console.log(response.json);
@@ -43,22 +44,22 @@ function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequ
   return (
     <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
-        title={"Order no " + orderRequest.order_id}
+        title={"Order number " + orderRequest.order_id}
       />
       <CardContent className="order-card-contents">
+        <Typography color="text.secondary">
+          {"Table number " + orderRequest.table_number}
+        </Typography>
         <Typography color="text.secondary">
           Item: {orderRequest.item_name}
         </Typography>
         <Typography color="text.secondary">
           Quantity: {orderRequest.quantity}
         </Typography>
-        <Typography color="text.secondary">
-          {"Table no " + orderRequest.table_number}
-        </Typography>
         <FormControl fullWidth>
           <Button 
             variant="contained" 
-            color="primary"
+            color="warning"
             onClick={() => {
               handleAcceptRequest();
             }}
@@ -77,20 +78,11 @@ function WaiterOrderRequests() {
   const [acceptedOrderRequest, setAcceptedOrderRequest] = useState(null);
   const [orderRequestAccepted, setOrderRequestAccepted] = useState(false);
   const [orderRequests, setOrderRequests] = useState([]);
-	const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const [latestOrderRequest, setLatestOrderRequest] = useState({})
   const [latestAccepetedOrderRequest, setLatestAccepetedOrderRequest] = useState({})
   const [newNotification, setNewNotification] = React.useState(false);
   const [notification, setNotification] = React.useState('');
-
-	const toggleDrawer = (isOpen) => () => {
-		setOpenDrawer(isOpen);
-	};
-
-  const callManager = () => {
-    // call manager
-  };
 
   useEffect(() => {
     axios.get('http://localhost:8000/orders/deliverrequests')
@@ -105,8 +97,8 @@ function WaiterOrderRequests() {
 
   const handleCompletedOrderRequest = () => {
     axios.put('http://localhost:8000/orders/delivernotifications/completed', {
-      "order": acceptedOrderRequest.order, 
-      "item": acceptedOrderRequest.item, 
+      "order_id": acceptedOrderRequest.order_id, 
+      "item_name": acceptedOrderRequest.item_name, 
       "deliver": acceptedOrderRequest.deliver, 
     })
     .then(response => {
@@ -144,7 +136,7 @@ function WaiterOrderRequests() {
       axios.get('http://localhost:8000/orders/delivernotifications/accepted/notificationcheck')
       .then(response => {
         // console.log(response.data, "hi")
-        if (latestAccepetedOrderRequest != {} && latestAccepetedOrderRequest.most_recent_wait_staff_assigned_time !== response.data.most_recent_wait_staff_assigned_time) {
+        if (Object.keys(latestOrderRequest).length !== 0 && latestAccepetedOrderRequest.most_recent_wait_staff_assigned_time !== response.data.most_recent_wait_staff_assigned_time) {
           console.log(latestAccepetedOrderRequest, response.data)
           setNewNotification(true);
           setNotification("Order request " + response.data.order + " for table " + response.data.table + " was accepted");
@@ -184,11 +176,12 @@ function WaiterOrderRequests() {
           orderRequestAccepted 
             ? (
               <div>
-                <h1>Order Request {acceptedOrderRequest.order} Table {acceptedOrderRequest.table} </h1>
-                <p>Item: {acceptedOrderRequest.item}</p>
+                <h1>Order Request {acceptedOrderRequest.order} Table {acceptedOrderRequest.table_number} </h1>
+                <p>Item: {acceptedOrderRequest.item_name}</p>
                 <p>Quantity: {acceptedOrderRequest.quantity}</p>
-                <Button onClick={callManager}>Call Manager</Button>
-                <Button onClick={handleCompletedOrderRequest} autoFocus>
+                <Button variant="contained" 
+                color="warning"
+                onClick={handleCompletedOrderRequest}>
                   Complete
                 </Button>
               </div>
@@ -197,7 +190,7 @@ function WaiterOrderRequests() {
               <div>
                 <h1>Order Requests</h1>
                 <hr />
-                <div className="order-requests-container">
+                <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} className="assistance-requests-container">
                   {orderRequests.map((request, index) => (
                     <MakeOrder key={index} 
                     orderRequest={request}

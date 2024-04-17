@@ -21,7 +21,7 @@ function Login() {
 			navigate('/waiter/order-requests');
 		}
 		else if (link === 'manager') {
-			navigate('/manager/main');
+			navigate('/manager/menu');
 		}
 		else {
 			navigate(link);
@@ -113,16 +113,6 @@ function Login() {
 					<ErrorDialog open={error} setOpen={setErrorOpen} message={errorMessage}/>
 				</div>
 				<div className="login-help">
-					<div className="login-help-link-container">
-						<p 
-							className="login-help-link-text"
-							onClick={() => {
-								navigateTo('/staff/forgot-password');
-							}}
-						>
-							Forgot password?
-						</p>
-					</div>
 					<div className="login-help-link-container">
 						<p 
 							className="login-help-link-text"

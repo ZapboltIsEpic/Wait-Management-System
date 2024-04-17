@@ -16,7 +16,7 @@ function MakeOrder({order}) {
   let formattedTime = "Ordered on " + order.formatted_time
 
   return (
-    <Card className="order-card" sx={{ minWidth: 400, maxHeight: 400, maxWidth: 400}}>
+    <Card className="order-card" sx={{ minWidth: 400, maxHeight: 400, maxWidth: 400, overflowY: 'auto'}}>
       <CardHeader
         title={orderNumber}
         subheader={

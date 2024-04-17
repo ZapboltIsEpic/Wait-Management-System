@@ -5,14 +5,15 @@ import StaffLogin from './Screens/Accounts/Login';
 import CustomerHomeMenu from './Screens/Customer/HomeMenu';
 import StaffForgotPassword from './Screens/Accounts/ForgotPasswordAccount';
 import Home from './Screens/Home';
-import ManagerMain from './Screens/Manager/ManagerMain';
 import CreateStaffAccount from './Screens/Accounts/CreateAccount';
 import KitchenOrderRequests from './Screens/Kitchen/KitchenOrderRequests';
 import KitchenOrderRequestsCompleted from './Screens/Kitchen/KitchenOrderRequestsCompleted';
 import WaiterOrderRequests from './Screens/Waiter/WaiterOrderRequests';
 import WaiterAssistanceRequests from './Screens/Waiter/WaiterAssistanceRequests';
 import ManagerMenu from './Screens/Manager/ManagerMenu';
+import ManagerCategories from './Screens/Manager/ManagerCategories';
 import WaiterBillRequests from './Screens/Waiter/WaiterBillRequests';
+import ManagerItemOrdering from './Screens/Manager/ManagerItemOrdering';
 
 function App() {
   return (
@@ -38,8 +39,9 @@ function App() {
         <Route path="/waiter/bill-requests" element={<WaiterBillRequests/>} />
 
         {/* Manager Routes */}
-        <Route path="/manager/main" element={<ManagerMain/>} />
+        <Route path="/manager/categories" element={<ManagerCategories/>} />
         <Route path="/manager/menu" element={<ManagerMenu/>} />
+        <Route path="/manager/item-ordering" element={<ManagerItemOrdering/>} />
 
       </Routes>
     </BrowserRouter>

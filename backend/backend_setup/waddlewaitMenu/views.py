@@ -73,6 +73,7 @@ def addMenuItem(request, categoryName):
             'name': request.query_params.get('name'),
             'description': request.query_params.get('description'),
             'price': request.query_params.get('price'),
+            'ingredients': request.query_params.get('ingredients'),
             'category': {'name' : categoryName}
         }
 
@@ -93,11 +94,11 @@ def addMenuItemWithImage(request):
         data = {
             'name': request.data.get('name'),
             'description': request.data.get('description'),
+            'ingredients': request.data.get('ingredients'),
             'price': request.data.get('price'),
             'category': {'name' : request.data.get('category')},
             'image': ImageFile(image_file) if image_file else None,
         }
-
         menu_item_serializer = MenuItemSerializer(data=data)
         if menu_item_serializer.is_valid():
             menu_item_serializer.save()
@@ -115,10 +116,8 @@ def modifyMenuItem(request, pk):
 
     if request.method == 'PUT':
         data = request.data
-        print(data)
-        print(ImageFile(data['image']))
-        data['image'] = ImageFile(data['image'])
-        # print(data)
+        if 'image' in data:
+            data['image'] = ImageFile(data['image'])
         serializer = MenuItemUpdateSerializer(menu_item, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -141,6 +140,10 @@ def categories(request):
         inputData = {
             'name' : request.data.get('name')
         }
+        categories = Category.objects.all()
+        for category in categories:
+            if str(category).lower() == request.data.get('name').lower():
+                return Response("Category already exists", status=status.HTTP_409_CONFLICT)
         categories_serializer = CategorySerializer(data = inputData)
         if categories_serializer.is_valid():
             categories_serializer.save()
@@ -151,17 +154,19 @@ def categories(request):
 @api_view(['GET', 'POST'])
 def modifyMenuOrder(request, pk):
     if request.method == 'GET':
-        menu_items = MenuItem.objects.all()
+        menu_items = MenuItem.objects.filter(category_id=pk)
         menu_items_serializer = MenuItemCondensedSerializer(menu_items, many = True)
         return JsonResponse({'menuItems': menu_items_serializer.data})
 
     if request.method == 'POST':
         try:
             list = request.data.get('menuItems')
-            list = list[1:-1].split(',')
-
+            if isinstance(list, str):
+                list = list.strip('[]')
+                list_of_strings = list.split(',')
+                list = [int(num_str) for num_str in list_of_strings]
             for item in list:
-                menu_item = MenuItem.objects.get(pk = int(item))
+                print(item)
         except MenuItem.DoesNotExist:
             return Response(str(MenuItem.objects.values_list('pk', flat=True)),status=status.HTTP_404_NOT_FOUND)
         if len(list) != len(set(list)):
@@ -183,7 +188,8 @@ def modifyCategoryOrder(request):
     if request.method == 'POST':
         try:
             list = request.data.get('categories')
-            list = list[1:-1].split(',')
+            print(list)
+            # list = list[1:-1].split(',')
             for item in list:
                 category_item = get_object_or_404(Category, pk=item)
         except Category.DoesNotExist:

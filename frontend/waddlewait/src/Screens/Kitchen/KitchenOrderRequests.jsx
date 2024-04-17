@@ -21,7 +21,7 @@ function MakeOrder({order, getOrders, setOrders}) {
   let tableItems = order.items
 
   return (
-    <Card className="order-card" sx={{ minWidth: 400, maxHeight: 500, maxWidth: 400}}>
+    <Card className="order-card" sx={{ minWidth: 400, maxHeight: 500, maxWidth: 400, overflowY: 'auto'}}>
       <CardHeader
         title={orderNumber}
         subheader={
@@ -34,7 +34,7 @@ function MakeOrder({order, getOrders, setOrders}) {
       <CardContent className="order-card-contents">
         <div>
           {tableItems.map((tableItem, key) => (
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '10px 0', overflowY: 'auto'}} key={key}>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '10px 0', overflowY: 'auto'}} key={key}>
               <p> {tableItem.quantity} orders of Item {tableItem.name}</p>
               <ItemStatus orderId={order.id} itemId={tableItem.id} itemPrepare={tableItem.is_preparing} itemReady={tableItem.is_ready}/>
             </div>

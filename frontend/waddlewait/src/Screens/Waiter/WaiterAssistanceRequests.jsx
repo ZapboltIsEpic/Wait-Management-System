@@ -16,7 +16,6 @@ import MenuItem from '@mui/material/MenuItem';
 import './waiter.css';
 
 function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAcceptedAssistanceRequest }) {
-
   const handleAcceptRequest = () => {
     axios.put('http://localhost:8000/assistance/notifications/accepted', {
       "table": assistanceRequest.table, 
@@ -38,14 +37,11 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
     return null;
   }
   return (
-    <Card className="order-card" sx={{ minWidth: 300, minHeight: 300, maxHeight: 400, maxWidth: 300}}>
+    <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
         title={"Table no " + assistanceRequest.table}
       />
       <CardContent className="order-card-contents">
-        <Typography color="text.secondary">
-          Kitchen Staff: {assistanceRequest.staffName}
-        </Typography>
         <FormControl fullWidth>
           <Button 
             variant="contained" 
@@ -73,10 +69,6 @@ function WaiterAssistanceRequests() {
   const [latestAccepetedAssistanceRequest, setLatestAccepetedAssistanceRequest] = useState({})
   const [newNotification, setNewNotification] = React.useState(false);
   const [notification, setNotification] = React.useState('');
-
-  const callManager = () => {
-    // call manager
-  };
 
   const handleCompletedAssistanceRequest = () => {
     axios.put('http://localhost:8000/assistance/notifications/completed', {
@@ -182,10 +174,15 @@ function WaiterAssistanceRequests() {
             assistanceRequestAccepted 
               ? (
                 <div>
-                  <h1>Assistance Request Table {acceptedAssistanceRequest.tableNumber} </h1>
-                  <p>Staff Name: {acceptedAssistanceRequest.staffName}</p>
-                  <Button onClick={callManager}>Call Manager</Button>
-                  <Button onClick={handleCompletedAssistanceRequest} autoFocus>
+                  <h1>Assistance Request Table {acceptedAssistanceRequest.table} </h1>
+                  <Button 
+                    variant="contained" 
+                    color="warning"
+                    onClick={() => {
+                      handleCompletedAssistanceRequest();
+                    }}
+                    autoFocus
+                  >
                     Complete
                   </Button>
                 </div>

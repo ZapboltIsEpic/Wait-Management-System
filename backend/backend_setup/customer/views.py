@@ -30,7 +30,7 @@ def createOrder(request):
 
         order_data = {
             'table': table,
-            'bill' : total_bill
+            'bill' : round(total_bill,2)
         }
 
         order_serializer = OrderSerializer(data=order_data)
@@ -64,6 +64,8 @@ def createOrder(request):
             return JsonResponse({"message": "Items added to order successfully",
                                  'total_amount': total_bill}, status=status.HTTP_201_CREATED)
         else: 
+            print("no way")
+
             return JsonResponse({'message': 'Invalid order data'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
