@@ -150,7 +150,7 @@ function WaiterBillRequests() {
                               <TableCell>{item.name}</TableCell>
                               <TableCell>${item.price}</TableCell>
                               <TableCell>{item.quantity}</TableCell>
-                              <TableCell>{item.quantity*item.price.toFixed(2)}</TableCell>
+                              <TableCell>${item.quantity*item.price.toFixed(2)}</TableCell>
                             </TableRow>
                           ))}
                         </TableBody>

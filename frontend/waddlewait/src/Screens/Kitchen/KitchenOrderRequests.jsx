@@ -34,8 +34,8 @@ function MakeOrder({order, getOrders, setOrders}) {
       <CardContent className="order-card-contents">
         <div>
           {tableItems.map((tableItem, key) => (
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '10px 0', overflowY: 'auto'}} key={key}>
-              <p> {tableItem.quantity} orders of Item {tableItem.name}</p>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '10px 0', overflowY: 'auto', alignItems: 'center'}} key={key}>
+              <p> {tableItem.quantity}x {tableItem.name}</p>
               <ItemStatus orderId={order.id} itemId={tableItem.id} itemPrepare={tableItem.is_preparing} itemReady={tableItem.is_ready}/>
             </div>
           ))}
