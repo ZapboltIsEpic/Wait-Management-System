@@ -148,14 +148,13 @@ def categories(request):
 @api_view(['GET', 'POST'])
 def modifyMenuOrder(request, pk):
     if request.method == 'GET':
-        menu_items = MenuItem.objects.all()
+        menu_items = MenuItem.objects.filter(category_id=pk)
         menu_items_serializer = MenuItemCondensedSerializer(menu_items, many = True)
         return JsonResponse({'menuItems': menu_items_serializer.data})
 
     if request.method == 'POST':
         try:
             list = request.data.get('menuItems')
-            list = list[1:-1].split(',')
 
             for item in list:
                 menu_item = MenuItem.objects.get(pk = int(item))
