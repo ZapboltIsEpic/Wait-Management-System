@@ -73,6 +73,7 @@ def addMenuItem(request, categoryName):
             'name': request.query_params.get('name'),
             'description': request.query_params.get('description'),
             'price': request.query_params.get('price'),
+            'ingredients': request.query_params.get('ingredients'),
             'category': {'name' : categoryName}
         }
 
@@ -93,6 +94,7 @@ def addMenuItemWithImage(request):
         data = {
             'name': request.data.get('name'),
             'description': request.data.get('description'),
+            'ingredients': request.data.get('ingredients'),
             'price': request.data.get('price'),
             'category': {'name' : request.data.get('category')},
             'image': ImageFile(image_file) if image_file else None,
@@ -138,6 +140,10 @@ def categories(request):
         inputData = {
             'name' : request.data.get('name')
         }
+        categories = Category.objects.all()
+        for category in categories:
+            if str(category).lower() == request.data.get('name').lower():
+                return Response("Category already exists", status=status.HTTP_409_CONFLICT)
         categories_serializer = CategorySerializer(data = inputData)
         if categories_serializer.is_valid():
             categories_serializer.save()
@@ -155,9 +161,12 @@ def modifyMenuOrder(request, pk):
     if request.method == 'POST':
         try:
             list = request.data.get('menuItems')
-
+            if isinstance(list, str):
+                list = list.strip('[]')
+                list_of_strings = list.split(',')
+                list = [int(num_str) for num_str in list_of_strings]
             for item in list:
-                menu_item = MenuItem.objects.get(pk = int(item))
+                print(item)
         except MenuItem.DoesNotExist:
             return Response(str(MenuItem.objects.values_list('pk', flat=True)),status=status.HTTP_404_NOT_FOUND)
         if len(list) != len(set(list)):

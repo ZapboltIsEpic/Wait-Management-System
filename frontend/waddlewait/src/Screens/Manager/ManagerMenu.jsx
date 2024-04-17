@@ -177,6 +177,7 @@ function Item({item, setNewChange, categories}) {
   const [showPopUpItem, setShowPopUpItem] = React.useState(false);
 	const [itemName, setItemName] = React.useState(item.name)
 	const [itemDescription, setItemDescription] = React.useState(item.description)
+	const [itemIngredients, setItemIngredients] = React.useState(item.ingredients)
 	const [itemPrice, setItemPrice] = React.useState(item.price)
 
 	const handleItemNameChange = (event) => {
@@ -185,6 +186,10 @@ function Item({item, setNewChange, categories}) {
 
 	const handleItemDescriptionChange = (event) => {
     setItemDescription(event.target.value);
+  };
+
+	const handleItemIngredientsChange = (event) => {
+		setItemIngredients(event.target.value);
   };
 
 	const handleItemPriceChange = (event) => {
@@ -199,6 +204,14 @@ function Item({item, setNewChange, categories}) {
 
   const [file, setFile] = React.useState("")
   const handleFileChange = (event) => {
+		const file = event.target.files[0];
+		const fileType = file['type'];
+		const validImageTypes = ['image/jpeg', 'image/png'];
+
+		if (!validImageTypes.includes(fileType)) {
+		alert('Error: Invalid file type. Please select a PNG or JPEG file.');
+		return;
+		}
 		setFile(event.target.files[0])
   }
 
@@ -265,7 +278,7 @@ function Item({item, setNewChange, categories}) {
 			open={showPopUpItem}
 			onClose={() => setShowPopUpItem(false)}
 		>
-        <Card sx={{ width: 600, height: 600 }}>
+        <Card sx={{ width: 600, height: 650 }}>
           <Grid onClick={handlePopUpItem}>
             <CardMedia
               sx={{ height: 250 }}
@@ -274,7 +287,7 @@ function Item({item, setNewChange, categories}) {
 					/>
 					<CardContent 
 						sx={{ 
-							height: 250, 
+							height: 300, 
 							display: 'flex',
 							flexDirection: 'column',
 						}}>
@@ -290,6 +303,13 @@ function Item({item, setNewChange, categories}) {
 							<TextField id="outlined-basic" variant="outlined" className="edit-input"
 								value={itemDescription}
 								onChange={handleItemDescriptionChange}
+							/>
+						</Box>
+						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+							<p className="edit-input-label">Ingredients</p>
+							<TextField id="outlined-basic" variant="outlined" className="edit-input"
+								value={itemIngredients}
+								onChange={handleItemIngredientsChange}
 							/>
 						</Box>
 						<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -340,13 +360,13 @@ function Item({item, setNewChange, categories}) {
 							})
 						}}
 					> Delete Item</Button>
-					<input type="file" onChange={handleFileChange} style={{display: 'none'}} id="fileInput"/>
+					<input type="file" onChange={handleFileChange} accept="image/png, image/jpeg" style={{display: 'none'}} id="fileInput"/>
 					<Button 
 						variant="outlined"	
 						color='warning'
 						onClick={handleTriggerFileChange}
 					>
-						{file == "" ? "Choose File" : (file.name)}
+					{file == "" ? "Choose Image" : (file.name)}
 					</Button>
 					<Button
 						variant="outlined"	
@@ -355,6 +375,7 @@ function Item({item, setNewChange, categories}) {
 							const formData = new FormData();
 							formData.append('name', itemName);
 							formData.append('description', itemDescription);
+							formData.append('ingredients', itemIngredients);
 							formData.append('price', itemPrice);
 							formData.append('category', category);
 							if (file != "") {
@@ -409,6 +430,9 @@ function CategoryDialog(props) {
 				})
 				.catch(error => {
 				console.log(error);
+				if (error.response.status === 409) {
+					alert('Error: Category already exists!');
+				}
 			});
 		}
 	}
@@ -466,6 +490,7 @@ function AddMenuDialog(props) {
 	const [showPopUpItem, setShowPopUpItem] = React.useState(false);
 	const [itemName, setItemName] = React.useState("")
 	const [itemDescription, setItemDescription] = React.useState("")
+	const [itemIngredients, setItemIngredients] = React.useState("")
 	const [itemPrice, setItemPrice] = React.useState("")
 
 	const handleItemNameChange = (event) => {
@@ -474,6 +499,10 @@ function AddMenuDialog(props) {
 
 	const handleItemDescriptionChange = (event) => {
     setItemDescription(event.target.value);
+  };
+
+  const handleItemIngredientsChange = (event) => {
+    setItemIngredients(event.target.value);
   };
 
 	const handleItemPriceChange = (event) => {
@@ -488,6 +517,14 @@ function AddMenuDialog(props) {
 
   const [file, setFile] = React.useState("")
   const handleFileChange = (event) => {
+		const file = event.target.files[0];
+		const fileType = file['type'];
+		const validImageTypes = ['image/jpeg', 'image/png'];
+	
+		if (!validImageTypes.includes(fileType)) {
+		alert('Error: Invalid file type. Please select a PNG or JPEG file.');
+		return;
+		}
 		setFile(event.target.files[0])
   }
 	
@@ -516,7 +553,7 @@ function AddMenuDialog(props) {
 				style: {
 					maxWidth: '600px',
 					width: '100%',
-					height: '450px',
+					height: '475px',
 					padding: '10px',
 					display: 'flex',
 					justifyContent: 'center',
@@ -529,7 +566,7 @@ function AddMenuDialog(props) {
 				<Grid onClick={handlePopUpItem}>
 				<CardContent 
 					sx={{ 
-						height: 250, 
+						height: 300, 
 						display: 'flex',
 						flexDirection: 'column',
 					}}>
@@ -545,6 +582,13 @@ function AddMenuDialog(props) {
 						<TextField id="outlined-basic" variant="outlined" className="edit-input"
 							value={itemDescription}
 							onChange={handleItemDescriptionChange}
+						/>
+					</Box>
+					<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+						<p className="edit-input-label">Ingredients</p>
+						<TextField id="outlined-basic" variant="outlined" className="edit-input"
+							value={itemIngredients}
+							onChange={handleItemIngredientsChange}
 						/>
 					</Box>
 					<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -588,13 +632,13 @@ function AddMenuDialog(props) {
 				>
 					Back
 				</Button>
-				<input type="file" onChange={handleFileChange} style={{display: 'none'}} id="fileInput"/>
+				<input type="file" onChange={handleFileChange} accept="image/png, image/jpeg" style={{display: 'none'}} id="fileInput"/>
 				<Button 
 					variant="outlined"	
 					color='warning'
 					onClick={handleTriggerFileChange}
 				>
-					{file == "" ? "Choose File" : (file.name)}
+					{file == "" ? "Choose Image" : (file.name)}
 				</Button>
 				<Button
 					variant="outlined"	
