@@ -72,7 +72,7 @@ function ManagerCategories() {
             { <ManagerSidebar />}
             </Drawer>
 			<div style={{width: '85vw', height: '100vh', marginLeft: '15vw'}}>
-				<h1>Categories</h1>
+				<h1>Category Arrangement</h1>
                 <hr/>
                 <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems:'center'}}>
                     {categories.map((cate, index) => (<div key={index}>
