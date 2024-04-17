@@ -36,7 +36,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
 class MenuItemUpdateSerializer(serializers.ModelSerializer): # new serializer class
     class Meta:
         model = MenuItem
-        fields = ['name', 'description', 'price', "image", "category"] # define required fields
+        fields = ['name', 'description', 'price', 'ingredients', "image", "category"] # define required fields
 
 class MenuItemCondensedSerializer(serializers.ModelSerializer): # new serializer class
     class Meta:

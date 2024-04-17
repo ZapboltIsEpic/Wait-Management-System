@@ -25,17 +25,15 @@ function ManagerItemOrdering() {
             let currentOrder = response.data.menuItems
             
             let newOrder = []
-            console.log(indexOne, indexTwo)
             for (let i = 1; i < currentOrder.length + 1; i++) {
                 if (i == indexOne) {
-                    newOrder.push(indexTwo)
+                    newOrder.push(currentOrder[indexTwo-1].id)
                 } else if (i == indexTwo) {
-                    newOrder.push(indexOne)
+                    newOrder.push(currentOrder[indexOne-1].id)
                 } else {
-                    newOrder.push(i)
+                    newOrder.push(currentOrder[i-1].id)
                 }
-            }
-            console.log(currentOrder, newOrder)
+            }            
             axios.post(`http://127.0.0.1:8000/menu/order/categorised/${cateId}/`, {
                 menuItems: newOrder
             })

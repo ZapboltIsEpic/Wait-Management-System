@@ -117,16 +117,6 @@ function Login() {
 						<p 
 							className="login-help-link-text"
 							onClick={() => {
-								navigateTo('/staff/forgot-password');
-							}}
-						>
-							Forgot password?
-						</p>
-					</div>
-					<div className="login-help-link-container">
-						<p 
-							className="login-help-link-text"
-							onClick={() => {
 								navigateTo('/staff/create-account');
 							}}
 						>
