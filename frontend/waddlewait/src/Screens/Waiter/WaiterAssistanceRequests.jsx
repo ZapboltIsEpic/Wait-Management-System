@@ -37,7 +37,7 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
     return null;
   }
   return (
-    <Card className="order-card" sx={{ minWidth: 300, minHeight: 300, maxHeight: 400, maxWidth: 300}}>
+    <Card className="order-card" sx={{ minWidth: 300, maxHeight: 400, maxWidth: 300}}>
       <CardHeader
         title={"Table no " + assistanceRequest.table}
       />
