@@ -16,7 +16,6 @@ import MenuItem from '@mui/material/MenuItem';
 import './waiter.css';
 
 function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAcceptedAssistanceRequest }) {
-
   const handleAcceptRequest = () => {
     axios.put('http://localhost:8000/assistance/notifications/accepted', {
       "table": assistanceRequest.table, 
@@ -43,9 +42,6 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
         title={"Table no " + assistanceRequest.table}
       />
       <CardContent className="order-card-contents">
-        <Typography color="text.secondary">
-          Kitchen Staff: {assistanceRequest.staffName}
-        </Typography>
         <FormControl fullWidth>
           <Button 
             variant="contained" 
@@ -178,8 +174,7 @@ function WaiterAssistanceRequests() {
             assistanceRequestAccepted 
               ? (
                 <div>
-                  <h1>Assistance Request Table {acceptedAssistanceRequest.tableNumber} </h1>
-                  <p>Staff Name: {acceptedAssistanceRequest.staffName}</p>
+                  <h1>Assistance Request Table {acceptedAssistanceRequest.table} </h1>
                   <Button 
                     variant="contained" 
                     color="warning"
