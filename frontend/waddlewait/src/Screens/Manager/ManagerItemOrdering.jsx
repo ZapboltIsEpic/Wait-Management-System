@@ -118,6 +118,15 @@ function ManagerItemOrdering() {
 function Items({ items, cateId, handleChange}) {
     var cateItems = [];
   
+
+    axios.get(`http://127.0.0.1:8000/menu/order/categorised/${cateId}`)
+    .then((response) => {
+        console.log(response.data)
+        cateItems = response.data.menuItems
+    })
+    .catch((error) => {
+        console.log(error)
+    })
     for (var index in items) {
       var item = items[index];
       if (item.category.id === cateId) {
