@@ -57,6 +57,7 @@ function MakeOrder({order, getOrders, setOrders}) {
               let currentOrders = getOrders;
               let filteredOrders = currentOrders.filter(currentOrder => currentOrder.id !== order.id);
               setOrders(filteredOrders);
+              window.location.reload();
             })
             .catch(error => {
               console.log(error);
