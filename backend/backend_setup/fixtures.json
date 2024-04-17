@@ -778,6 +778,7 @@
     "fields": {
       "name": "Tomato Soup",
       "description": "Rich and comforting tomato blend",
+      "ingredients": "Tomatoes, Onion, Cream, Salt, Pepper",
       "price": "5.49",
       "image": "menu_images/app1_tomatosoup.jpg",
       "category": 1,
@@ -790,6 +791,7 @@
     "fields": {
       "name": "Chicken Salad",
       "description": "Fresh greens topped with seasoned chicken",
+      "ingredients": "Chicken, Lettuce, Tomatoes, Cucumbers, Dressing",
       "price": "4.49",
       "image": "menu_images/app2_chickensalad.jpg",
       "category": 1,
@@ -802,6 +804,7 @@
     "fields": {
       "name": "Crispy Corn",
       "description": "Corn kernels fried to crispy perfection",
+      "ingredients": "Corn, Oil, Salt, Pepper, Spices",
       "price": "4.99",
       "image": "menu_images/app3_crispycorn.jpg",
       "category": 1,
@@ -814,6 +817,7 @@
     "fields": {
       "name": "Grilled Fish",
       "description": "Tender fish grilled to succulent perfection",
+      "ingredients": "Fish, Lemon, Salt, Pepper, Olive Oil",
       "price": "12.99",
       "image": "menu_images/mains1_grilledfish.jpg",
       "category": 2,
@@ -826,6 +830,7 @@
     "fields": {
       "name": "Grilled chicken with rice",
       "description": "Juicy grilled chicken served over rice",
+      "ingredients": "Chicken, Rice, Salt, Pepper, Spices",
       "price": "13.49",
       "image": "menu_images/mains2_chickenandrice.jpg",
       "category": 2,
@@ -838,6 +843,7 @@
     "fields": {
       "name": "Turkey and Ham Pie",
       "description": "Savory pie filled with turkey and ham",
+      "ingredients": "Turkey, Ham, Flour, Butter, Salt",
       "price": "11.99",
       "image": "menu_images/mains3_turkeyandhampie.jpg",
       "category": 2,
@@ -850,6 +856,7 @@
     "fields": {
       "name": "Vegetable Pasta",
       "description": "Flavorful pasta with assorted veggies",
+      "ingredients": "Pasta, Tomatoes, Bell Peppers, Zucchini, Garlic",
       "price": "15.49",
       "image": "menu_images/mains4_vegetablepasta.jpg",
       "category": 2,
@@ -862,6 +869,7 @@
     "fields": {
       "name": "Fruit Cream",
       "description": "Creamy dessert infused with fresh fruit",
+      "ingredients": "Cream, Sugar, Strawberries, Blueberries, Bananas",
       "price": "8.49",
       "image": "menu_images/dessert1_fruitcream.jpg",
       "category": 3,
@@ -874,6 +882,7 @@
     "fields": {
       "name": "Ice Cream",
       "description": "Classic creamy frozen treat",
+      "ingredients": "Cream, Sugar, Vanilla, Milk, Eggs",
       "price": "6.99",
       "image": "menu_images/dessert2_icecream.jpg",
       "category": 3,
@@ -886,6 +895,7 @@
     "fields": {
       "name": "Oreo Cheesecake",
       "description": "Indulgent cheesecake topped with Oreo crumbles",
+      "ingredients": "Cream Cheese, Sugar, Oreos, Butter, Eggs",
       "price": "9.99",
       "image": "menu_images/dessert3_oreocheesecake.jpg",
       "category": 3,
@@ -898,6 +908,7 @@
     "fields": {
       "name": "Apple Crumble Pie",
       "description": "Warm apple filling under a crispy topping",
+      "ingredients": "Apples, Flour, Sugar, Butter, Cinnamon",
       "price": "7.49",
       "image": "menu_images/dessert4_applepie.jpg",
       "category": 3,
@@ -910,6 +921,7 @@
     "fields": {
       "name": "Mineral Water",
       "description": "Pure and refreshing hydration",
+      "ingredients": "Water",
       "price": "4.49",
       "image": "menu_images/drinks1_mineralwater.jpg",
       "category": 4,
@@ -922,6 +934,7 @@
     "fields": {
       "name": "Fruit Juice",
       "description": "Freshly squeezed citrus goodness",
+      "ingredients": "Oranges, Lemons, Sugar, Water, Ice",
       "price": "6.99",
       "image": "menu_images/drinks2_fruitjuice.jpg",
       "category": 4,
@@ -934,6 +947,7 @@
     "fields": {
       "name": "Coffee",
       "description": "Aromatic and invigorating morning brew",
+      "ingredients": "Coffee Beans, Water, Sugar, Milk, Cream",
       "price": "7.49",
       "image": "menu_images/drinks3_coffee.jpg",
       "category": 4,
@@ -946,6 +960,7 @@
     "fields": {
       "name": "Tea",
       "description": "Bold and steeped to perfection",
+      "ingredients": "Tea Leaves, Water, Sugar, Lemon, Mint",
       "price": "6.49",
       "image": "menu_images/drinks4_tea.jpg",
       "category": 4,
@@ -958,6 +973,7 @@
     "fields": {
       "name": "Red Wine",
       "description": "Rich and full-bodied fermented grapes",
+      "ingredients": "Grapes, Yeast, Sugar, Water, Oak",
       "price": "3.49",
       "image": "menu_images/drinks5_wine.jpg",
       "category": 4,
