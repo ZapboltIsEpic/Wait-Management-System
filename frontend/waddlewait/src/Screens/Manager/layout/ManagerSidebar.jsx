@@ -9,10 +9,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 export const ManagerSidebar = () => {
     const navigate = useNavigate();
 
-    const handleDashboardClick = () => {
-        navigate('/manager/dashboard'); 
-    };
-
     const handleCategoriesClick = () => {
         navigate('/manager/categories'); 
     };
@@ -21,8 +17,8 @@ export const ManagerSidebar = () => {
         navigate('/manager/menu'); 
     };
 
-    const handleManageOrderClick = () => {
-        navigate('/manager/manageorder'); 
+    const handleManageItemsClick = () => {
+        navigate('/manager/item-ordering'); 
     };
 
     const handleManageSignOut = () => {
@@ -31,7 +27,8 @@ export const ManagerSidebar = () => {
 
     const ManagerListItems = [
         { key: 'Menu', value: handleMenuClick },
-        { key: 'Categories', value: handleCategoriesClick },
+        { key: 'Category Arrangement', value: handleCategoriesClick },
+        { key: 'Menu Item Arrangment', value: handleManageItemsClick},
         { key: 'Sign Out', value: handleManageSignOut },
     ];
 
@@ -54,13 +51,4 @@ export const ManagerSidebar = () => {
 			</List>
 		</div>
 	);
-    // return (
-    //     <div className="ManagerSidebar">
-    //         <div><a onClick={handleDashboardClick}>Dashboard</a></div>
-    //         <div><a onClick={handleCategoriesClick}>Categories</a></div>
-    //         <div><a onClick={handleMenuClick}>Menu</a></div>
-    //         <div><a onClick={handleManageOrderClick}>ManageOrder</a></div>
-    //         <div><a onClick={handleManageSignOut}>Sign out</a></div>
-    //     </div>
-    // );
 };

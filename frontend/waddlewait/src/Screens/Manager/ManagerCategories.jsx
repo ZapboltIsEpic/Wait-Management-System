@@ -75,9 +75,10 @@ function ManagerCategories() {
 				<h1>Categories</h1>
                 <hr/>
                 <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems:'center'}}>
-                    {categories.map((cate, index) => (
+                    {categories.map((cate, index) => (<>
                         <CategoryItem key={index} index={index + 1} cate={cate} categories={categories} handleCategoryChange={handleCategoryChange} setSwapCategory={setSwapCategory}/>
-					))}
+                        <hr/>
+                    </>))}
                 </div>
             </div>
         </div>
@@ -96,7 +97,9 @@ function CategoryItem({cate, index, handleCategoryChange, categories, setSwapCat
     };
     return (
         <div style={{display: 'flex', justifyContent: 'space-between', flexDirection:'row', width: '400px', marginTop: '10px', marginBottom: '10px'}}>
-            <Button>
+            <Button
+                color="warning"
+            >
                 {cate.name}
             </Button>
             <FormControl sx={{width: '150px'}}>

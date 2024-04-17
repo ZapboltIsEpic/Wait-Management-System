@@ -21,7 +21,7 @@ function Login() {
 			navigate('/waiter/order-requests');
 		}
 		else if (link === 'manager') {
-			navigate('/manager/main');
+			navigate('/manager/menu');
 		}
 		else {
 			navigate(link);
