@@ -606,7 +606,8 @@ function HomeMenu() {
       // Menu
       <>
         <h1>
-          Welcome! Your table number is {confirmTable}, please select your meal!
+          Welcome! You are table {confirmTable}.
+          Please select your meal!
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', marginX: 2}}>
             <Button
