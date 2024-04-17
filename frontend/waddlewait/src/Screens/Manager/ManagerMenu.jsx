@@ -642,6 +642,7 @@ function AddMenuDialog(props) {
 						const formData = new FormData();
 						formData.append('name', itemName);
 						formData.append('description', itemDescription);
+						formData.append('ingredients', itemIngredients);
 						formData.append('price', itemPrice);
 						formData.append('category', category);
 						if (file != "") {
