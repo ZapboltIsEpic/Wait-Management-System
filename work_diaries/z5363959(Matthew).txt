@@ -21,3 +21,24 @@ Week 4:
 Week 5:
 - Finished table api
 - Helped presentation
+
+Week 6: Flex week
+- Double checked previous implementation
+
+Week 7:
+- Worked on manager diagrams and plans
+- Implemented manger api
+
+Week 8:
+- Worked on manager api
+
+Week 9: 
+- Finalised manager backend
+- Finalised manager database
+
+Week 10: 
+- Helped perform quality assurance testing
+- Did user testing
+- Helped in double checking frontend inplementation for manager
+- Helped in presentation
+- Worked on report
