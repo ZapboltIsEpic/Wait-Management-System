@@ -29,13 +29,18 @@ def pendingOrders(request):
 @api_view(['GET'])
 def newestOrder(request):
     if request.method == 'GET':
-        order = Order.objects.latest('created_at')
-        order_data = OrderSerializer(order).data
-       
-        order_items = OrderItem.objects.filter(order=order)
-        order_items_data = OrderItemSerializer(order_items, many=True).data
-        order_data['items'] = order_items_data
-        return Response(order_data)
+        try:
+            order = Order.objects.latest('created_at')
+            order_data = OrderSerializer(order).data
+        
+            order_items = OrderItem.objects.filter(order=order)
+            order_items_data = OrderItemSerializer(order_items, many=True).data
+            order_data['items'] = order_items_data
+            return Response(order_data)
+        except:
+
+            return Response("No orders yet")
+
 
 @api_view(['GET'])
 def completedOrders(request):
