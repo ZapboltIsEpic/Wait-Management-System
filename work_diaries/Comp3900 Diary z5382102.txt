@@ -9,3 +9,18 @@ We initialized the project and established connections with the Postgres databas
 
 Week 5: Implementation of Authentication System 
 This week, I implemented the authentication system for the backend using a JWT token system. Users can register new accounts, log in, and receive a JWT token stored securely in their cookies. Upon logout, the token is invalidated, enhancing security. This authentication mechanism ensures secure access to our application.
+
+Week 6: Meeting and Backend Design During 
+This week, our team delved into the upcoming user stories for the sprint. My primary responsibility was crafting the API endpoints for all aspects of the waitstaff module. Collaborating closely with the team, we outlined the necessary endpoints to ensure smooth integration between the frontend and backend systems. 
+
+Week 7: Backend Implementation 
+Progressing into implementation, I focused on building the backend infrastructure for the waitstaff system. This involved developing the necessary views, models, and initializing the URL endpoints. By meticulously laying the groundwork, we set the stage for seamless functionality down the line. 
+
+Week 8: Backend-Frontend Integration 
+Working in tandem with Yijun, a frontend team member, we established a robust connection between the waitstaff system's backend and frontend interfaces. This collaborative effort ensured that data flowed seamlessly between the two components, enhancing the user experience and system efficiency. 
+
+Week 9: Bug Fixing and API Expansion 
+This week was dedicated to refining the waitstaff system. We addressed lingering bugs from the previous sprint, optimizing backend views, and enhancing functionality based on frontend requirements. Additionally, new API endpoints were implemented to accommodate evolving user needs, further solidifying the system's versatility.
+
+Week 10: Presentation Preparation and Report Writing 
+As we approached the final stages of the sprint, my focus shifted towards preparing the demo presentation and compiling a comprehensive report. Documenting the functionalities of the waitstaff module, and preparing the presentation for the functionality. Simultaneously, the report provided insights into the development process, challenges overcome, and future recommendations.
