@@ -92,7 +92,7 @@ def viewPastOrderedItems(request, table):
         try:
             tableObj = Table.objects.get(table_number=table)
             
-            orderItems= OrderItem.objects.filter(order__table=tableObj)
+            orderItems= OrderItem.objects.filter(order__table=tableObj).order_by('pk')
             orderItems_serializer = OrderItemSerializer(orderItems, many = True)
 
             return Response(orderItems_serializer.data)  

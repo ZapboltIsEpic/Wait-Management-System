@@ -19,7 +19,7 @@ def pendingOrders(request):
         orders_data = []
         for order in orders:
             order_data = OrderSerializer(order).data
-            order_items = OrderItem.objects.filter(order=order)
+            order_items = OrderItem.objects.filter(order=order).order_by('pk')
             order_items_data = OrderItemSerializer(order_items, many=True).data
             order_data['items'] = order_items_data
             orders_data.append(order_data)
@@ -45,7 +45,7 @@ def completedOrders(request):
         orders_data = []
         for order in orders:
             order_data = OrderSerializer(order).data
-            order_items = OrderItem.objects.filter(order=order)
+            order_items = OrderItem.objects.filter(order=order).order_by('pk')
             order_items_data = OrderItemSerializer(order_items, many=True).data
             order_data['items'] = order_items_data
             orders_data.append(order_data)
