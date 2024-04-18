@@ -56,3 +56,7 @@ Week 9:
 Week 10:
 - Updated Jira board
 - Updated UI of Kitchen staff to match Yijun's Wait staff
+- Cleaned up Jira stories
+- Helped Jasmine create presentation slides for Final demo
+- Working on Make file for project
+- Worked on proposal for manual
