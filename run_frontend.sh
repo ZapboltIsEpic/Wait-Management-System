@@ -12,4 +12,5 @@ npm install || { echo "'npm install' failed"; exit 1; }
 # Run frontend 
 
 echo "Starting server..."
-npm run start
+
+npm start 

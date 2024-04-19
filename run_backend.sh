@@ -6,6 +6,13 @@ cd backend/backend_setup/
 # This is ran in the root directory of the project
 # Note: Need to be in a bash terminal
 
+
+if [ "$1" = "run" ]; then
+    # Start the Django development server
+    echo "Starting server..."
+    python manage.py runserver || exit 1
+fi
+
 set -e
 
 # Adjusting UTF
