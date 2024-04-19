@@ -2,10 +2,93 @@
 
 ## How to run:
 
-Ensure that you are in root directory of project
+### Running Frontend
 
-1. To run backend: run "./run_backend.sh". When asked to clear database, type "yes"
+Installation:
 
-2. To run frontend: run "./run_frontend.sh"
+Our frontend server relies on using npm and nodeJS
 
-3. [Click here](http://localhost:3000/) to visit site
+You can check if you have these installed by running
+
+- npm -v
+- node —version
+
+Tested npm version: 8.15
+
+Tested node version: v16.17.1
+
+Installation manual: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
+Steps after installation:
+
+1. Git clone the repository into your local branch
+2. Navigate inside the root repository “capstone-project-3900h11s_chunkypenguins”
+
+### Running backend
+
+Installation:
+
+Our backend server relies on python
+
+You can check if you have this installed by running
+
+- python —version
+
+Tested python version: 3.10.1
+
+Official python installation: https://www.python.org/downloads/
+
+Steps after installation:
+
+1. Install pip via https://pip.pypa.io/en/stable/installation/
+    
+    Verify installation via pip —version
+    
+2. Navigate to backend root directory via \backend\backend_setup
+3. Install Django via pip install django
+    
+    Check that it is installed via python -m django --version
+    
+    If Django does not allow version to check, an override must be done via
+    
+    pip install --force-reinstall django
+    
+    Check version again afterwards with python -m django --version
+    
+4. Install django corheaders via pip install django-cors-headers
+Use “pip list” to verify installation
+5. Install django restframework via pip install djangorestframework
+Use pip list to verify
+6. Install jwt via pip install PyJWT
+Use pip list to verify
+7. Install Pillow via python -m pip install Pillow
+8. Install Postgre va https://www.postgresql.org/download/windows/
+Press yes (Install all additionals)
+When quered on password, type “admin” for both
+Select port number 8080
+Hit Next and install
+Do not select (Open stackbuilder on exit)
+9. 
+
+Issues: If a port number issue arises
+
+- Open [settings.py](http://settings.py) in backend\backend_setup\waddleWait
+- Change Port number in DATABASES to 8080
+
+When running the shell script, two options can be used
+
+1. ./run_backend.sh
+This will clear the database and load in default values from a preset database
+    
+    When prompted to clear the database, type “yes”, this allows for a full reset/clear of any existing data
+    
+2. ./run_backend.sh run
+This is used when running the database without reseting or reloading preset data.
+
+Usage:
+
+First time: run step 1
+
+Consecutive use: run step 2
+
+Reseting all data: run step 1

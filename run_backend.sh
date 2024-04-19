@@ -7,11 +7,11 @@ cd backend/backend_setup/
 # Note: Need to be in a bash terminal
 
 
-if [ "$1" = "run" ]; then
-    # Start the Django development server
-    echo "Starting server..."
-    python manage.py runserver || exit 1
-fi
+    if [ "$1" = "run" ]; then
+        # Start the Django development server
+        echo "Starting server..."
+        python manage.py runserver || exit 1
+    fi
 
 set -e
 
@@ -24,10 +24,6 @@ if [ ! -f "$fixturesFile" ]; then
     echo "Error: '$fixturesFile' not found."
     exit 1
 fi
-
-# Convert from UTF-16 to UTF-8
-# iconv -f UTF-16 -t UTF-8 "$fixturesFile" > "${fixturesFile}.tmp" \
-#   && mv "${fixturesFile}.tmp" "$fixturesFile" \
 
 echo "Clearing database"
 python manage.py flush || { echo "Clearing database via flush failed"; exit 1; }
