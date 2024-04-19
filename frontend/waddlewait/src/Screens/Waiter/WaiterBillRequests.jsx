@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Button, Drawer} from '@mui/material';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
@@ -50,7 +49,6 @@ function MakeBill({ billRequest, setBillRequestAccepted, setAcceptedBillRequest}
 }
 
 function WaiterBillRequests() {
-  const navigate = useNavigate();
 
   const [acceptedBillRequest, setAcceptedBillRequest] = useState(null);
   const [billRequestAccepted, setBillRequestAccepted] = useState(false);
@@ -107,11 +105,7 @@ function WaiterBillRequests() {
       setBillRequestAccepted(false);
       setAcceptedBillRequest(null);
     }
-
-    const callManager = () => {
-      // call manager
-    };
-
+    
   return (
     <div className="App">
       <Drawer 

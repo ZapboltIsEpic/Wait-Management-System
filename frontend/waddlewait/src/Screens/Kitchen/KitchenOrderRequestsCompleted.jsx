@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { Button, Drawer } from '@mui/material';
+import { Drawer } from '@mui/material';
 import { KitchenSidebar } from './layout/KitchenSidebar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -41,17 +40,6 @@ function MakeOrder({order}) {
 
 function KitchenOrderRequestsCompleted() {
   const [orderRequests, setOrderRequests] = useState([]);
-  
-	const [open, setOpen] = React.useState(false);
-  
-  const navigate = useNavigate(); 
-  const toggleSignOut = () => {
-		navigate("/staff/login");
-	};
-
-	const toggleDrawer = (isOpen) => () => {
-		setOpen(isOpen);
-	};
 
   useEffect(() => {
     axios.get('http://localhost:8000/kitchenstaff/completed')

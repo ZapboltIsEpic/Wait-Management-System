@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Tab,
   Tabs,
@@ -30,11 +29,6 @@ import axios from 'axios';
 import './manager.css'
 
 function ManagerMenu() {
-	const navigate = useNavigate();
-	const navigateTo = (link) => {
-		navigate(link);
-	}
-	const [open, setOpen] = React.useState(false);
 	const [categoryDialog, setCategoryDialog] = React.useState(false);
 	const [addMenuDialog, setAddMenuDialog] = React.useState(false);
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Button, Drawer, Alert, Snackbar } from '@mui/material';
 import { WaiterSidebar } from './layout/WaiterSidebar';
 import Card from '@mui/material/Card';
@@ -65,7 +64,6 @@ function MakeOrder({ orderRequest, setOrderRequestAccepted, setAcceptedOrderRequ
 }
 
 function WaiterOrderRequests() {
-  const navigate = useNavigate();
 
   const [acceptedOrderRequest, setAcceptedOrderRequest] = useState(null);
   const [orderRequestAccepted, setOrderRequestAccepted] = useState(false);

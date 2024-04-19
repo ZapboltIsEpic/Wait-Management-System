@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Button, Drawer, Alert, Snackbar } from '@mui/material';
 import { WaiterSidebar } from './layout/WaiterSidebar';
 import Card from '@mui/material/Card';
@@ -54,7 +53,6 @@ function MakeAssistance({ assistanceRequest, setAssistanceRequestAccepted, setAc
 }
 
 function WaiterAssistanceRequests() {
-  const navigate = useNavigate();
 
   const [acceptedAssistanceRequest, setAcceptedAssistanceRequest] = useState(null);
   const [assistanceRequestAccepted, setAssistanceRequestAccepted] = useState(false);

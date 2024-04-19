@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button, Drawer, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import { ManagerSidebar } from './layout/ManagerSidebar';
 import axios from 'axios';
@@ -7,7 +6,6 @@ import axios from 'axios';
 function ManagerCategories() {
 
     const [categories, setCategories] = React.useState([]);
-    const [category, setCategory] = React.useState('');
     const [swapCategory, setSwapCategory] = React.useState('');
     const [hasChange, setNewChange] = React.useState(false);
     const [reRender, setreRender] = React.useState(false);
