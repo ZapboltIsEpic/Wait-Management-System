@@ -23,6 +23,8 @@ Steps after installation:
 
 1. Git clone the repository into your local branch
 2. Navigate inside the root repository “capstone-project-3900h11s_chunkypenguins”
+3. Run ./run_frontend, a terminal should appear, followed by a web page
+4. If no webpage is shown/the terminal closes, it means the server is already running from your first attempt. Navigate to http://localhost:3000/
 
 ### Running backend
 
